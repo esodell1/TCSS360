@@ -4,9 +4,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Collection;
+import java.util.List;
 
 public class Persistent {
+	private List<Job> jobs;
+	private List<Park> parks;
+	private List<User> users;
 	
 	String filename = "persistent.ser";
 	
@@ -14,19 +17,19 @@ public class Persistent {
 		
 	}
 	
-	public void saveData(Collection<Job> jobs, Collection<Park> parks, Collection<User> users) {
+	public void saveData(List<Job> jobs, List<Park> parks, List<User> users) {
 		// save the objects to file
 	    FileOutputStream fos = null;
 	    ObjectOutputStream out = null;
-	    
-	    Data data = new Data(jobs, parks, users);
 	    
 	    try {
 	        fos = new FileOutputStream(filename);
 	        out = new ObjectOutputStream(fos);
 	        
-	        out.writeObject(data);
-
+	        out.writeObject(jobs);
+	        out.writeObject(parks);
+	        out.writeObject(users);
+	        
 	        out.close();
 	    } 
 	    catch (Exception ex) {
@@ -34,20 +37,19 @@ public class Persistent {
 	    }
 	}
 	
-	public void loadData(Collection<Job> jobs, Collection<Park> parks, Collection<User> users) {
+	@SuppressWarnings("unchecked")
+	public void loadData() {
 		// read the object from file
 	    FileInputStream fis = null;
 	    ObjectInputStream in = null;
-	    
 	    try {
 	    	fis = new FileInputStream(filename);
 	    	in = new ObjectInputStream(fis);
 	    	
-	    	Data data = (Data) in.readObject();
-	    	jobs = data.jobs;
-	    	parks = data.parks;
-	    	users = data.users;
-	    	
+	    	jobs = (List<Job>) in.readObject();
+	    	parks = (List<Park>) in.readObject();
+	    	users = (List<User>) in.readObject();
+	    		    	
 	    	in.close();
 	    } 
 	    catch (Exception ex) {
@@ -55,16 +57,17 @@ public class Persistent {
 	    }
 	}
 	
-	private class Data {
-		public Collection<Job> jobs;
-		public Collection<Park> parks;
-		public Collection<User> users;
-		
-		public Data (Collection<Job> jobs, Collection<Park> parks, Collection<User> users) {
-			this.jobs = jobs;
-			this.parks = parks;
-			this.users = users;
-		}
+	public List<Job> getJobs() {
+		return jobs;
 	}
+
+	public List<Park> getParks() {
+		return parks;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+	
     
 }
