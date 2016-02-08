@@ -2,6 +2,7 @@ package Project;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.List;
 
 public class UserInterface {
 
@@ -66,17 +67,17 @@ public class UserInterface {
 		return input;
 	}
 
-	public int optionsInt(String title, String[] options) {
+	public int optionsInt(String title, List<String> options) {
 		int input = -100;
 		do {
 			// Title
 			System.out.println("Title: " + title);
 			
 			// Options
-			for (int i = 0; i < options.length; i++) {
-				System.out.println(i + ".\t" + options[i]);
+			for (int i = 0; i < options.size(); i++) {
+				System.out.println(i + ".\t" + options.get(i));
 			}
-			input = getInt(1, options.length);
+			input = getInt(1, options.size());
 		} while (input == -100);
 		return input;
 	}
@@ -92,7 +93,7 @@ public class UserInterface {
 		return myScanner.next();
 	}
 
-	public int listInt(String title, String[] items, String[] options) {
+	public int listInt(String title, String[] items, List<String> options) {
 		int input = -100;
 		do {
 			// Title
@@ -103,10 +104,10 @@ public class UserInterface {
 				System.out.println(items[i]);
 			}
 			// Options
-			for (int i = 0; i < options.length; i++) {
-				System.out.println(i + ".\t" + options[i]);
+			for (int i = 0; i < options.size(); i++) {
+				System.out.println(i + ".\t" + options.get(i));
 			}
-			input = getInt(1, options.length);
+			input = getInt(1, options.size());
 		} while (input == -100);
 		return input;
 	}
