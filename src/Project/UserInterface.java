@@ -93,15 +93,15 @@ public class UserInterface {
 		return myScanner.next();
 	}
 
-	public int listInt(String title, String[] items, List<String> options) {
+	public int listInt(String title, List<String> items, List<String> options) {
 		int input = -100;
 		do {
 			// Title
 			System.out.println("Title: " + title);
 			
 			// List
-			for (int i = 0; i < items.length; i++) {
-				System.out.println(items[i]);
+			for (int i = 0; i < items.size(); i++) {
+				System.out.println(items.get(i));
 			}
 			// Options
 			for (int i = 0; i < options.size(); i++) {
