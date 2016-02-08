@@ -12,13 +12,19 @@ public class Control {
 	private User currentUser;
 	
 		
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
 	public int login(String email) {
+		int result = -1;
 		for(int i = 0; i < users.size(); i++) {
-			
-		}
-		
-		return 0;
-		
+			if (users.get(i).login(email)) {
+				currentUser = users.get(i);
+				result = 1;
+			}
+		}		
+		return result;
 	}
 
 	// Lists all jobs as a link to the Collection
@@ -44,5 +50,12 @@ public class Control {
 		parks = new ArrayList<Park>();
 		users = new ArrayList<User>();
 		db = new Persistent();
+//		User newUser = new Staff("Eric", "555-467-3456", "esodell@uw.edu");
+//		users.add(newUser);
+//		db.saveData(jobs, parks, users);
+		db.loadData();
+		jobs = db.getJobs();
+		parks = db.getParks();
+		users = db.getUsers();
 	}
 }

@@ -15,5 +15,11 @@ public interface User {
 	 * @param theJob The given Job.
 	 * @return Returns info about the job? Or the job object itself? Idk yet.
 	 */
-	Job viewJob(Job theJob);	
+	Job viewJob(Job theJob);
+	
+	public String getFirstName();
+	
+	public String getLastName();
+	
+	public String getEmail();
 }
