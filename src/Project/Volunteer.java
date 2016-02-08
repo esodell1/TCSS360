@@ -12,12 +12,14 @@ public class Volunteer extends AbstractUser implements Serializable {
 	int myWorkGrade;
 	Collection<Job> myJobs;
 	
-	public Volunteer() {
+	public Volunteer(String theName, String thePhone, String theEmail) {
+		super(theName, thePhone, theEmail);
 		myJobs = new ArrayList<Job>();
 	}
 	
 	public void signUp(Job theJob) {
 		myJobs.add(theJob);
+		theJob.addVolunteer(this);
 	}
 	
 	public void cancelSignUp(Job theJob) {
@@ -27,6 +29,4 @@ public class Volunteer extends AbstractUser implements Serializable {
 			throw new IllegalArgumentException("Volunteer never signed up for this job.");
 		}
 	}
-
-	
 }
