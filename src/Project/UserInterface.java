@@ -140,6 +140,10 @@ public class UserInterface {
 	    return myScanner.nextLine();
 	  }
 
+  public int listInt(String title, String[] items) {
+	  
+	  return 0;
+  }
 
   public int basicView(String title, String item1, String item2, String item3, String item4, String[] theContent) {
     int spaceCount = (DEFAULT_WIDTH - 30 - title.length()) / 2;
