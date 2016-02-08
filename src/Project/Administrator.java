@@ -5,6 +5,9 @@ import java.io.Serializable;
 public class Administrator extends AbstractUser implements Serializable {
 	private static final long serialVersionUID = 405845997836012126L;
 	
+	public Administrator(String theFirstName, String theLastName, String theEmail) {
+		super(theFirstName, theLastName, theEmail);
+	}
 	/** Not sure what parameters we are going to store with the Job and how they will be passed to this method,
 	 * 	but this seemed like a good start.
 	 * 
@@ -27,6 +30,5 @@ public class Administrator extends AbstractUser implements Serializable {
 	
 	public void blackball(Volunteer theVol){
 		theVol.myBlackBalled = true;
-	}
-	
+	}	
 }
