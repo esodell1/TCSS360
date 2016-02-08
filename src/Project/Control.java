@@ -9,8 +9,18 @@ public class Control {
 	private List<Park> parks;
 	private List<User> users;
 	private Persistent db;
+	private User currentUser;
 	
-	
+		
+	public int login(String email) {
+		for(int i = 0; i < users.size(); i++) {
+			
+		}
+		
+		return 0;
+		
+	}
+
 	// Lists all jobs as a link to the Collection
 	protected List<Job> listJobs() {
 		return jobs;

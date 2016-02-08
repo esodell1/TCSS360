@@ -70,7 +70,7 @@ public class UserInterface {
 
 
 
-  public int basicNavigation(String title, String item1, String item2, String item3, String item4) {
+  public int basicNavigation(String title, String[] items) {
     int spaceCount = (DEFAULT_WIDTH - 30 - title.length()) / 2;
     int input = -100;
     while (input == -100) {
@@ -88,10 +88,11 @@ public class UserInterface {
       for (int i = 0; i < spaceCount; i++) System.out.print("_");
 
       // Content
-      System.out.println("\n\n\t\t1.\t" + item1 + "\n");
-      System.out.println("\t\t2.\t" + item2 + "\n");
-      System.out.println("\t\t3.\t" + item3 + "\n");
-      System.out.print("\t\t4.\t" + item4 + "\n\n\t\t");
+      System.out.println("\n\n");
+      for (int i = 0; i < items.length; i++) {
+    	  System.out.println("\t\t1.\t" + items[i] + "\n");
+      }      
+      System.out.println("\n\t\t");
 
       // Bottom content bar
       for (int i = 0; i < DEFAULT_WIDTH - 30; i++) System.out.print("_");
@@ -105,6 +106,44 @@ public class UserInterface {
     }
     return input;
   }
+  
+  public String listString(String title, String[] items) {
+	    int spaceCount = (DEFAULT_WIDTH - 30 - title.length()) / 2;
+	    int input = -100;
+	    while (input == -100) {
+	      // Screen header
+	      printTopBorder(DEFAULT_WIDTH);
+	      printUserInfo();
+
+	      // Filler space
+	      for (int i = 0; i < 3; i++) System.out.println();
+
+	      // Top content bar
+	      System.out.print("               ");
+	      for (int i = 0; i < spaceCount; i++) System.out.print("_");
+	      System.out.print(title);
+	      for (int i = 0; i < spaceCount; i++) System.out.print("_");
+
+	      // Content
+	      System.out.println("\n\n");
+	      for (int i = 0; i < items.length; i++) {
+	    	  System.out.println("\t\t1.\t" + items[i] + "\n");
+	      }      
+	      System.out.println("\n\t\t");
+
+	      // Bottom content bar
+	      for (int i = 0; i < DEFAULT_WIDTH - 30; i++) System.out.print("_");
+
+	      // Filler space
+	      for (int i = 0; i < 4; i++) System.out.println();
+
+	      //Screen footer
+	      printBottomBorder(DEFAULT_WIDTH);
+	      
+	    }
+	    return myScanner.nextLine();
+	  }
+
 
   public int basicView(String title, String item1, String item2, String item3, String item4, String[] theContent) {
     int spaceCount = (DEFAULT_WIDTH - 30 - title.length()) / 2;
