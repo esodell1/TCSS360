@@ -68,9 +68,7 @@ public class UserInterface {
         return input;
   }
 
-
-
-  public int basicNavigation(String title, String[] items) {
+  public int optionsInt(String title, String[] items) {
     int spaceCount = (DEFAULT_WIDTH - 30 - title.length()) / 2;
     int input = -100;
     while (input == -100) {
@@ -107,7 +105,7 @@ public class UserInterface {
     return input;
   }
   
-  public String listString(String title, String[] items) {
+  public String detailsString(String title, String details) {
 	    int spaceCount = (DEFAULT_WIDTH - 30 - title.length()) / 2;
 	    int input = -100;
 	    while (input == -100) {
@@ -126,9 +124,7 @@ public class UserInterface {
 
 	      // Content
 	      System.out.println("\n\n");
-	      for (int i = 0; i < items.length; i++) {
-	    	  System.out.println("\t\t1.\t" + items[i] + "\n");
-	      }      
+	      System.out.println("\t\t1.\t" + details + "\n");
 	      System.out.println("\n\t\t");
 
 	      // Bottom content bar
