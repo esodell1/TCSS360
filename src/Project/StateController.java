@@ -1,5 +1,7 @@
 package Project;
 
+import java.util.List;
+
 public class StateController {
 	private UserInterface ui;
 	private Control ctrl;
@@ -15,22 +17,25 @@ public class StateController {
 	public void nextState() {
 		int command;
 		String input;
+		List<String> opts;
 		switch (currentState) {
 			case "LOGIN":
 				input = ui.detailsString("Login", "Enter an email address:");
 				int result = ctrl.login(input);
 				if(result >= 0) {
-					nextState = "MAIN";
 					ui.setUser(ctrl.getCurrentUser().getFirstName(), 
 							ctrl.getCurrentUser().getLastName(), "TYPE HERE");
+					nextState = "MAIN";
 				}
 				else {
 					nextState = "LOGIN";
 				}
 				break;
 			case "MAIN":
-				command = ui.listInt("Main Menu", new String[0], new String[0]);
-				if (command > 5) {
+				opts = ctrl.mainMenu();
+				command = ui.optionsInt("Main Menu", opts);
+				System.out.println(command);
+				if (command < 5) {
 					nextState = "LOGIN";
 				} else {
 					nextState = "LIST_ALL_JOBS";
