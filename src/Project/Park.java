@@ -10,10 +10,8 @@ public class Park implements Serializable {
 	private String manager;
 	
 	public Park(String location, String manager) {
-		
 		this.location = location;
-		this.manager = manager;
-				
+		this.manager = manager;		
 	}
 
 	public String getLocation() {

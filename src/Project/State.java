@@ -32,7 +32,9 @@ public enum State {
 				if (command == 2) {
 					// Search volunteers
 				} else if (command == 3) {
-					// Logout
+					ctrl.logout();
+					currentUser = null;
+					return LOGIN;
 				}
 			} else if(currentUser instanceof Manager) {
 				options.add("View all Jobs");
@@ -40,11 +42,26 @@ public enum State {
 				options.add("Submit new Job");
 				options.add("Logout");
 				command = ui.optionsInt("Main Menu", options);
+				if (command == 2) {
+					
+				} else if (command == 3) {
+					// New Job
+				} else if (command == 4) {
+					ctrl.logout();
+					return LOGIN;
+				}
 			} else {
 				options.add("View all Jobs");
 				options.add("View my Jobs");
 				options.add("Logout");
 				command = ui.optionsInt("Main Menu", options);
+				if (command == 2) {
+					
+				} else if (command == 3) {
+					ctrl.logout();
+					currentUser = null;
+					return LOGIN;
+				}
 			}
 			
 			if (command == 1) {

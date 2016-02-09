@@ -33,6 +33,10 @@ public class Control {
 		}		
 		return result;
 	}
+	
+	public void logout() {
+		currentUser = null;
+	}
 
 	// Lists all jobs as a link to the Collection
 	protected List<Job> listJobs() {
