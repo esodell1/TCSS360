@@ -11,25 +11,6 @@ public class Control {
 	private Persistent db;
 	private User currentUser;
 	
-	public List<String> mainMenu() {
-		List<String> options = new ArrayList<String>();
-		if (currentUser instanceof Staff) {
-			options.add("View all Jobs");
-			options.add("Search volunteers");
-			options.add("Logout");
-		} else if(currentUser instanceof Manager) {
-			options.add("View all Jobs");
-			options.add("View my Jobs");
-			options.add("Submit new Job");
-			options.add("Logout");
-		} else {
-			options.add("View all Jobs");
-			options.add("View my Jobs");
-			options.add("Logout");
-		}
-		return options;
-	}
-	
 	public List<String> getAllJobs() {
 		List<String> options = new ArrayList<String>();
 		for (int i = 0; i < jobs.size(); i++) {
