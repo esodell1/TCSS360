@@ -29,6 +29,10 @@ public class Control {
 		}
 		return options;
 	}
+	
+	public List<String> getAllJobs() {
+		
+	}
 		
 	public User getCurrentUser() {
 		return currentUser;

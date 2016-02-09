@@ -57,4 +57,14 @@ public abstract class AbstractUser implements User, Serializable {
 	public String getEmail() {
 		return myEmail;
 	}
+	
+	public String getUserType() {
+		if (this instanceof Manager) {
+			return "Park Manager";
+		} else if (this instanceof Staff) {
+			return "Urban Parks Staff";
+		} else {
+			return "Volunteer";
+		}
+	}
 }
