@@ -23,8 +23,9 @@ public class StateController {
 				input = ui.detailsString("Login", "Enter an email address:");
 				int result = ctrl.login(input);
 				if(result >= 0) {
-					ui.setUser(ctrl.getCurrentUser().getFirstName(), 
-							ctrl.getCurrentUser().getLastName(), "TYPE HERE");
+					ui.setUser(	ctrl.getCurrentUser().getFirstName(), 
+								ctrl.getCurrentUser().getLastName(), 
+								ctrl.getCurrentUser().getUserType());
 					nextState = "MAIN";
 				}
 				else {

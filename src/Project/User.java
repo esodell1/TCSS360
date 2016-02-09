@@ -22,4 +22,6 @@ public interface User {
 	public String getLastName();
 	
 	public String getEmail();
+	
+	public String getUserType();
 }

@@ -29,6 +29,14 @@ public class Control {
 		}
 		return options;
 	}
+	
+	public List<String> getAllJobs() {
+		List<String> options = new ArrayList<String>();
+		for (int i = 0; i < jobs.size(); i++) {
+			options.add(jobs.get(i).getName());
+		}
+		return options;
+	}
 		
 	public User getCurrentUser() {
 		return currentUser;
