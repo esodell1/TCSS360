@@ -2,7 +2,7 @@ package Project;
 
 import java.io.Serializable;
 
-public class Administrator extends AbstractUser implements Serializable {
+public abstract class Administrator extends AbstractUser implements Serializable {
 	private static final long serialVersionUID = 405845997836012126L;
 	
 	public Administrator(String theFirstName, String theLastName, String theEmail) {

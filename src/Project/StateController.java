@@ -1,63 +1,22 @@
 package Project;
 
-import java.util.List;
-
 public class StateController {
-	private UserInterface ui;
-	private Control ctrl;
-	private String currentState;
-	private String nextState;
+	private static UserInterface ui;
+	private static Control ctrl;
+	//private static User currentUser;
+	private State state;
 	
 	public StateController() {
-		this.ui = new UserInterface();
-		this.ctrl = new Control();
-		currentState = "LOGIN";
+		ui = new UserInterface();
+		ctrl = new Control();
+		state = State.LOGIN;
 	}
-	
-	public void nextState() {
-		int command;
-		String input;
-		List<String> opts;
-		switch (currentState) {
-			case "LOGIN":
-				input = ui.detailsString("Login", "Enter an email address:");
-				int result = ctrl.login(input);
-				if(result >= 0) {
-					ui.setUser(	ctrl.getCurrentUser().getFirstName(), 
-								ctrl.getCurrentUser().getLastName(), 
-								ctrl.getCurrentUser().getUserType());
-					nextState = "MAIN";
-				}
-				else {
-					nextState = "LOGIN";
-				}
-				break;
-			case "MAIN":
-				opts = ctrl.mainMenu();
-				command = ui.optionsInt("Main Menu", opts);
-				System.out.println(command);
-				if (command < 5) {
-					nextState = "LOGIN";
-				} else {
-					nextState = "LIST_ALL_JOBS";
-				}
-				break;
-			case "LIST_ALL_JOBS":
-				break;
-			case "LIST_MY_JOBS":
-				break;
-			default:
-				return;
-				
-		}
-		currentState = nextState;
-	}
-	
-	public static void main(String args[]) {
 		
-		StateController statecon = new StateController();
+	public static void main(String args[]) {
+		StateController stateControl = new StateController();
+		
 		while (true) {
-			statecon.nextState();
+			stateControl.state = stateControl.state.nextState(ui, ctrl);
 		}
 	}
 	

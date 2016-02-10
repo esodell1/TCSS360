@@ -1,5 +1,7 @@
 package Project;
 
+import java.util.List;
+
 public interface User {
 	
 	/**
@@ -24,4 +26,8 @@ public interface User {
 	public String getEmail();
 	
 	public String getUserType();
+	
+	public List<String> getMenuOptions(State currentState);
+	
+	public State getNextState(State currentState, int command);
 }

@@ -7,13 +7,11 @@ public class Park implements Serializable {
 	private static final long serialVersionUID = -5896375771655268671L;
 	
 	private String location;
-	private String manager;
+	private User manager;
 	
-	public Park(String location, String manager) {
-		
+	public Park(String location, User newUser2) {
 		this.location = location;
-		this.manager = manager;
-				
+		this.manager = newUser2;		
 	}
 
 	public String getLocation() {
@@ -24,11 +22,11 @@ public class Park implements Serializable {
 		this.location = location;
 	}
 
-	public String getManager() {
+	public User getManager() {
 		return manager;
 	}
 
-	public void setManager(String manager) {
+	public void setManager(User manager) {
 		this.manager = manager;
 	}
 	

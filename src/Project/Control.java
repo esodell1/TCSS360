@@ -11,25 +11,6 @@ public class Control {
 	private Persistent db;
 	private User currentUser;
 	
-	public List<String> mainMenu() {
-		List<String> options = new ArrayList<String>();
-		if (currentUser instanceof Staff) {
-			options.add("View all Jobs");
-			options.add("Search volunteers");
-			options.add("Logout");
-		} else if(currentUser instanceof Manager) {
-			options.add("View all Jobs");
-			options.add("View my Jobs");
-			options.add("Submit new Job");
-			options.add("Logout");
-		} else {
-			options.add("View all Jobs");
-			options.add("View my Jobs");
-			options.add("Logout");
-		}
-		return options;
-	}
-	
 	public List<String> getAllJobs() {
 		List<String> options = new ArrayList<String>();
 		for (int i = 0; i < jobs.size(); i++) {
@@ -51,6 +32,10 @@ public class Control {
 			}
 		}		
 		return result;
+	}
+	
+	public void logout() {
+		currentUser = null;
 	}
 
 	// Lists all jobs as a link to the Collection
@@ -76,8 +61,17 @@ public class Control {
 		parks = new ArrayList<Park>();
 		users = new ArrayList<User>();
 		db = new Persistent();
-//		User newUser = new Staff("Eric", "555-467-3456", "esodell@uw.edu");
+//		User newUser = new Staff("Eric", "555-467-3456", "staff@uw.edu");
+//		User newUser2 = new Manager("Elijah", "555-467-3456", "manager@uw.edu");
+//		User newUser3 = new Volunteer("Tyler", "555-467-3456", "volunteer@uw.edu");
+//		Park newPark = new Park("123 East Main Street", newUser2);
+//		Job newJob = new Job("Trash Pickup", newPark, "02/16/2016", 
+//				"This job will just be picking up trash.", new ArrayList<Volunteer>());
 //		users.add(newUser);
+//		users.add(newUser2);
+//		users.add(newUser3);
+//		parks.add(newPark);
+//		jobs.add(newJob);
 //		db.saveData(jobs, parks, users);
 		db.loadData();
 		jobs = db.getJobs();
