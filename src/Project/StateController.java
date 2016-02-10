@@ -3,7 +3,7 @@ package Project;
 public class StateController {
 	private static UserInterface ui;
 	private static Control ctrl;
-	private static User currentUser;
+	//private static User currentUser;
 	private State state;
 	
 	public StateController() {
@@ -16,7 +16,7 @@ public class StateController {
 		StateController stateControl = new StateController();
 		
 		while (true) {
-			stateControl.state = stateControl.state.nextState(ui, ctrl, currentUser);
+			stateControl.state = stateControl.state.nextState(ui, ctrl);
 		}
 	}
 	

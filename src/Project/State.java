@@ -1,15 +1,14 @@
 package Project;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public enum State {
 	LOGIN {
-		State nextState(UserInterface ui, Control ctrl, User currentUser) {
+		State nextState(UserInterface ui, Control ctrl) {
 			String input = ui.detailsString("Login", "Enter an email address:");
 			int result = ctrl.login(input);
 			if(result >= 0) {
-				currentUser = ctrl.getCurrentUser();
+				User currentUser = ctrl.getCurrentUser();
 				ui.setUser(	currentUser.getFirstName(), 
 							currentUser.getLastName(), 
 							currentUser.getUserType());
@@ -21,69 +20,36 @@ public enum State {
 		}
 	},
 	MAIN {
-		State nextState(UserInterface ui, Control ctrl, User currentUser) {
-			int command;
-			List<String> options = new ArrayList<String>();
-			if (currentUser instanceof Staff) {
-				options.add("View all Jobs");
-				options.add("Search volunteers");
-				options.add("Logout");
-				command = ui.optionsInt("Main Menu", options);
-				if (command == 2) {
-					// Search volunteers
-				} else if (command == 3) {
-					ctrl.logout();
-					currentUser = null;
-					return LOGIN;
-				}
-			} else if(currentUser instanceof Manager) {
-				options.add("View all Jobs");
-				options.add("View my Jobs");
-				options.add("Submit new Job");
-				options.add("Logout");
-				command = ui.optionsInt("Main Menu", options);
-				if (command == 2) {
-					
-				} else if (command == 3) {
-					// New Job
-				} else if (command == 4) {
-					ctrl.logout();
-					return LOGIN;
-				}
-			} else {
-				options.add("View all Jobs");
-				options.add("View my Jobs");
-				options.add("Logout");
-				command = ui.optionsInt("Main Menu", options);
-				if (command == 2) {
-					
-				} else if (command == 3) {
-					ctrl.logout();
-					currentUser = null;
-					return LOGIN;
-				}
-			}
-			
-			if (command == 1) {
-				return VIEW_ALL_JOBS;
-			} else {
-				return MAIN;
-			}
+		State nextState(UserInterface ui, Control ctrl) {
+			User currentUser = ctrl.getCurrentUser();
+			List<String> options = currentUser.getMenuOptions(MAIN);
+			int command = ui.optionsInt("Main Menu", options);
+			return currentUser.getNextState(MAIN, command);
 		}
 	},
 	VIEW_ALL_JOBS {
-		State nextState(UserInterface ui, Control ctrl, User currentUser) {
+		State nextState(UserInterface ui, Control ctrl) {
+			User currentUser = ctrl.getCurrentUser();
 			List<String> opts = ctrl.getAllJobs();
 			int command = ui.optionsInt("View All Jobs", opts);
-			System.out.println(command);
-			if (command < 5) {
-				return LOGIN;
-			} else {
-				return VIEW_ALL_JOBS;
-			}
+			return currentUser.getNextState(VIEW_ALL_JOBS, command);
+		}
+	},
+	SEARCH_VOLUNTEERS {
+		State nextState(UserInterface ui, Control ctrl) {
+			User currentUser = ctrl.getCurrentUser();
+			
+			return MAIN;
+		}
+	},
+	LOGOUT {
+		State nextState(UserInterface ui, Control ctrl) {
+			User currentUser = ctrl.getCurrentUser();
+			
+			return MAIN;
 		}
 	};
 	
-	abstract State nextState(UserInterface ui, Control ctrl, User currentUser);
+	abstract State nextState(UserInterface ui, Control ctrl);
 
 }

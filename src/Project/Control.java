@@ -61,8 +61,17 @@ public class Control {
 		parks = new ArrayList<Park>();
 		users = new ArrayList<User>();
 		db = new Persistent();
-//		User newUser = new Staff("Eric", "555-467-3456", "esodell@uw.edu");
+//		User newUser = new Staff("Eric", "555-467-3456", "staff@uw.edu");
+//		User newUser2 = new Manager("Elijah", "555-467-3456", "manager@uw.edu");
+//		User newUser3 = new Volunteer("Tyler", "555-467-3456", "volunteer@uw.edu");
+//		Park newPark = new Park("123 East Main Street", newUser2);
+//		Job newJob = new Job("Trash Pickup", newPark, "02/16/2016", 
+//				"This job will just be picking up trash.", new ArrayList<Volunteer>());
 //		users.add(newUser);
+//		users.add(newUser2);
+//		users.add(newUser3);
+//		parks.add(newPark);
+//		jobs.add(newJob);
 //		db.saveData(jobs, parks, users);
 		db.loadData();
 		jobs = db.getJobs();
