@@ -75,7 +75,7 @@ public class UserInterface {
 			
 			// Options
 			for (int i = 0; i < options.size(); i++) {
-				System.out.println(i + ".\t" + options.get(i));
+				System.out.println((i + 1) + ".\t" + options.get(i));
 			}
 			input = getInt(1, options.size());
 		} while (input == -100);
@@ -105,7 +105,7 @@ public class UserInterface {
 			}
 			// Options
 			for (int i = 0; i < options.size(); i++) {
-				System.out.println(i + ".\t" + options.get(i));
+				System.out.println((i + 1) + ".\t" + options.get(i));
 			}
 			input = getInt(1, options.size());
 		} while (input == -100);
