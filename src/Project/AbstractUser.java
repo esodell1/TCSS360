@@ -67,3 +67,9 @@ public abstract class AbstractUser implements User, Serializable {
 		}
 	}
 }
+
+enum WorkLoad {
+	LOW,
+	MEDIUM,
+	HIGH
+}
