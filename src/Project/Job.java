@@ -1,23 +1,34 @@
 package Project;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Job implements Serializable {
+	
 	private static final long serialVersionUID = 6239276355031273785L;
 	
 	private String name;
 	private Park park;
-	private String date;
+	private Date date;
 	private String discription;
 	private List<Volunteer> enrolledVolunteers;
 	
-	public Job(String name, Park park, String date, String discription, List<Volunteer> volunteerList) {
+	public Job(String name, Park park, Date date, String discription, List<Volunteer> volunteerList) {
 		this.name = name;
 		this.park = park;
 		this.date = date;
 		this.discription = discription;
 		this.enrolledVolunteers = volunteerList;
+	}
+	
+	public Job() {
+		this.name = "null";
+		this.park = new Park("null", null);
+		this.date = new Date();
+		this.discription = "null";
+		this.enrolledVolunteers = new LinkedList<Volunteer>();
 	}
 	
 	public void addVolunteer(Volunteer volunteer) {
@@ -45,11 +56,11 @@ public class Job implements Serializable {
 		this.park = park;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

@@ -27,7 +27,22 @@ public interface User {
 	
 	public String getUserType();
 	
+	
+	/**
+	 * Returns a list of strings that provide the content for the current menu 
+	 * commands available in the user interface. These are dependent on the type
+	 * of user and the current state.
+	 * @param currentState - current state of navigation within the system
+	 * @return List<String> menu options
+	 */
 	public List<String> getMenuOptions(State currentState);
 	
+	/**
+	 * Returns the next state of a given state, taking into account the command
+	 * that was specified by the user.
+	 * @param currentState - current system state
+	 * @param command - command requested by the user
+	 * @return State - the next state based on the command
+	 */
 	public State getNextState(State currentState, int command);
 }
