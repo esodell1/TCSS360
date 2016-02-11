@@ -112,7 +112,7 @@ public class UserInterface {
 		return input;
 	}
 	
-	public int detailsInt(String title, String details, String[] options) {
+	public int detailsInt(String title, String details, List<String> options) {
 		int input = -100;
 		do {
 			// Title
@@ -122,10 +122,10 @@ public class UserInterface {
 			System.out.println(details);
 			
 			// Options
-			for (int i = 0; i < options.length; i++) {
-				System.out.println(i + ".\t" + options[i]);
+			for (int i = 0; i < options.size(); i++) {
+				System.out.println((i + 1) + ".\t" + options.get(i));
 			}
-			input = getInt(1, options.length);
+			input = getInt(1, options.size());
 		} while (input == -100);
 		return input;
 	}
