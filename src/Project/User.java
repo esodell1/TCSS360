@@ -12,13 +12,6 @@ public interface User {
 	 */
 	boolean login(String theUser);
 	
-	/**
-	 * View specific information about a job. What else goes here I'm not quite sure yet.
-	 * @param theJob The given Job.
-	 * @return Returns info about the job? Or the job object itself? Idk yet.
-	 */
-	Job viewJob(Job theJob);
-	
 	public String getFirstName();
 	
 	public String getLastName();

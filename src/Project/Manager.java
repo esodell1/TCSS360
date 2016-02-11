@@ -2,38 +2,13 @@ package Project;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Manager extends Administrator implements Serializable {
 	private static final long serialVersionUID = -7518771764293378227L;
-	private Collection<Park> myParks;
-	private Collection<Job> myJobs;
 	
 	public Manager(String theFirstName, String theLastName, String theEmail, WorkLoad theWl) {
 		super(theFirstName, theLastName, theEmail, theWl);
-		myParks = new LinkedList<Park>();
-	}
-	
-	public void addPark(Park thePark) {
-		if(!myParks.contains(thePark)) {
-			myParks.add(thePark);
-		}
-	}
-	
-	public void addJob(Job theJob) {
-		if(!myJobs.contains(theJob)) {
-			myJobs.add(theJob);
-		}
-	}
-	
-	public Collection<Park> getParkList() {
-		return myParks;
-	}
-	
-	public Collection<Job> getJobList() {
-		return myJobs;
 	}
 	
 	public List<String> getMenuOptions(State currentState) {

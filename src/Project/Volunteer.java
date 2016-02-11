@@ -2,20 +2,18 @@ package Project;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Volunteer extends AbstractUser implements Serializable {
 	private static final long serialVersionUID = -635814670107592458L;
 	
+	/** Shows whether a user is flagged or not */
 	boolean myFlagged = false;
+	/** Boolean to store whether volunteer is blackballed. */
 	boolean myBlackBalled = false;
-	int myWorkGrade;
-	Collection<Job> myJobs;
 	
 	public Volunteer(String theFirstName, String theLastName, String theEmail, WorkLoad theWl) {
 		super(theFirstName, theLastName, theEmail, theWl);
-		myJobs = new ArrayList<Job>();
 	}
 	
 	public void signUp(Job theJob) {
@@ -61,5 +59,9 @@ public class Volunteer extends AbstractUser implements Serializable {
 			default:
 		}
 		return nextState;
+	}
+	
+	public void flag() {
+		myFlagged = true;
 	}
 }

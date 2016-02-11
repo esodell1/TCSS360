@@ -7,10 +7,21 @@ import java.util.List;
 public class Staff extends Administrator implements Serializable {
 	private static final long serialVersionUID = 5682221508960104447L;
 	
+	/**
+	 * Constructs a Staff Member based on given parameters
+	 * @param theFirstName First Name
+	 * @param theLastName Last name
+	 * @param theEmail Email address
+	 * @param theWl Workload level
+	 */
 	public Staff(String theFirstName, String theLastName, String theEmail, WorkLoad theWl) {
 		super(theFirstName, theLastName, theEmail, theWl);
 	}
 	
+	/**
+	 * Gets menu options for a Staff member based on current state.
+	 * @return ArrayList of Strings with menu options.
+	 */
 	public List<String> getMenuOptions(State currentState) {
 		List<String> options = new ArrayList<String>();
 		if (currentState == State.MAIN) {
