@@ -11,8 +11,8 @@ public class Manager extends Administrator implements Serializable {
 	private Collection<Park> myParks;
 	private Collection<Job> myJobs;
 	
-	public Manager(String theFirstName, String theLastName, String theEmail) {
-		super(theFirstName, theLastName, theEmail);
+	public Manager(String theFirstName, String theLastName, String theEmail, WorkLoad theWl) {
+		super(theFirstName, theLastName, theEmail, theWl);
 		myParks = new LinkedList<Park>();
 	}
 	

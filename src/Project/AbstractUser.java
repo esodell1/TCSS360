@@ -11,6 +11,8 @@ public abstract class AbstractUser implements User, Serializable {
 	private String myLastName;
 	/** Email address */
 	private String myEmail;
+	/** Workload of User */
+	private WorkLoad myWorkLoad;
 	
 	/**
 	 * Creates a new User with given username, password, real name, phone number, and email address.
@@ -19,10 +21,11 @@ public abstract class AbstractUser implements User, Serializable {
 	 * @param thePhone User's phone number.
 	 * @param theEmail User's email address.
 	 */
-	public AbstractUser(String theFirstName, String theLastName, String theEmail) {
+	public AbstractUser(String theFirstName, String theLastName, String theEmail, WorkLoad theWl) {
 		myFirstName = theFirstName;
 		myLastName = theLastName;
 		myEmail = theEmail;
+		myWorkLoad = theWl;
 	}
 	
 	/**

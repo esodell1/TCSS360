@@ -13,8 +13,8 @@ public class Volunteer extends AbstractUser implements Serializable {
 	int myWorkGrade;
 	Collection<Job> myJobs;
 	
-	public Volunteer(String theName, String thePhone, String theEmail) {
-		super(theName, thePhone, theEmail);
+	public Volunteer(String theFirstName, String theLastName, String theEmail, WorkLoad theWl) {
+		super(theFirstName, theLastName, theEmail, theWl);
 		myJobs = new ArrayList<Job>();
 	}
 	
