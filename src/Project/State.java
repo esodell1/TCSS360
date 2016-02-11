@@ -65,6 +65,14 @@ public enum State {
 			return MAIN;
 		}
 	},
+	JOB_SIGNUP{
+		@Override
+		State nextState(UserInterface ui, Control ctrl) {
+			
+			return null;
+		}
+		
+	},
 	LOGOUT {
 		State nextState(UserInterface ui, Control ctrl) {
 			User currentUser = ctrl.getCurrentUser();
