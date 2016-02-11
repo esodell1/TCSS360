@@ -2,9 +2,11 @@ package Project;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Job implements Serializable {
+	
 	private static final long serialVersionUID = 6239276355031273785L;
 	
 	private String name;
@@ -19,6 +21,14 @@ public class Job implements Serializable {
 		this.date = date;
 		this.discription = discription;
 		this.enrolledVolunteers = volunteerList;
+	}
+	
+	public Job() {
+		this.name = "null";
+		this.park = new Park("null", null);
+		this.date = new Date();
+		this.discription = "null";
+		this.enrolledVolunteers = new LinkedList<Volunteer>();
 	}
 	
 	public void addVolunteer(Volunteer volunteer) {
