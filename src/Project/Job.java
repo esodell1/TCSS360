@@ -1,6 +1,7 @@
 package Project;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class Job implements Serializable {
@@ -8,11 +9,11 @@ public class Job implements Serializable {
 	
 	private String name;
 	private Park park;
-	private String date;
+	private Date date;
 	private String discription;
 	private List<Volunteer> enrolledVolunteers;
 	
-	public Job(String name, Park park, String date, String discription, List<Volunteer> volunteerList) {
+	public Job(String name, Park park, Date date, String discription, List<Volunteer> volunteerList) {
 		this.name = name;
 		this.park = park;
 		this.date = date;
@@ -45,11 +46,11 @@ public class Job implements Serializable {
 		this.park = park;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
