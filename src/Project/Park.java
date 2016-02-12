@@ -30,6 +30,18 @@ public class Park implements Serializable {
 		this.manager = manager;
 	}
 	
+	public String toString() {
+		StringBuilder park_info = new StringBuilder();
+		park_info.append("Park: ");
+		park_info.append(getLocation());
+		park_info.append(". Manager: ");
+		park_info.append(this.manager.getLastName());
+		park_info.append(", ");
+		park_info.append(this.manager.getFirstName());
+
+		return park_info.toString();
+	}
+	
 	
 	
 }
