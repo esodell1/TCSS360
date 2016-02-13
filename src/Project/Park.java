@@ -42,6 +42,21 @@ public class Park implements Serializable {
 		return park_info.toString();
 	}
 	
-	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Park other = (Park) obj;
+        if (!location.equals(other.location))
+            return false;
+        if (!manager.equals(other.manager))
+            return false;
+        return true;
+    }
+
 	
 }

@@ -80,7 +80,29 @@ public class Job implements Serializable {
 	public void setenrolledVolunteers(List<Volunteer> volunteerList) {
 		this.enrolledVolunteers = volunteerList;
 	}
-	
+
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Job other = (Job) obj;
+        if (!description.equals(other.description))
+            return false;
+        if (!name.equals(other.name))
+            return false;
+        if (!park.equals(other.park))
+            return false;
+        // TODO This needs fixed somehow, using Calendar is a pain
+//        if (date.YEAR != other.date.YEAR)
+//            return false;
+        if (!enrolledVolunteers.equals(other.enrolledVolunteers))
+            return false;
+        return true;
+    }
 
 	
 }

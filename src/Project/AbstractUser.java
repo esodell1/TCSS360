@@ -3,6 +3,7 @@ package Project;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Travis Stinebaugh
@@ -20,7 +21,7 @@ public abstract class AbstractUser implements User, Serializable {
 	/** Workload of User */
 	protected WorkLoad myWorkLoad;
 	/** Collection of all Job objects a user contains */
-	protected Collection<Job> myJobs;
+	protected List<Job> myJobs;
 	
 	/**
 	 * Creates a new User with given username, password, real name, phone number, and email address.
@@ -90,7 +91,7 @@ public abstract class AbstractUser implements User, Serializable {
 	 * Gets the Jobs associated with user.
 	 * @return Collection of jobs assigned to this User.
 	 */
-	public Collection<Job> getJobs() {
+	public List<Job> getMyJobs() {
 		return myJobs;
 	}
 	
@@ -111,6 +112,8 @@ public abstract class AbstractUser implements User, Serializable {
 			throw new IllegalStateException("Usertype invalid");
 		}
 	}
+	
+
 }
 
 /**

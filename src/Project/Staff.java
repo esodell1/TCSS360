@@ -55,4 +55,27 @@ public class Staff extends Administrator implements Serializable {
 		}
 		return nextState;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Staff other = (Staff) obj;
+    	if (myFirstName != other.myFirstName)
+            return false;
+        if (myLastName != other.myLastName)
+            return false;
+        if (myEmail != other.myEmail)
+            return false;
+        if (myWorkLoad != other.myWorkLoad)
+            return false;
+        if (myJobs != other.myJobs)
+            return false;
+        return true;
+    }
+
 }

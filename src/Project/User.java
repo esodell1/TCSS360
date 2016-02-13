@@ -20,6 +20,10 @@ public interface User {
 	
 	public String getUserType();
 	
+	public WorkLoad getWorkLoad();
+	
+	public List<Job> getMyJobs();
+	
 	
 	/**
 	 * Returns a list of strings that provide the content for the current menu 

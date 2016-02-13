@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class Control {
 	// Instance fields
-	private List<Job> jobs;
-	private List<Park> parks;
-	private List<User> users;
+	protected List<Job> jobs;
+	protected List<Park> parks;
+	protected List<User> users;
 	private Persistent db;
 	private User currentUser;
 	private Park currentPark;

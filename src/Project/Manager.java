@@ -46,4 +46,27 @@ public class Manager extends Administrator implements Serializable {
 		}
 		return nextState;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Manager other = (Manager) obj;
+    	if (!myFirstName.equals(other.myFirstName))
+            return false;
+        if (!myLastName.equals(other.myLastName))
+            return false;
+        if (!myEmail.equals(other.myEmail))
+            return false;
+        if (!myWorkLoad.equals(other.myWorkLoad))
+            return false;
+        if (!myJobs.equals(other.myJobs))
+            return false;
+        return true;
+    }
+
 }

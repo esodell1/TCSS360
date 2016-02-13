@@ -64,4 +64,27 @@ public class Volunteer extends AbstractUser implements Serializable {
 	public void flag() {
 		myFlagged = true;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Volunteer other = (Volunteer) obj;
+    	if (myFirstName != other.myFirstName)
+            return false;
+        if (myLastName != other.myLastName)
+            return false;
+        if (myEmail != other.myEmail)
+            return false;
+        if (myWorkLoad != other.myWorkLoad)
+            return false;
+        if (myJobs != other.myJobs)
+            return false;
+        return true;
+    }
+
 }
