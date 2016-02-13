@@ -2,6 +2,7 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -61,7 +62,11 @@ public class Control {
 	}
 
 	public void setCurrentUser(int currentUser) {
-		this.currentUser = users.get(currentUser);
+		if (currentUser >= 0 && currentUser < users.size()) {
+			this.currentUser = users.get(currentUser);
+		} else {
+			this.currentUser = null;
+		}
 	}
 
 	public void setCurrentPark(int currentPark) {
@@ -136,18 +141,18 @@ public class Control {
 		parks = new ArrayList<Park>();
 		users = new ArrayList<User>();
 		db = new Persistent();
-		User newUser = new Staff("Eric", "555-467-3456", "staff@uw.edu", WorkLoad.HIGH);
-		User newUser2 = new Manager("Elijah", "555-467-3456", "manager@uw.edu", WorkLoad.MEDIUM);
-		User newUser3 = new Volunteer("Tyler", "555-467-3456", "volunteer@uw.edu", WorkLoad.LOW);
-		Park newPark = new Park("123 East Main Street", newUser2);
-		Job newJob = new Job("Trash Pickup", newPark, new Date(), 
-				"This job will just be picking up trash.", new ArrayList<Volunteer>());
-		users.add(newUser);
-		users.add(newUser2);
-		users.add(newUser3);
-		parks.add(newPark);
-		jobs.add(newJob);
-		db.saveData(jobs, parks, users);
+//		User newUser = new Staff("Eric", "555-467-3456", "staff@uw.edu", WorkLoad.HIGH);
+//		User newUser2 = new Manager("Elijah", "555-467-3456", "manager@uw.edu", WorkLoad.MEDIUM);
+//		User newUser3 = new Volunteer("Tyler", "555-467-3456", "volunteer@uw.edu", WorkLoad.LOW);
+//		Park newPark = new Park("123 East Main Street", newUser2);
+//		Job newJob = new Job("Trash Pickup", newPark, new GregorianCalendar(), 
+//				"This job will just be picking up trash.", new ArrayList<Volunteer>());
+//		users.add(newUser);
+//		users.add(newUser2);
+//		users.add(newUser3);
+//		parks.add(newPark);
+//		jobs.add(newJob);
+//		db.saveData(jobs, parks, users);
 		db.loadData();
 		jobs = db.getJobs();
 		parks = db.getParks();

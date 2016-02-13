@@ -1,7 +1,8 @@
 package Project;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,11 +12,11 @@ public class Job implements Serializable {
 	
 	private String name;
 	private Park park;
-	private Date date;
+	private Calendar date;
 	private String description;
 	private List<Volunteer> enrolledVolunteers;
 	
-	public Job(String name, Park park, Date date, String description, List<Volunteer> volunteerList) {
+	public Job(String name, Park park, Calendar date, String description, List<Volunteer> volunteerList) {
 		this.name = name;
 		this.park = park;
 		this.date = date;
@@ -26,7 +27,7 @@ public class Job implements Serializable {
 	public Job() {
 		this.name = "null";
 		this.park = new Park("null", null);
-		this.date = new Date();
+		this.date = new GregorianCalendar();
 		this.description = "null";
 		this.enrolledVolunteers = new LinkedList<Volunteer>();
 	}
@@ -56,12 +57,12 @@ public class Job implements Serializable {
 		this.park = park;
 	}
 
-	public Date getDate() {
+	public Calendar getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(int year, int month, int day, int hour, int minute) {
+		this.date.set(year, month, day, hour, minute);
 	}
 
 	public String getDescription() {

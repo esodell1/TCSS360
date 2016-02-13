@@ -1,7 +1,6 @@
 package Project;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,7 +61,6 @@ public enum State {
 	},
 	DELETE_JOB {
 		State nextState(UserInterface ui, Control ctrl) {
-			User currentUser = ctrl.getCurrentUser();
 			String job = ctrl.getCurrentJob().toString();
 			job = job + "\n\n\tAre you sure you want to delete this job?\n";
 			List<String> opts = new ArrayList<String>();
@@ -108,14 +106,14 @@ public enum State {
 	},
 	CREATE_JOB_4 {
 		State nextState(UserInterface ui, Control ctrl) {
-			String date = ui.detailsString("Create a New Job", "Please enter a job date: MM/DD/YYYY ");
-			String[] tokens = date.split("/");
-			if(tokens.length != 3) {
+			String date = ui.detailsString("Create a New Job", "Please enter a job date: MM/DD/YYYY HH:MM");
+			String[] tokens = date.split("/| |:");
+			if(tokens.length != 5) {
 				return CREATE_JOB_4;
 			}
-			ctrl.getCurrentJob().setDate(new Date(Integer.parseInt(tokens[2]), 
-										Integer.parseInt(tokens[0]), 
-										Integer.parseInt(tokens[1])));
+			ctrl.getCurrentJob().setDate(Integer.parseInt(tokens[2]), 
+					Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]),
+					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
 			return CONFIRM_JOB;
 		}
 	},
@@ -137,7 +135,7 @@ public enum State {
 	},
 	SEARCH_VOLUNTEERS {
 		State nextState(UserInterface ui, Control ctrl) {
-			User currentUser = ctrl.getCurrentUser();
+			//User currentUser = ctrl.getCurrentUser();
 			
 			return MAIN;
 		}
@@ -152,9 +150,8 @@ public enum State {
 	},
 	LOGOUT {
 		State nextState(UserInterface ui, Control ctrl) {
-			User currentUser = ctrl.getCurrentUser();
-			
-			return MAIN;
+			ctrl.setCurrentUser(-1);
+			return LOGIN;
 		}
 	};
 	

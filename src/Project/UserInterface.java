@@ -90,7 +90,7 @@ public class UserInterface {
 		
 		// Details
 		System.out.println(details);
-		return myScanner.next();
+		return myScanner.nextLine();
 	}
 
 	public int listInt(String title, List<String> items, List<String> options) {
