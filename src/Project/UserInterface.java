@@ -67,7 +67,7 @@ public class UserInterface {
 		return input;
 	}
 
-	public int optionsInt(String title, List<String> options) {
+	public int optionsInt(String title, List<?> options) {
 		int input = -100;
 		do {
 			// Title

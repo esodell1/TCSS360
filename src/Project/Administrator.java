@@ -3,11 +3,12 @@ package Project;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 public abstract class Administrator extends AbstractUser implements Serializable {
 	private static final long serialVersionUID = 405845997836012126L;
-	/** Collection of Park objects added to Administrator*/
-	private Collection<Park> myParks;
+	/** List of Park objects added to Administrator*/
+	private List<Park> myParks;
 	
 	/**
 	 * Constructs Administrator usertype.
@@ -42,10 +43,10 @@ public abstract class Administrator extends AbstractUser implements Serializable
 	}
 	
 	/**
-	 * Returns a Collection of parks added to this usertype.
+	 * Returns a List of parks added to this user type.
 	 * @return Collection of Parks.
 	 */
-	public Collection<Park> getParks() {
+	public List<Park> getParks() {
 		return myParks;
 	}
 	

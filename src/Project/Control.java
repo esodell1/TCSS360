@@ -34,6 +34,10 @@ public class Control {
 		return options;
 	}
 		
+	public List<Park> getParks() {
+		return parks;
+	}
+
 	public User getCurrentUser() {
 		return currentUser;
 	}
@@ -44,6 +48,16 @@ public class Control {
 
 	public Job getCurrentJob() {
 		return currentJob;
+	}
+	
+	public void deleteCurrentJob() {
+		if (currentJob != null) {
+			int idx = jobs.indexOf(currentJob);
+			if (idx >= 0) {
+				jobs.remove(idx);
+			}
+			currentJob = null;
+		}
 	}
 
 	public void setCurrentUser(int currentUser) {
@@ -56,6 +70,14 @@ public class Control {
 
 	public void setCurrentJob(int currentJob) {
 		this.currentJob = jobs.get(currentJob);
+	}
+	
+	public void setCurrentJob(Job currentJob) {
+		this.currentJob = currentJob;
+	}
+	
+	public void saveCurrentJob() {
+		this.jobs.add(this.currentJob);
 	}
 
 	/**

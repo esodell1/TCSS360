@@ -12,14 +12,14 @@ public class Job implements Serializable {
 	private String name;
 	private Park park;
 	private Date date;
-	private String discription;
+	private String description;
 	private List<Volunteer> enrolledVolunteers;
 	
-	public Job(String name, Park park, Date date, String discription, List<Volunteer> volunteerList) {
+	public Job(String name, Park park, Date date, String description, List<Volunteer> volunteerList) {
 		this.name = name;
 		this.park = park;
 		this.date = date;
-		this.discription = discription;
+		this.description = description;
 		this.enrolledVolunteers = volunteerList;
 	}
 	
@@ -27,7 +27,7 @@ public class Job implements Serializable {
 		this.name = "null";
 		this.park = new Park("null", null);
 		this.date = new Date();
-		this.discription = "null";
+		this.description = "null";
 		this.enrolledVolunteers = new LinkedList<Volunteer>();
 	}
 	
@@ -64,12 +64,12 @@ public class Job implements Serializable {
 		this.date = date;
 	}
 
-	public String getDiscription() {
-		return discription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDiscription(String discription) {
-		this.discription = discription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<Volunteer> getenrolledVolunteers() {

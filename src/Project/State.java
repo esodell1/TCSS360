@@ -1,6 +1,7 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,11 +72,68 @@ public enum State {
 			if(command == 1) {
 				return MAIN;
 			} else {
-				// TODO Delete the ctrl.currentJob reference.
+				ctrl.deleteCurrentJob();
 				return VIEW_ALL_JOBS;
 			}
 		}
 		
+	},
+	CREATE_JOB {
+		State nextState(UserInterface ui, Control ctrl) {
+			String name = ui.detailsString("Create a New Job", "Please enter a job name: ");
+			ctrl.setCurrentJob(new Job());
+			ctrl.getCurrentJob().setName(name);
+			return CREATE_JOB_2;
+		}
+	},
+	CREATE_JOB_2 {
+		State nextState(UserInterface ui, Control ctrl) {
+			String name = ui.detailsString("Create a New Job", "Please enter a job description: ");
+			ctrl.getCurrentJob().setDescription(name);
+			return CREATE_JOB_3;
+		}
+	},
+	CREATE_JOB_3 {
+		State nextState(UserInterface ui, Control ctrl) {
+			Administrator currentUser = (Administrator) ctrl.getCurrentUser();
+			List<Park> opts = currentUser.getParks();
+			if (opts.size() <= 0) {
+				opts = ctrl.getParks();
+			}
+			int park = ui.optionsInt("Create a New Job", opts);
+			ctrl.setCurrentPark(park - 1);
+			ctrl.getCurrentJob().setPark(ctrl.getCurrentPark());
+			return CREATE_JOB_4;
+		}
+	},
+	CREATE_JOB_4 {
+		State nextState(UserInterface ui, Control ctrl) {
+			String date = ui.detailsString("Create a New Job", "Please enter a job date: MM/DD/YYYY ");
+			String[] tokens = date.split("/");
+			if(tokens.length != 3) {
+				return CREATE_JOB_4;
+			}
+			ctrl.getCurrentJob().setDate(new Date(Integer.parseInt(tokens[2]), 
+										Integer.parseInt(tokens[0]), 
+										Integer.parseInt(tokens[1])));
+			return CONFIRM_JOB;
+		}
+	},
+	CONFIRM_JOB {
+		State nextState(UserInterface ui, Control ctrl) {
+			String job = ctrl.getCurrentJob().toString();
+			List<String> opts = new ArrayList<String>();
+			opts.add("No");
+			opts.add("Yes");
+			int command = ui.detailsInt("View Job", job, opts);
+			if(command == 1) {
+				ctrl.setCurrentJob(-1);
+				return MAIN;
+			} else {
+				ctrl.saveCurrentJob();
+				return VIEW_JOB;
+			}
+		}
 	},
 	SEARCH_VOLUNTEERS {
 		State nextState(UserInterface ui, Control ctrl) {
