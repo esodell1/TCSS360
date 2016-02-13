@@ -1,5 +1,6 @@
 package Project;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,24 @@ public enum State {
 			int command = ui.detailsInt("View Job", job, opts);
 			return currentUser.getNextState(VIEW_JOB, command);
 		}
+	},
+	DELETE_JOB {
+		State nextState(UserInterface ui, Control ctrl) {
+			User currentUser = ctrl.getCurrentUser();
+			String job = ctrl.getCurrentJob().toString();
+			job = job + "\n\n\tAre you sure you want to delete this job?\n";
+			List<String> opts = new ArrayList<String>();
+			opts.add("No");
+			opts.add("Yes");
+			int command = ui.detailsInt("Confirm Job Deletion", job, opts);
+			if(command == 1) {
+				return MAIN;
+			} else {
+				// TODO Delete the ctrl.currentJob reference.
+				return VIEW_ALL_JOBS;
+			}
+		}
+		
 	},
 	SEARCH_VOLUNTEERS {
 		State nextState(UserInterface ui, Control ctrl) {

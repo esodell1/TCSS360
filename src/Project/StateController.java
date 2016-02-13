@@ -3,7 +3,6 @@ package Project;
 public class StateController {
 	private static UserInterface ui;
 	private static Control ctrl;
-	//private static User currentUser;
 	private State state;
 	
 	public StateController() {
