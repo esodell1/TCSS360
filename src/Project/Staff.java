@@ -26,7 +26,7 @@ public class Staff extends Administrator implements Serializable {
 		List<String> options = new ArrayList<String>();
 		if (currentState == State.MAIN) {
 			options.add("View all Jobs");
-			options.add("Search volunteers");
+			options.add("Search volunteers by Last Name");
 			options.add("Logout");
 		} else if (currentState == State.VIEW_JOB) {
 			options.add("Edit job details");
@@ -42,7 +42,7 @@ public class Staff extends Administrator implements Serializable {
 		switch (currentState) {
 			case MAIN:
 				if (command == 1) nextState = State.VIEW_ALL_JOBS;
-				else if (command == 2) nextState = State.SEARCH_VOLUNTEERS;
+				else if (command == 2) nextState = State.SEARCH_LAST_NAME;
 				else if (command == 3) nextState = State.LOGOUT;
 				break;
 			case VIEW_JOB:

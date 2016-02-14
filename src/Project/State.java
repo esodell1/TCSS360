@@ -156,12 +156,28 @@ public enum State {
 			}
 		}
 	},
-	SEARCH_VOLUNTEERS {
+	SEARCH_LAST_NAME {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
-			//User currentUser = ctrl.getCurrentUser();
-			
-			return MAIN;
+			String name = ui.detailsString("User Search", "Search for a volunteer by Last Name");
+			ctrl.searchUsers("last", name);
+			String details = "\n";
+			if (ctrl.search.size() > 0) {
+				for (User vol : ctrl.search) {
+					details = details + "\t" + vol.getLastName() + ", " + vol.getFirstName()
+						+ " \t" + vol.getEmail() + "\n";
+				}
+				
+			} else {
+				details = details + "\tThere we no matches from the search.\n";
+			}
+			ctrl.search.clear();
+			List<String> options = new ArrayList<String>();
+			options.add("Search again");
+			options.add("Return to Main Menu");
+			int command = ui.detailsInt("Search Results", details, options);
+			if (command == 1) return SEARCH_LAST_NAME;
+			else return MAIN;
 		}
 	},
 	JOB_SIGNUP{

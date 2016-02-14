@@ -18,6 +18,7 @@ public class Control {
 	protected List<Job> jobs;
 	protected List<Park> parks;
 	protected List<User> users;
+	protected List<User> search;
 	protected boolean jobEdit;
 	private Persistent db;
 	private User currentUser;
@@ -50,6 +51,16 @@ public class Control {
 
 	public Job getCurrentJob() {
 		return currentJob;
+	}
+	
+	public void searchUsers(String key, String value) {
+		if (key.equals("last")) {
+			for (User vol : users) {
+				if (vol.getLastName().equals(value) && vol instanceof Volunteer) {
+					search.add(vol);
+				}
+			}
+		}
 	}
 	
 	public void deleteCurrentJob() {
@@ -141,6 +152,7 @@ public class Control {
 		jobs = new ArrayList<Job>();
 		parks = new ArrayList<Park>();
 		users = new ArrayList<User>();
+		search = new ArrayList<User>();
 		db = new Persistent();
 		jobEdit = false;
 		User newUser = new Staff("Eric", "Odell", "staff@uw.edu", WorkLoad.HIGH);
