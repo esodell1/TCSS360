@@ -1,6 +1,8 @@
 package Project;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -26,7 +28,7 @@ public class Job implements Serializable {
 	
 	public Job() {
 		this.name = "null";
-		this.park = new Park("null", null);
+		this.park = new Park("null", "null", null);
 		this.date = new GregorianCalendar();
 		this.description = "null";
 		this.enrolledVolunteers = new LinkedList<Volunteer>();
@@ -79,6 +81,23 @@ public class Job implements Serializable {
 
 	public void setenrolledVolunteers(List<Volunteer> volunteerList) {
 		this.enrolledVolunteers = volunteerList;
+	}
+	
+	@Override
+	public String toString() {
+		DateFormat date = new SimpleDateFormat("EEEE MMM d yyyy");
+		DateFormat time = new SimpleDateFormat("HH:mm");
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n\tName: \t\t");
+		sb.append(this.name);
+		sb.append("\n\tDescription: \t");
+		sb.append(this.description);
+		sb.append("\n\tDate: \t\t");
+		sb.append(date.format(this.date.getTime()));
+		sb.append("\n\tTime: \t\t");
+		sb.append(time.format(this.date.getTime()));
+		sb.append(park);
+		return sb.toString();
 	}
 
 	@Override

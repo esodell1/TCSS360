@@ -6,12 +6,14 @@ public class Park implements Serializable {
 	
 	private static final long serialVersionUID = -5896375771655268671L;
 	
+	private String name;
 	private String location;
 	private User manager;
 	
-	public Park(String location, User newUser2) {
+	public Park(String name, String location, User manager) {
+		this.name = name;
 		this.location = location;
-		this.manager = newUser2;		
+		this.manager = manager;		
 	}
 
 	public String getLocation() {
@@ -30,15 +32,25 @@ public class Park implements Serializable {
 		this.manager = manager;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String toString() {
 		StringBuilder park_info = new StringBuilder();
-		park_info.append("Park: ");
-		park_info.append(getLocation());
-		park_info.append(". Manager: ");
+		park_info.append("\n\tPark: \t\t");
+		park_info.append(this.name);
+		park_info.append("\n\tLocation: \t");
+		park_info.append(location);
+		park_info.append("\n\tManager: \t");
 		park_info.append(this.manager.getLastName());
 		park_info.append(", ");
 		park_info.append(this.manager.getFirstName());
-
+		park_info.append("\n");
 		return park_info.toString();
 	}
 	
