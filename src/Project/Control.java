@@ -158,6 +158,18 @@ public class Control {
 		return (count < 5);
 	}
 	
+	protected boolean isDayOpen() {
+		Calendar now = currentJob.getStartDate();
+		for (Job theJob : currentUser.getMyJobs()) {
+			if ((theJob.getStartDate().get(Calendar.YEAR) == now.get(Calendar.YEAR))
+					&& (theJob.getStartDate().get(Calendar.MONTH) == now.get(Calendar.MONTH))
+					&& (theJob.getStartDate().get(Calendar.DATE) == now.get(Calendar.DATE))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	protected boolean isDurationAllowed(Calendar start, Calendar end) {
 		double milliSec1 = start.getTimeInMillis();
         double milliSec2 = end.getTimeInMillis();

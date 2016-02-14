@@ -1,6 +1,7 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -236,6 +237,16 @@ public enum State {
 	JOB_SIGNUP{
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
+			// Check if job is past:
+			if (ctrl.getCurrentJob().getStartDate().compareTo(Calendar.getInstance()) < 0) {
+				ctrl.userMessage = "Cannot sign up for a job that has passed.";
+				return ERROR_MSG;
+			}
+			// Check if the volunteer is already signed up on this day:
+			if (!ctrl.isDayOpen()) {
+				ctrl.userMessage = "Cannot sign up for multiple jobs on the same day.";
+				return ERROR_MSG;
+			}
 			String job = ctrl.getCurrentJob().toString();
 			job = job + "\n\tWhat work grade would you like to sign up for?";
 			List<String> opts = new ArrayList<String>();
