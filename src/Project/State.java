@@ -153,6 +153,29 @@ public enum State {
 			ctrl.setCurrentUser(-1);
 			return LOGIN;
 		}
+	},
+	
+	MY_JOBS {
+		State nextState(UserInterface ui, Control ctrl) {
+			List<Job> jobs = ctrl.getCurrentUser().getMyJobs();
+			if (jobs.size() > 0) {
+				for (Job j: jobs) {
+					System.out.println(j.toString());
+				}
+			} else {
+				System.out.println("You currently are not enrolled in a job.");
+			}
+		return MAIN;
+		}
+	},
+	
+	EDIT_JOB_DETAILS {
+		State nextState(UserInterface ui, Control ctrl) {
+			List<Job> jobs = ctrl.getCurrentUser().getMyJobs();
+			// need to finish
+		return MAIN;
+		}
+			
 	};
 	
 	
