@@ -13,6 +13,7 @@ import java.util.List;
  */
 public enum State {
 	LOGIN {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String input = ui.detailsString("Login", "Enter an email address:");
 			int result = ctrl.login(input);
@@ -29,6 +30,7 @@ public enum State {
 		}
 	},
 	MAIN {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			User currentUser = ctrl.getCurrentUser();
 			List<String> options = currentUser.getMenuOptions(MAIN);
@@ -37,6 +39,7 @@ public enum State {
 		}
 	},
 	VIEW_ALL_JOBS {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			List<String> opts = ctrl.getAllJobs();
 			int size = opts.size();
@@ -51,6 +54,7 @@ public enum State {
 		}
 	},
 	VIEW_JOB {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			User currentUser = ctrl.getCurrentUser();
 			String job = ctrl.getCurrentJob().toString();
@@ -60,6 +64,7 @@ public enum State {
 		}
 	},
 	DELETE_JOB {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String job = ctrl.getCurrentJob().toString();
 			job = job + "\n\n\tAre you sure you want to delete this job?\n";
@@ -77,6 +82,7 @@ public enum State {
 		
 	},
 	CREATE_JOB {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String name = ui.detailsString("Create a New Job", "Please enter a job name: ");
 			ctrl.setCurrentJob(new Job());
@@ -85,6 +91,7 @@ public enum State {
 		}
 	},
 	CREATE_JOB_2 {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String name = ui.detailsString("Create a New Job", "Please enter a job description: ");
 			ctrl.getCurrentJob().setDescription(name);
@@ -92,6 +99,7 @@ public enum State {
 		}
 	},
 	CREATE_JOB_3 {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			Administrator currentUser = (Administrator) ctrl.getCurrentUser();
 			List<Park> parks = currentUser.getParks();
@@ -109,6 +117,7 @@ public enum State {
 		}
 	},
 	CREATE_JOB_4 {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String date = ui.detailsString("Create a New Job", "Please enter a job date: MM/DD/YYYY HH:MM");
 			String[] tokens = date.split("/| |:");
@@ -122,6 +131,7 @@ public enum State {
 		}
 	},
 	CONFIRM_JOB {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String job = ctrl.getCurrentJob().toString();
 			List<String> opts = new ArrayList<String>();
@@ -142,6 +152,7 @@ public enum State {
 		}
 	},
 	SEARCH_VOLUNTEERS {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			//User currentUser = ctrl.getCurrentUser();
 			
@@ -151,18 +162,29 @@ public enum State {
 	JOB_SIGNUP{
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
-			
-			return null;
+			String job = ctrl.getCurrentJob().toString();
+			job = job + "\n\tAre you sure you want to sign up for this job?";
+			List<String> opts = new ArrayList<String>();
+			opts.add("No");
+			opts.add("Yes");
+			int command = ui.detailsInt("Job Sign Up", job, opts);
+			if (command == 2) {
+				ctrl.getCurrentJob().addVolunteer(ctrl.getCurrentUser());
+				ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
+			} 
+			return VIEW_JOB;
 		}
 		
 	},
 	LOGOUT {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			ctrl.setCurrentUser(-1);
 			return LOGIN;
 		}
 	},
 	MY_JOBS {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			List<String> jobs = ctrl.getCurrentUser().getMyJobNames();
 			if (jobs.size() > 0) {
@@ -189,6 +211,7 @@ public enum State {
 		}
 	},
 	EDIT_JOB_DETAILS {
+		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			List<Job> jobs = ctrl.getCurrentUser().getMyJobs();
 			// need to finish

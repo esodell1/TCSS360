@@ -145,13 +145,16 @@ public class Control {
 		User newUser2 = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
 		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.LOW);
 		Park newPark = new Park("Central Park", "123 East Main Street", newUser2);
-//		Job newJob = new Job("Trash Pickup", newPark, new GregorianCalendar(), 
-//				"This job will just be picking up trash.", new ArrayList<Volunteer>());
+		Job newJob = new Job("Trash Pickup", newPark, new GregorianCalendar(), 
+				"This job will just be picking up trash.", new ArrayList<User>());
+		newJob.addVolunteer(newUser3);
+		newPark.addJob(newJob);
+		newUser2.getMyJobs().add(newJob);
 		users.add(newUser);
 		users.add(newUser2);
 		users.add(newUser3);
 		parks.add(newPark);
-//		jobs.add(newJob);
+		jobs.add(newJob);
 		db.saveData(jobs, parks, users);
 		db.loadData();
 		jobs = db.getJobs();

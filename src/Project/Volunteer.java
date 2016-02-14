@@ -39,7 +39,7 @@ public class Volunteer extends AbstractUser implements Serializable {
 			options.add("Sign up for job");
 			options.add("Return to job list");
 			options.add("Return to main menu");
-		}
+		} 
 		return options;
 	}
 	
@@ -48,11 +48,11 @@ public class Volunteer extends AbstractUser implements Serializable {
 		switch (currentState) {
 			case MAIN:
 				if (command == 1) nextState = State.VIEW_ALL_JOBS;
-				else if (command == 2) nextState = State.SEARCH_VOLUNTEERS;
+				else if (command == 2) nextState = State.MY_JOBS;
 				else if (command == 3) nextState = State.LOGOUT;
 				break;
 			case VIEW_JOB:
-				if (command == 1) nextState = State.MAIN;	// TODO Add job signup state
+				if (command == 1) nextState = State.JOB_SIGNUP;
 				else if (command == 2) nextState = State.VIEW_ALL_JOBS;
 				else if (command == 3) nextState = State.MAIN;
 				break;

@@ -16,9 +16,9 @@ public class Job implements Serializable {
 	private Park park;
 	private Calendar date;
 	private String description;
-	private List<Volunteer> enrolledVolunteers;
+	private List<User> enrolledVolunteers;
 	
-	public Job(String name, Park park, Calendar date, String description, List<Volunteer> volunteerList) {
+	public Job(String name, Park park, Calendar date, String description, List<User> volunteerList) {
 		this.name = name;
 		this.park = park;
 		this.date = date;
@@ -31,7 +31,7 @@ public class Job implements Serializable {
 		this.park = new Park("null", "null", null);
 		this.date = new GregorianCalendar();
 		this.description = "null";
-		this.enrolledVolunteers = new LinkedList<Volunteer>();
+		this.enrolledVolunteers = new LinkedList<User>();
 	}
 	
 	public void addVolunteer(Volunteer volunteer) {
@@ -75,12 +75,12 @@ public class Job implements Serializable {
 		this.description = description;
 	}
 
-	public List<Volunteer> getenrolledVolunteers() {
+	public List<User> getEnrolledVolunteers() {
 		return enrolledVolunteers;
 	}
 
-	public void setenrolledVolunteers(List<Volunteer> volunteerList) {
-		this.enrolledVolunteers = volunteerList;
+	public void addVolunteer(User volunteer) {
+		this.enrolledVolunteers.add(volunteer);
 	}
 	
 	@Override
