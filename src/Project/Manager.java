@@ -38,7 +38,7 @@ public class Manager extends Administrator implements Serializable {
 				else if (command == 4) nextState = State.LOGOUT;
 				break;
 			case VIEW_JOB:
-				if (command == 1) nextState = State.MAIN;	// TODO Add edit job state
+				if (command == 1) nextState = State.EDIT_JOB_DETAILS;
 				else if (command == 2) nextState = State.VIEW_JOB_VOL;
 				else if (command == 3) nextState = State.DELETE_JOB;
 				else if (command == 4) nextState = State.VIEW_ALL_JOBS;

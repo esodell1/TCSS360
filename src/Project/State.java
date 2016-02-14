@@ -56,6 +56,7 @@ public enum State {
 	VIEW_JOB {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
+			ctrl.jobEdit = false;
 			User currentUser = ctrl.getCurrentUser();
 			String job = ctrl.getCurrentJob().toString();
 			List<String> opts = currentUser.getMenuOptions(VIEW_JOB);
@@ -84,23 +85,26 @@ public enum State {
 	CREATE_JOB {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
-			String name = ui.detailsString("Create a New Job", "Please enter a job name: ");
-			ctrl.setCurrentJob(new Job());
+			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
+			String name = ui.detailsString(title, "Please enter a job name: ");
+			if (!ctrl.jobEdit) ctrl.setCurrentJob(new Job());
 			ctrl.getCurrentJob().setName(name);
-			return CREATE_JOB_2;
+			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_2;
 		}
 	},
 	CREATE_JOB_2 {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
-			String name = ui.detailsString("Create a New Job", "Please enter a job description: ");
+			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
+			String name = ui.detailsString(title, "Please enter a job description: ");
 			ctrl.getCurrentJob().setDescription(name);
-			return CREATE_JOB_3;
+			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_3;
 		}
 	},
 	CREATE_JOB_3 {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
+			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
 			Administrator currentUser = (Administrator) ctrl.getCurrentUser();
 			List<Park> parks = currentUser.getParks();
 			List<String> opts = new ArrayList<String>();
@@ -110,16 +114,17 @@ public enum State {
 			for (Park p : parks) {
 				opts.add(p.getName());
 			}
-			int park = ui.optionsInt("Create a New Job", opts);
+			int park = ui.optionsInt(title, opts);
 			ctrl.setCurrentPark(park - 1);
 			ctrl.getCurrentJob().setPark(ctrl.getCurrentPark());
-			return CREATE_JOB_4;
+			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_4;
 		}
 	},
 	CREATE_JOB_4 {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
-			String date = ui.detailsString("Create a New Job", "Please enter a job date: MM/DD/YYYY HH:MM");
+			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
+			String date = ui.detailsString(title, "Please enter a job date: MM/DD/YYYY HH:MM");
 			String[] tokens = date.split("/| |:");
 			if(tokens.length != 5) {
 				return CREATE_JOB_4;
@@ -127,7 +132,7 @@ public enum State {
 			ctrl.getCurrentJob().setDate(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
-			return CONFIRM_JOB;
+			return (ctrl.jobEdit) ? VIEW_JOB : CONFIRM_JOB;
 		}
 	},
 	CONFIRM_JOB {
@@ -231,9 +236,24 @@ public enum State {
 	EDIT_JOB_DETAILS {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
-			List<Job> jobs = ctrl.getCurrentUser().getMyJobs();
-			// need to finish
-			return MAIN;
+			List<String> opts = new ArrayList<String>();
+			String details = ctrl.getCurrentJob().toString() + "What would you like to change?";
+			opts.add("Name");
+			opts.add("Description");
+			opts.add("Park");
+			opts.add("Date/Time");
+			opts.add("Return to job");
+			opts.add("Return to Main Menu");
+			int command = ui.detailsInt("Edit Job Details", details, opts);
+			if (command == 5) return VIEW_JOB;
+			else if (command == 6) return MAIN;
+			else {
+				ctrl.jobEdit = true;
+				if(command == 1) return CREATE_JOB;
+				else if(command == 2) return CREATE_JOB_2;
+				else if(command == 3) return CREATE_JOB_3;
+				else return CREATE_JOB_4;
+			}
 		}
 			
 	};

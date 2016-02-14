@@ -18,6 +18,7 @@ public class Control {
 	protected List<Job> jobs;
 	protected List<Park> parks;
 	protected List<User> users;
+	protected boolean jobEdit;
 	private Persistent db;
 	private User currentUser;
 	private Park currentPark;
@@ -141,6 +142,7 @@ public class Control {
 		parks = new ArrayList<Park>();
 		users = new ArrayList<User>();
 		db = new Persistent();
+		jobEdit = false;
 		User newUser = new Staff("Eric", "Odell", "staff@uw.edu", WorkLoad.HIGH);
 		User newUser2 = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
 		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.LOW);
