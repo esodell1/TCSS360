@@ -86,6 +86,12 @@ public enum State {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
+			if (!ctrl.jobEdit) {	// Check for max job count
+				if (!ctrl.allowedJobCount()) {
+					ctrl.errorMessage = "You have reached the maximum number of jobs (30).";
+					return ERROR_MSG;
+				}
+			}
 			String name = ui.detailsString(title, "Please enter a job name: ");
 			if (!ctrl.jobEdit) ctrl.setCurrentJob(new Job());
 			ctrl.getCurrentJob().setName(name);
@@ -132,6 +138,10 @@ public enum State {
 			ctrl.getCurrentJob().setDate(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
+			if (!ctrl.isWeekOpen()) {
+				ctrl.errorMessage = "This week is already full.";
+				return ERROR_MSG;
+			}
 			return (ctrl.jobEdit) ? VIEW_JOB : CONFIRM_JOB;
 		}
 	},
@@ -167,7 +177,6 @@ public enum State {
 					details = details + "\t" + vol.getLastName() + ", " + vol.getFirstName()
 						+ " \t" + vol.getEmail() + "\n";
 				}
-				
 			} else {
 				details = details + "\tThere we no matches from the search.\n";
 			}
@@ -272,6 +281,16 @@ public enum State {
 			}
 		}
 			
+	},
+	ERROR_MSG {
+		@Override
+		State nextState(UserInterface ui, Control ctrl) {
+			List<String> options = new ArrayList<String>();
+			options.add("Return to Main Menu");
+			ui.detailsInt("Error", "\n\t" + ctrl.errorMessage + "\n\n", options);
+			ctrl.errorMessage = null;
+			return MAIN;
+		}
 	};
 	
 	

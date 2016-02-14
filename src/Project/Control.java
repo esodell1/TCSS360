@@ -1,6 +1,7 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Control {
 	protected List<User> users;
 	protected List<User> search;
 	protected boolean jobEdit;
+	protected String errorMessage;
 	private Persistent db;
 	private User currentUser;
 	private Park currentPark;
@@ -132,6 +134,29 @@ public class Control {
 		return jobs;
 	}
 	
+	protected boolean allowedJobCount() {
+		int count = 0;
+		for (Job theJob : jobs) {
+			if (theJob.getDate().after(Calendar.getInstance())) {
+				count++;
+			}
+		}
+		return (count < 30);
+	}
+	
+	protected boolean isWeekOpen() {
+		int count = 0;
+		Calendar now = currentJob.getDate();
+		for (Job theJob : jobs) {
+			if ((theJob.getDate().get(Calendar.YEAR) == now.get(Calendar.YEAR))
+					&& (theJob.getDate().get(Calendar.MONTH) == now.get(Calendar.MONTH))
+					&& (Math.abs(theJob.getDate().get(Calendar.DATE) 
+							- now.get(Calendar.DATE))) <= 3) {
+				count++;
+			}
+		}
+		return (count < 5);
+	}
 	
 	/**
 	 * Returns the number of jobs in the system.
@@ -159,7 +184,9 @@ public class Control {
 		User newUser2 = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
 		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.LOW);
 		Park newPark = new Park("Central Park", "123 East Main Street", newUser2);
-		Job newJob = new Job("Trash Pickup", newPark, new GregorianCalendar(), 
+		Calendar cal = new GregorianCalendar();
+		cal.set(2016, 2, 3, 14, 30);
+		Job newJob = new Job("Trash Pickup", newPark, cal, 
 				"This job will just be picking up trash.", new ArrayList<User>());
 		newJob.addVolunteer(newUser3);
 		newPark.addJob(newJob);
