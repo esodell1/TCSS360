@@ -96,7 +96,9 @@ public class Job implements Serializable {
 		sb.append(date.format(this.date.getTime()));
 		sb.append("\n\tTime: \t\t");
 		sb.append(time.format(this.date.getTime()));
-		sb.append(park);
+		sb.append("\n\tPark: \t");
+		sb.append(park.getName());
+		sb.append("\n");
 		return sb.toString();
 	}
 

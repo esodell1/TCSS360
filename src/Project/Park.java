@@ -1,6 +1,8 @@
 package Project;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Park implements Serializable {
 	
@@ -9,11 +11,13 @@ public class Park implements Serializable {
 	private String name;
 	private String location;
 	private User manager;
+	private List<Job> myJobs;
 	
 	public Park(String name, String location, User manager) {
 		this.name = name;
 		this.location = location;
-		this.manager = manager;		
+		this.manager = manager;	
+		this.myJobs = new ArrayList<Job>();
 	}
 
 	public String getLocation() {
@@ -38,6 +42,14 @@ public class Park implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Job> getMyJobs() {
+		return myJobs;
+	}
+
+	public void addJob(Job newJob) {
+		this.myJobs.add(newJob);
 	}
 
 	public String toString() {

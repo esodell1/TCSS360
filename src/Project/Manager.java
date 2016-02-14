@@ -32,7 +32,7 @@ public class Manager extends Administrator implements Serializable {
 		switch (currentState) {
 			case MAIN:
 				if (command == 1) nextState = State.VIEW_ALL_JOBS;
-				else if (command == 2) nextState = State.SEARCH_VOLUNTEERS;  // TODO Add state for view my jobs
+				else if (command == 2) nextState = State.MY_JOBS;
 				else if (command == 3) nextState = State.CREATE_JOB;
 				else if (command == 4) nextState = State.LOGOUT;
 				break;

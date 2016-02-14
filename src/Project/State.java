@@ -94,9 +94,13 @@ public enum State {
 	CREATE_JOB_3 {
 		State nextState(UserInterface ui, Control ctrl) {
 			Administrator currentUser = (Administrator) ctrl.getCurrentUser();
-			List<Park> opts = currentUser.getParks();
-			if (opts.size() <= 0) {
-				opts = ctrl.getParks();
+			List<Park> parks = currentUser.getParks();
+			List<String> opts = new ArrayList<String>();
+			if (parks.size() <= 0) {
+				parks = ctrl.getParks();
+			}
+			for (Park p : parks) {
+				opts.add(p.getName());
 			}
 			int park = ui.optionsInt("Create a New Job", opts);
 			ctrl.setCurrentPark(park - 1);
@@ -112,7 +116,7 @@ public enum State {
 				return CREATE_JOB_4;
 			}
 			ctrl.getCurrentJob().setDate(Integer.parseInt(tokens[2]), 
-					Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]),
+					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
 			return CONFIRM_JOB;
 		}
@@ -129,6 +133,10 @@ public enum State {
 				return MAIN;
 			} else {
 				ctrl.saveCurrentJob();
+				System.out.println(ctrl.getCurrentPark());
+				System.out.println(ctrl.getCurrentJob());
+				ctrl.getCurrentPark().addJob(ctrl.getCurrentJob());
+				ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
 				return VIEW_JOB;
 			}
 		}
@@ -154,26 +162,37 @@ public enum State {
 			return LOGIN;
 		}
 	},
-	
 	MY_JOBS {
 		State nextState(UserInterface ui, Control ctrl) {
-			List<Job> jobs = ctrl.getCurrentUser().getMyJobs();
+			List<String> jobs = ctrl.getCurrentUser().getMyJobNames();
 			if (jobs.size() > 0) {
-				for (Job j: jobs) {
-					System.out.println(j.toString());
+				int size = jobs.size();
+				jobs.add("Return to Main Menu");
+				int command = ui.optionsInt("My Jobs", jobs);
+				if (command <= size) {
+					ctrl.setCurrentJob(ctrl.getCurrentUser().getMyJobs().get(command - 1));
+					return VIEW_JOB;
+				} else {
+					return MAIN;
 				}
 			} else {
-				System.out.println("You currently are not enrolled in a job.");
+				List<String> opts = new ArrayList<String>();
+				opts.add("View all jobs");
+				opts.add("Return to Main Menu");
+				int command = ui.detailsInt("My Jobs", "You don't have any jobs.", opts);
+				if (command == 1) {
+					return VIEW_ALL_JOBS;
+				} else {
+					return MAIN;
+				}
 			}
-		return MAIN;
 		}
 	},
-	
 	EDIT_JOB_DETAILS {
 		State nextState(UserInterface ui, Control ctrl) {
 			List<Job> jobs = ctrl.getCurrentUser().getMyJobs();
 			// need to finish
-		return MAIN;
+			return MAIN;
 		}
 			
 	};

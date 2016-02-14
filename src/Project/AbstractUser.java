@@ -1,6 +1,7 @@
 package Project;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -92,6 +93,14 @@ public abstract class AbstractUser implements User, Serializable {
 	 */
 	public List<Job> getMyJobs() {
 		return myJobs;
+	}
+	
+	public List<String> getMyJobNames() {
+		List<String> names = new ArrayList<String>();
+		for (Job j : myJobs) {
+			names.add(j.getName());
+		}
+		return names;
 	}
 	
 	/**

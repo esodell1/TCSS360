@@ -24,6 +24,8 @@ public interface User {
 	
 	public List<Job> getMyJobs();
 	
+	public List<String> getMyJobNames();
+	
 	
 	/**
 	 * Returns a list of strings that provide the content for the current menu 
