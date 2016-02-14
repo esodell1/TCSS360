@@ -130,22 +130,51 @@ public enum State {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
-			String date = ui.detailsString(title, "Please enter a job date: MM/DD/YYYY HH:MM");
+			String date = ui.detailsString(title, 
+					"Please enter a job start date and time: MM/DD/YYYY HH:MM");
 			String[] tokens = date.split("/| |:");
 			if(tokens.length != 5) {
 				return CREATE_JOB_4;
 			}
-			ctrl.getCurrentJob().setDate(Integer.parseInt(tokens[2]), 
+			ctrl.getCurrentJob().setStartDate(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
 			if (!ctrl.isWeekOpen()) {
 				ctrl.userMessage = "This week is already full (5).";
 				return ERROR_MSG;
 			}
+			if (ctrl.isJobPast(ctrl.getCurrentJob().getStartDate())) {
+				ctrl.userMessage = "Must schedule jobs for future dates, and no more than 3 months in advance.";
+				return ERROR_MSG;
+			}
 			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_5;
 		}
 	},
 	CREATE_JOB_5 {
+		@Override
+		State nextState(UserInterface ui, Control ctrl) {
+			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
+			String date = ui.detailsString(title, 
+					"Please enter a job end date and time: MM/DD/YYYY HH:MM");
+			String[] tokens = date.split("/| |:");
+			if(tokens.length != 5) {
+				return CREATE_JOB_5;
+			}
+			ctrl.getCurrentJob().setEndDate(Integer.parseInt(tokens[2]), 
+					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
+					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
+			if (!ctrl.isWeekOpen()) {
+				ctrl.userMessage = "This week is already full (5).";
+				return ERROR_MSG;
+			} else if (!ctrl.isDurationAllowed(ctrl.getCurrentJob().getStartDate(), 
+					ctrl.getCurrentJob().getEndDate())) {
+				ctrl.userMessage = "That job dureation is too long (Max 2 days).";
+				return ERROR_MSG;
+			}
+			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_6;
+		}
+	},
+	CREATE_JOB_6 {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
@@ -231,7 +260,7 @@ public enum State {
 					ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
 					return VIEW_JOB;
 				} else {
-					ctrl.userMessage = "This job is full based on your current work grade.";
+					ctrl.userMessage = "This job is full based on your selected work grade.";
 					return ERROR_MSG;
 				}
 			}

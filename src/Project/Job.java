@@ -14,7 +14,8 @@ public class Job implements Serializable {
 	
 	private String name;
 	private Park park;
-	private Calendar date;
+	private Calendar startDate;
+	private Calendar endDate;
 	private String description;
 	private List<User> enrolledVolunteers;
 	protected int high;
@@ -24,11 +25,12 @@ public class Job implements Serializable {
 	private int mediumCount;
 	private int lowCount;
 	
-	public Job(String name, Park park, Calendar date, String description, List<User> volunteerList,
-			int high, int medium, int low) {
+	public Job(String name, Park park, Calendar start, Calendar end, String description, 
+			List<User> volunteerList, int high, int medium, int low) {
 		this.name = name;
 		this.park = park;
-		this.date = date;
+		this.startDate = start;
+		this.endDate = end;
 		this.description = description;
 		this.enrolledVolunteers = volunteerList;
 		this.high = high;
@@ -42,7 +44,8 @@ public class Job implements Serializable {
 		this.low = 0;
 		this.name = "null";
 		this.park = new Park("null", "null", null);
-		this.date = new GregorianCalendar();
+		this.startDate = new GregorianCalendar();
+		this.endDate = new GregorianCalendar();
 		this.description = "null";
 		this.enrolledVolunteers = new LinkedList<User>();
 	}
@@ -91,12 +94,20 @@ public class Job implements Serializable {
 		this.park = park;
 	}
 
-	public Calendar getDate() {
-		return date;
+	public Calendar getStartDate() {
+		return startDate;
 	}
 
-	public void setDate(int year, int month, int day, int hour, int minute) {
-		this.date.set(year, month, day, hour, minute);
+	public void setStartDate(int year, int month, int day, int hour, int minute) {
+		this.startDate.set(year, month, day, hour, minute);
+	}
+	
+	public Calendar getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(int year, int month, int day, int hour, int minute) {
+		this.endDate.set(year, month, day, hour, minute);
 	}
 
 	public String getDescription() {
@@ -120,17 +131,27 @@ public class Job implements Serializable {
 		sb.append(this.name);
 		sb.append("\n\tDescription: \t");
 		sb.append(this.description);
-		sb.append("\n\tDate: \t\t");
-		sb.append(date.format(this.date.getTime()));
-		sb.append("\n\tTime: \t\t");
-		sb.append(time.format(this.date.getTime()));
-		sb.append("\n\tPark: \t");
+		sb.append("\n\tStart Date: \t");
+		sb.append(date.format(this.startDate.getTime()));
+		sb.append(" ");
+		sb.append(time.format(this.startDate.getTime()));
+		sb.append("\n\tEnd Date: \t");
+		sb.append(date.format(this.endDate.getTime()));
+		sb.append(" ");
+		sb.append(time.format(this.endDate.getTime()));
+		sb.append("\n\tPark: \t\t");
 		sb.append(park.getName());
 		sb.append("\n\tWorkload: \n\t\tHigh:\t");
+		sb.append(this.highCount);
+		sb.append("/");
 		sb.append(this.high);
 		sb.append("\n\t\tMedium:\t");
+		sb.append(this.mediumCount);
+		sb.append("/");
 		sb.append(this.medium);
 		sb.append("\n\t\tLow:\t");
+		sb.append(this.lowCount);
+		sb.append("/");
 		sb.append(this.low);
 		sb.append("\n");
 		return sb.toString();

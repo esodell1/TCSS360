@@ -137,7 +137,7 @@ public class Control {
 	protected boolean allowedJobCount() {
 		int count = 0;
 		for (Job theJob : jobs) {
-			if (theJob.getDate().after(Calendar.getInstance())) {
+			if (theJob.getStartDate().after(Calendar.getInstance())) {
 				count++;
 			}
 		}
@@ -146,16 +146,44 @@ public class Control {
 	
 	protected boolean isWeekOpen() {
 		int count = 0;
-		Calendar now = currentJob.getDate();
+		Calendar now = currentJob.getStartDate();
 		for (Job theJob : jobs) {
-			if ((theJob.getDate().get(Calendar.YEAR) == now.get(Calendar.YEAR))
-					&& (theJob.getDate().get(Calendar.MONTH) == now.get(Calendar.MONTH))
-					&& (Math.abs(theJob.getDate().get(Calendar.DATE) 
+			if ((theJob.getStartDate().get(Calendar.YEAR) == now.get(Calendar.YEAR))
+					&& (theJob.getStartDate().get(Calendar.MONTH) == now.get(Calendar.MONTH))
+					&& (Math.abs(theJob.getStartDate().get(Calendar.DATE) 
 							- now.get(Calendar.DATE))) <= 3) {
 				count++;
 			}
 		}
 		return (count < 5);
+	}
+	
+	protected boolean isDurationAllowed(Calendar start, Calendar end) {
+		double milliSec1 = start.getTimeInMillis();
+        double milliSec2 = end.getTimeInMillis();
+        double timeDifInMilliSec;
+        if(milliSec1 >= milliSec2)
+        {
+            timeDifInMilliSec = milliSec1 - milliSec2;
+        }
+        else
+        {
+            timeDifInMilliSec = milliSec2 - milliSec1;
+        }
+        double timeDifDays = timeDifInMilliSec / (24 * 60 * 60 * 1000);
+		return (timeDifDays <= 2);
+	}
+	
+	protected boolean isJobPast(Calendar start) {
+		// Ensures job is in the future, and no further off than 90 days
+		long milliSec1 = start.getTimeInMillis();
+        long milliSec2 = Calendar.getInstance().getTimeInMillis();
+        double timeDifInMilliSec;
+        if(milliSec1 >= milliSec2) timeDifInMilliSec = milliSec1 - milliSec2;
+        else return true;
+        double milliPerDay = (24 * 60 * 60 * 1000);
+        double timeDifDays = (timeDifInMilliSec / milliPerDay);
+		return timeDifDays > 90;
 	}
 	
 	/**
@@ -186,8 +214,10 @@ public class Control {
 		Park newPark = new Park("Central Park", "123 East Main Street", newUser2);
 		Calendar cal = new GregorianCalendar();
 		cal.set(2016, 2, 3, 14, 30);
-		Job newJob = new Job("Trash Pickup", newPark, cal, 
-				"This job will just be picking up trash.", new ArrayList<User>(), 0, 1, 0);
+		Calendar cal2 = new GregorianCalendar();
+		cal2.set(2016, 2, 3, 16, 30);
+		Job newJob = new Job("Trash Pickup", newPark, cal, cal2,
+				"This job will just be picking up trash.", new ArrayList<User>(), 5, 2, 0);
 		newJob.addVolunteer((Volunteer) newUser3, WorkLoad.MEDIUM);
 		newPark.addJob(newJob);
 		newUser2.getMyJobs().add(newJob);

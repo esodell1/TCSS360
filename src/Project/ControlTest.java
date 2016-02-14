@@ -32,8 +32,9 @@ public class ControlTest {
 		controlClass = new Control();
 		initialUser = new Manager("Elijah", "555-467-3456", "manager@uw.edu", WorkLoad.MEDIUM);
 		initialPark = new Park("Central Park", "123 East Main Street", initialUser);
-		initialJob = new Job("Trash Pickup", initialPark, new GregorianCalendar(), 
-				"This job will just be picking up trash.", new ArrayList<User>(), 0, 0, 1);
+		initialJob = new Job("Trash Pickup", initialPark, new GregorianCalendar(),
+				new GregorianCalendar(), "This job will just be picking up trash.", 
+				new ArrayList<User>(), 0, 0, 1);
 	}
 
 	/**
@@ -125,7 +126,7 @@ public class ControlTest {
 	@Test
 	public void testSetCurrentJobInt() {
 		controlClass.setCurrentJob(0);
-		System.out.println(controlClass.getCurrentJob().getDate().get(Calendar.DATE));
+//		System.out.println(controlClass.getCurrentJob().getDate().get(Calendar.DATE));
 		assertEquals(initialJob, controlClass.getCurrentJob());
 	}
 
