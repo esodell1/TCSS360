@@ -20,6 +20,7 @@ public class Manager extends Administrator implements Serializable {
 			options.add("Logout");
 		} else if (currentState == State.VIEW_JOB) {
 			options.add("Edit job details");
+			options.add("View current volunteers");
 			options.add("Delete job");
 			options.add("Return to job list");
 			options.add("Return to main menu");
@@ -38,9 +39,10 @@ public class Manager extends Administrator implements Serializable {
 				break;
 			case VIEW_JOB:
 				if (command == 1) nextState = State.MAIN;	// TODO Add edit job state
-				else if (command == 2) nextState = State.DELETE_JOB;
-				else if (command == 3) nextState = State.VIEW_ALL_JOBS;
-				else if (command == 4) nextState = State.MAIN;
+				else if (command == 2) nextState = State.VIEW_JOB_VOL;
+				else if (command == 3) nextState = State.DELETE_JOB;
+				else if (command == 4) nextState = State.VIEW_ALL_JOBS;
+				else if (command == 5) nextState = State.MAIN;
 				break;
 			default:
 		}

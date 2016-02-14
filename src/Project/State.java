@@ -176,6 +176,24 @@ public enum State {
 		}
 		
 	},
+	VIEW_JOB_VOL {
+		@Override
+		State nextState(UserInterface ui, Control ctrl) {
+			String str = "Volunteers signed up for: " + ctrl.getCurrentJob().getName() + "\n";
+			for (User vol : ctrl.getCurrentJob().getEnrolledVolunteers()) {
+				str = str + "\tName: \t" + vol.getLastName() + ", " + vol.getFirstName()
+					+ "\tGrade: " + vol.getWorkLoad() + "\n";
+			}
+			List<String> opts = new ArrayList<String>();
+			opts.add("Return to job view");
+			opts.add("Return to jobs list");
+			opts.add("Return to Main Menu");
+			int command = ui.detailsInt("View Job", str, opts);
+			if (command == 1) return VIEW_JOB;
+			else if (command == 2) return VIEW_ALL_JOBS;
+			else return MAIN;
+		}
+	},
 	LOGOUT {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
