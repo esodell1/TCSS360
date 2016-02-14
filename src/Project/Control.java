@@ -21,7 +21,7 @@ public class Control {
 	protected List<User> users;
 	protected List<User> search;
 	protected boolean jobEdit;
-	protected String errorMessage;
+	protected String userMessage;
 	private Persistent db;
 	private User currentUser;
 	private Park currentPark;
@@ -182,13 +182,13 @@ public class Control {
 		jobEdit = false;
 		User newUser = new Staff("Eric", "Odell", "staff@uw.edu", WorkLoad.HIGH);
 		User newUser2 = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
-		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.LOW);
+		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.MEDIUM);
 		Park newPark = new Park("Central Park", "123 East Main Street", newUser2);
 		Calendar cal = new GregorianCalendar();
 		cal.set(2016, 2, 3, 14, 30);
 		Job newJob = new Job("Trash Pickup", newPark, cal, 
-				"This job will just be picking up trash.", new ArrayList<User>());
-		newJob.addVolunteer(newUser3);
+				"This job will just be picking up trash.", new ArrayList<User>(), 0, 1, 0);
+		newJob.addVolunteer((Volunteer) newUser3, WorkLoad.MEDIUM);
 		newPark.addJob(newJob);
 		newUser2.getMyJobs().add(newJob);
 		users.add(newUser);

@@ -33,7 +33,7 @@ public class ControlTest {
 		initialUser = new Manager("Elijah", "555-467-3456", "manager@uw.edu", WorkLoad.MEDIUM);
 		initialPark = new Park("Central Park", "123 East Main Street", initialUser);
 		initialJob = new Job("Trash Pickup", initialPark, new GregorianCalendar(), 
-				"This job will just be picking up trash.", new ArrayList<User>());
+				"This job will just be picking up trash.", new ArrayList<User>(), 0, 0, 1);
 	}
 
 	/**

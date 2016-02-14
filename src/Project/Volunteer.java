@@ -18,7 +18,6 @@ public class Volunteer extends AbstractUser implements Serializable {
 	
 	public void signUp(Job theJob) {
 		myJobs.add(theJob);
-		theJob.addVolunteer(this);
 	}
 	
 	public void cancelSignUp(Job theJob) {

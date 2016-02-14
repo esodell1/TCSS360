@@ -88,7 +88,7 @@ public enum State {
 			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
 			if (!ctrl.jobEdit) {	// Check for max job count
 				if (!ctrl.allowedJobCount()) {
-					ctrl.errorMessage = "You have reached the maximum number of jobs (30).";
+					ctrl.userMessage = "You have reached the maximum number of jobs (30).";
 					return ERROR_MSG;
 				}
 			}
@@ -139,9 +139,24 @@ public enum State {
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
 			if (!ctrl.isWeekOpen()) {
-				ctrl.errorMessage = "This week is already full.";
+				ctrl.userMessage = "This week is already full (5).";
 				return ERROR_MSG;
 			}
+			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_5;
+		}
+	},
+	CREATE_JOB_5 {
+		@Override
+		State nextState(UserInterface ui, Control ctrl) {
+			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
+			String date = ui.detailsString(title, "Please enter a number for each required work load: H/M/L");
+			String[] tokens = date.split("/");
+			if(tokens.length != 3) {
+				return CREATE_JOB_5;
+			}
+			ctrl.getCurrentJob().high = Integer.parseInt(tokens[0]);
+			ctrl.getCurrentJob().medium = Integer.parseInt(tokens[1]);
+			ctrl.getCurrentJob().low = Integer.parseInt(tokens[2]);
 			return (ctrl.jobEdit) ? VIEW_JOB : CONFIRM_JOB;
 		}
 	},
@@ -193,16 +208,33 @@ public enum State {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String job = ctrl.getCurrentJob().toString();
-			job = job + "\n\tAre you sure you want to sign up for this job?";
+			job = job + "\n\tWhat work grade would you like to sign up for?";
 			List<String> opts = new ArrayList<String>();
-			opts.add("No");
-			opts.add("Yes");
+			opts.add("Low");
+			opts.add("Medium");
+			opts.add("High");
+			opts.add("Return to job view");
+			opts.add("Return to Main Menu");
 			int command = ui.detailsInt("Job Sign Up", job, opts);
-			if (command == 2) {
-				ctrl.getCurrentJob().addVolunteer(ctrl.getCurrentUser());
-				ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
-			} 
-			return VIEW_JOB;
+			if (command == 4) return VIEW_JOB;
+			else if (command == 5) return MAIN;
+			else {
+				boolean success = false;
+				if (command == 1) success = ctrl.getCurrentJob()
+						.addVolunteer((Volunteer)ctrl.getCurrentUser(), WorkLoad.LOW);
+				else if (command == 2) success = ctrl.getCurrentJob()
+						.addVolunteer((Volunteer)ctrl.getCurrentUser(), WorkLoad.MEDIUM);
+				else success = ctrl.getCurrentJob()
+						.addVolunteer((Volunteer)ctrl.getCurrentUser(), WorkLoad.HIGH);
+				
+				if (success) {
+					ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
+					return VIEW_JOB;
+				} else {
+					ctrl.userMessage = "This job is full based on your current work grade.";
+					return ERROR_MSG;
+				}
+			}
 		}
 		
 	},
@@ -267,17 +299,19 @@ public enum State {
 			opts.add("Description");
 			opts.add("Park");
 			opts.add("Date/Time");
+			opts.add("Workload");
 			opts.add("Return to job");
 			opts.add("Return to Main Menu");
 			int command = ui.detailsInt("Edit Job Details", details, opts);
-			if (command == 5) return VIEW_JOB;
-			else if (command == 6) return MAIN;
+			if (command == 6) return VIEW_JOB;
+			else if (command == 7) return MAIN;
 			else {
 				ctrl.jobEdit = true;
 				if(command == 1) return CREATE_JOB;
 				else if(command == 2) return CREATE_JOB_2;
 				else if(command == 3) return CREATE_JOB_3;
-				else return CREATE_JOB_4;
+				else if(command == 4) return CREATE_JOB_4;
+				else return CREATE_JOB_5;
 			}
 		}
 			
@@ -287,8 +321,18 @@ public enum State {
 		State nextState(UserInterface ui, Control ctrl) {
 			List<String> options = new ArrayList<String>();
 			options.add("Return to Main Menu");
-			ui.detailsInt("Error", "\n\t" + ctrl.errorMessage + "\n\n", options);
-			ctrl.errorMessage = null;
+			ui.detailsInt("Error", "\n\t" + ctrl.userMessage + "\n\n", options);
+			ctrl.userMessage = null;
+			return MAIN;
+		}
+	},
+	SUCCESS_MSG {
+		@Override
+		State nextState(UserInterface ui, Control ctrl) {
+			List<String> options = new ArrayList<String>();
+			options.add("Return to Main Menu");
+			ui.detailsInt("Success", "\n\t" + ctrl.userMessage + "\n\n", options);
+			ctrl.userMessage = null;
 			return MAIN;
 		}
 	};
