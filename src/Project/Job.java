@@ -172,9 +172,10 @@ public class Job implements Serializable {
             return false;
         if (!park.equals(other.park))
             return false;
-        // TODO This needs fixed somehow, using Calendar is a pain
-//        if (date.YEAR != other.date.YEAR)
-//            return false;
+        if (startDate.compareTo(other.startDate) != 0)
+            return false;
+        if (endDate.compareTo(other.endDate) != 0)
+        	return false;
         if (!enrolledVolunteers.equals(other.enrolledVolunteers))
             return false;
         return true;

@@ -22,7 +22,9 @@ public class ControlTest {
 	Control controlClass;
 	Job initialJob;
 	Park initialPark;
-	User initialUser;
+	User staff;
+	User manager;
+	User volunteer;
 
 	/**
 	 * @throws java.lang.Exception
@@ -30,11 +32,24 @@ public class ControlTest {
 	@Before
 	public void setUp() throws Exception {
 		controlClass = new Control();
-		initialUser = new Manager("Elijah", "555-467-3456", "manager@uw.edu", WorkLoad.MEDIUM);
-		initialPark = new Park("Central Park", "123 East Main Street", initialUser);
-		initialJob = new Job("Trash Pickup", initialPark, new GregorianCalendar(),
-				new GregorianCalendar(), "This job will just be picking up trash.", 
-				new ArrayList<User>(), 0, 0, 1);
+		staff = new Staff("Eric", "Odell", "staff@uw.edu", WorkLoad.HIGH);
+		manager = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
+		volunteer = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.MEDIUM);
+		initialPark = new Park("Central Park", "123 East Main Street", manager);
+		Calendar cal = new GregorianCalendar();
+		cal.set(2016, 2, 3, 14, 30);
+		Calendar cal2 = new GregorianCalendar();
+		cal2.set(2016, 2, 3, 16, 30);
+		initialJob = new Job("Trash Pickup", initialPark, cal, cal2,
+				"This job will just be picking up trash.", new ArrayList<User>(), 5, 2, 0);
+		initialJob.addVolunteer((Volunteer) volunteer, WorkLoad.MEDIUM);
+		initialPark.addJob(initialJob);
+//		manager.getMyJobs().add(initialJob);
+		controlClass.users.add(staff);
+		controlClass.users.add(manager);
+		controlClass.users.add(volunteer);
+		controlClass.parks.add(initialPark);
+		controlClass.jobs.add(initialJob);
 	}
 
 	/**
@@ -51,10 +66,12 @@ public class ControlTest {
 	public void testGetAllJobs() {
 		// Expects a list of Strings of Job names
 		List<String> expected = new ArrayList<String>();
-		expected.add(initialJob.getName());
+		for (Job theJob : controlClass.jobs) {
+			expected.add(theJob.getName());
+		}
 		
 		// Assert the expected and actual are equivalent
-		assertEquals("Should be equal", expected, controlClass.getAllJobs());
+		assertEquals(expected, controlClass.getAllJobs());
 	}
 
 	/**
@@ -81,7 +98,8 @@ public class ControlTest {
 	 */
 	@Test
 	public void testGetCurrentUser() {
-		fail("Not yet implemented"); // TODO
+		controlClass.setCurrentUser(0);
+		assertEquals(controlClass.users.get(0), controlClass.getCurrentUser());
 	}
 
 	
@@ -90,7 +108,8 @@ public class ControlTest {
 	 */
 	@Test
 	public void testGetCurrentJob() {
-		fail("Not yet implemented"); // TODO
+		controlClass.setCurrentJob(0);
+		assertEquals(controlClass.jobs.get(0), controlClass.getCurrentJob());
 	}
 
 	/**
@@ -107,7 +126,7 @@ public class ControlTest {
 	@Test
 	public void testSetCurrentUser() {
 		controlClass.setCurrentUser(0);
-		assertEquals(initialUser, controlClass.getCurrentUser());
+		assertEquals(controlClass.users.get(0), controlClass.getCurrentUser());
 	}
 
 	/**
@@ -115,9 +134,8 @@ public class ControlTest {
 	 */
 	@Test
 	public void testSetCurrentPark() {
-		// Expects a specific park
 		controlClass.setCurrentPark(0);
-		assertEquals(initialPark, controlClass.getCurrentPark());
+		assertEquals(controlClass.parks.get(0), controlClass.getCurrentPark());
 	}
 
 	/**
@@ -126,8 +144,7 @@ public class ControlTest {
 	@Test
 	public void testSetCurrentJobInt() {
 		controlClass.setCurrentJob(0);
-//		System.out.println(controlClass.getCurrentJob().getDate().get(Calendar.DATE));
-		assertEquals(initialJob, controlClass.getCurrentJob());
+		assertEquals(controlClass.jobs.get(0), controlClass.getCurrentJob());
 	}
 
 	/**
@@ -135,7 +152,8 @@ public class ControlTest {
 	 */
 	@Test
 	public void testSetCurrentJobJob() {
-		fail("Not yet implemented"); // TODO
+		controlClass.setCurrentJob(controlClass.jobs.get(0));
+		assertEquals(controlClass.jobs.get(0), controlClass.getCurrentJob());
 	}
 
 	/**
@@ -143,7 +161,15 @@ public class ControlTest {
 	 */
 	@Test
 	public void testSaveCurrentJob() {
-		fail("Not yet implemented"); // TODO
+		Calendar cal = new GregorianCalendar();
+		cal.set(2016, 2, 5, 14, 30);
+		Calendar cal2 = new GregorianCalendar();
+		cal2.set(2016, 2, 5, 16, 30);
+		Job newJob = new Job("Trash Pickup 2", initialPark, cal, cal2,
+				"This job will just be picking up trash.", new ArrayList<User>(), 5, 2, 0);	
+		controlClass.setCurrentJob(newJob);
+		controlClass.saveCurrentJob();
+		assertEquals(newJob, controlClass.jobs.get(controlClass.jobs.size()-1));
 	}
 
 	/**
@@ -151,7 +177,12 @@ public class ControlTest {
 	 */
 	@Test
 	public void testLogin() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(controlClass.login("test@email.com") < 0);
+		assertTrue(controlClass.login("") < 0);
+		assertTrue(controlClass.login(null) < 0);
+		assertTrue(controlClass.login(staff.getEmail()) > 0);
+		assertTrue(controlClass.login(manager.getEmail()) > 0);
+		assertTrue(controlClass.login(volunteer.getEmail()) > 0);		
 	}
 
 	/**
@@ -159,7 +190,10 @@ public class ControlTest {
 	 */
 	@Test
 	public void testLogout() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(controlClass.login(staff.getEmail()) > 0);
+		assertTrue(controlClass.getCurrentUser() != null);
+		controlClass.logout();
+		assertTrue(controlClass.getCurrentUser() == null);
 	}
 
 	/**
@@ -167,7 +201,15 @@ public class ControlTest {
 	 */
 	@Test
 	public void testJobCount() {
-		fail("Not yet implemented"); // TODO
+		int jobCount = controlClass.jobCount();
+		Calendar cal = new GregorianCalendar();
+		cal.set(2016, 2, 5, 14, 30);
+		Calendar cal2 = new GregorianCalendar();
+		cal2.set(2016, 2, 5, 16, 30);
+		Job newJob = new Job("Trash Pickup 2", initialPark, cal, cal2,
+				"This job will just be picking up trash.", new ArrayList<User>(), 5, 2, 0);	
+		controlClass.jobs.add(newJob);
+		assertTrue(jobCount == controlClass.jobCount() - 1);
 	}
 
 }

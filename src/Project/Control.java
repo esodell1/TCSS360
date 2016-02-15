@@ -2,7 +2,6 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -39,22 +38,44 @@ public class Control {
 		return options;
 	}
 		
+	/**
+	 * Returns a list of all known parks.
+	 * @return List<Park>
+	 */
 	public List<Park> getParks() {
 		return parks;
 	}
 
+	/**
+	 * Returns the current user of the system.
+	 * @return User
+	 */
 	public User getCurrentUser() {
 		return currentUser;
 	}
 
+	/**
+	 * Returns the current park of the system.
+	 * @return Park
+	 */
 	public Park getCurrentPark() {
 		return currentPark;
 	}
 
+	/**
+	 * Returns the current job of the system.
+	 * @return Job
+	 */
 	public Job getCurrentJob() {
 		return currentJob;
 	}
 	
+	/**
+	 * Searches through all volunteers given a key to match,
+	 * and the value to which the key is matched.
+	 * @param key String ["last"]
+	 * @param value String ["Smith"]
+	 */
 	public void searchUsers(String key, String value) {
 		if (key.equals("last")) {
 			for (User vol : users) {
@@ -65,6 +86,9 @@ public class Control {
 		}
 	}
 	
+	/**
+	 * Deletes the Job object pointed to by currentJob.
+	 */
 	public void deleteCurrentJob() {
 		if (currentJob != null) {
 			int idx = jobs.indexOf(currentJob);
@@ -75,6 +99,10 @@ public class Control {
 		}
 	}
 
+	/**
+	 * Sets the currentUser to an index within the users list.
+	 * @param currentUser Integer representing the index in the users list.
+	 */
 	public void setCurrentUser(int currentUser) {
 		if (currentUser >= 0 && currentUser < users.size()) {
 			this.currentUser = users.get(currentUser);
@@ -83,18 +111,33 @@ public class Control {
 		}
 	}
 
+	/**
+	 * Sets the currentPark to an index within the parks list.
+	 * @param currentPark Integer representing the index in the parks list.
+	 */
 	public void setCurrentPark(int currentPark) {
 		this.currentPark = parks.get(currentPark);
 	}
 
+	/**
+	 * Sets the currentJob to an index within the jobs list.
+	 * @param currentJob Integer representing the index in the jobs list.
+	 */
 	public void setCurrentJob(int currentJob) {
 		this.currentJob = jobs.get(currentJob);
 	}
 	
+	/**
+	 * Sets the currentJob to a Job object referenced by the parameter.
+	 * @param currentJob Job object to which the currentJob is linked.
+	 */
 	public void setCurrentJob(Job currentJob) {
 		this.currentJob = currentJob;
 	}
 	
+	/**
+	 * Saves the Job referenced by currentJob to the list of system jobs.
+	 */
 	public void saveCurrentJob() {
 		this.jobs.add(this.currentJob);
 	}
@@ -103,7 +146,7 @@ public class Control {
 	 * This method returns whether a user has been identified in this system,
 	 * given the provided email address.
 	 * @param String email
-	 * @return integer equal to 1 if authenticated, -1 otherwise
+	 * @return Integer greater than 0 if authenticated, less than 0 otherwise
 	 */
 	public int login(String email) {
 		int result = -1;
@@ -134,6 +177,11 @@ public class Control {
 		return jobs;
 	}
 	
+	/**
+	 * Determines if a new job can be created, such that no more than 30
+	 * jobs may exist in the system at any given time.
+	 * @return true if the Job may be added, false otherwise.
+	 */
 	protected boolean allowedJobCount() {
 		int count = 0;
 		for (Job theJob : jobs) {
@@ -144,6 +192,11 @@ public class Control {
 		return (count < 30);
 	}
 	
+	/**
+	 * Determines if a new job can be created, such that no more than 5
+	 * jobs during a consecutive 7 day span may exist in the system.
+	 * @return true if the job may be created, false otherwise.
+	 */
 	protected boolean isWeekOpen() {
 		int count = 0;
 		Calendar now = currentJob.getStartDate();
@@ -158,6 +211,11 @@ public class Control {
 		return (count < 5);
 	}
 	
+	/**
+	 * Determines is a volunteer may sign up for the currentJob, given the
+	 * condition that they may not sign up for more than one job on any given date.
+	 * @return true if they are allowed to sign up, false otherwise.
+	 */
 	protected boolean isDayOpen() {
 		Calendar now = currentJob.getStartDate();
 		for (Job theJob : currentUser.getMyJobs()) {
@@ -170,6 +228,13 @@ public class Control {
 		return true;
 	}
 	
+	/**
+	 * Given two Calendar objects for start and end dates, determines if these 
+	 * dates satisfy the rule that the duration between the dates is less than 2 days.
+	 * @param start Calendar start date
+	 * @param end Calendar end date
+	 * @return true if the duration is allowed, false otherwise.
+	 */
 	protected boolean isDurationAllowed(Calendar start, Calendar end) {
 		double milliSec1 = start.getTimeInMillis();
         double milliSec2 = end.getTimeInMillis();
@@ -186,6 +251,12 @@ public class Control {
 		return (timeDifDays <= 2);
 	}
 	
+	/**
+	 * Given a new job start date, this will determine if the job is in the past, 
+	 * or if the job is more than 90 days in the future.
+	 * @param start Calendar start date
+	 * @return false if job is allowed, true otherwise
+	 */
 	protected boolean isJobPast(Calendar start) {
 		// Ensures job is in the future, and no further off than 90 days
 		long milliSec1 = start.getTimeInMillis();
@@ -206,13 +277,9 @@ public class Control {
 		return jobs.size();
 	}
 	
-	// Lists the users based on their role
-	protected List<User> listUsersByType() {
-		//TODO Limit search parameters
-		return users;
-	}
-	
-	
+	/**
+	 * Default constructor, no parameters accepted.
+	 */
 	public Control() {
 		jobs = new ArrayList<Job>();
 		parks = new ArrayList<Park>();
