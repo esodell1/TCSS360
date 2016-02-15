@@ -261,6 +261,7 @@ public class Control {
         else return true;
         double milliPerDay = (24 * 60 * 60 * 1000);
         double timeDifDays = (timeDifInMilliSec / milliPerDay);
+        System.out.println(timeDifDays);
 		return timeDifDays > 90;
 	}
 	

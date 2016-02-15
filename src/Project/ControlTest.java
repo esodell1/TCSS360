@@ -282,17 +282,17 @@ public class ControlTest {
 	@Test
 	public void testIsJobPast() {
 		Calendar cal = new GregorianCalendar();
-		cal.set(2016, 2, 20, 14, 30);
-		assertFalse(controlClass.isJobPast(cal));
-		cal.set(2015, 2, 20, 14, 30);
-		assertTrue(controlClass.isJobPast(cal));
 		cal.set(2016, 1, 20, 14, 30);
+		assertFalse(controlClass.isJobPast(cal));
+		cal.set(2015, 1, 20, 14, 30);
 		assertTrue(controlClass.isJobPast(cal));
-		cal.set(2016, 2, 14, 14, 30);
+		cal.set(2016, 0, 20, 14, 30);
 		assertTrue(controlClass.isJobPast(cal));
-		cal.set(2016, 2, 15, 14, 30);
+		cal.set(2016, 1, 14, 14, 30);
 		assertTrue(controlClass.isJobPast(cal));
-		cal.set(2016, 2, 15, 17, 30);
+		cal.set(2016, 1, 15, 14, 30);
+		assertTrue(controlClass.isJobPast(cal));
+		cal.set(2016, 1, 15, 15, 30);
 		assertTrue(controlClass.isJobPast(cal));
 	}
 }
