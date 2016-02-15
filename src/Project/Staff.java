@@ -29,8 +29,6 @@ public class Staff extends Administrator implements Serializable {
 			options.add("Search volunteers by Last Name");
 			options.add("Logout");
 		} else if (currentState == State.VIEW_JOB) {
-			options.add("Edit job details");
-			options.add("Delete job");
 			options.add("Return to job list");
 			options.add("Return to main menu");
 		}
@@ -46,10 +44,8 @@ public class Staff extends Administrator implements Serializable {
 				else if (command == 3) nextState = State.LOGOUT;
 				break;
 			case VIEW_JOB:
-				if (command == 1) nextState = State.MAIN;	// TODO Add edit job state
-				else if (command == 2) nextState = State.MAIN; // TODO Add delete job state
-				else if (command == 3) nextState = State.VIEW_ALL_JOBS;
-				else if (command == 4) nextState = State.MAIN;
+				if (command == 1) nextState = State.VIEW_ALL_JOBS;
+				else if (command == 2) nextState = State.MAIN;
 				break;
 			default:
 		}
