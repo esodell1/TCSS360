@@ -53,13 +53,6 @@ public class ControlTest {
 	}
 
 	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	/**
 	 * Test method for {@link Project.Control#getAllJobs()}.
 	 */
 	@Test
@@ -117,7 +110,9 @@ public class ControlTest {
 	 */
 	@Test
 	public void testDeleteCurrentJob() {
-		
+		controlClass.setCurrentJob(initialJob);
+		controlClass.deleteCurrentJob();
+		assertNull(controlClass.getCurrentJob());
 	}
 
 	/**
