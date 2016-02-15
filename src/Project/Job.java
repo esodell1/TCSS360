@@ -73,8 +73,8 @@ public class Job implements Serializable {
 		return false;
 	}
 	
-	public void removeVolunteer(String name) {
-		int index = this.enrolledVolunteers.indexOf(name);
+	public void removeVolunteer(User vol) {
+		int index = this.enrolledVolunteers.indexOf(vol);
 		this.enrolledVolunteers.remove(index);
 	}
 
