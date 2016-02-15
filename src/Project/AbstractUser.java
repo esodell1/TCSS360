@@ -112,7 +112,6 @@ public abstract class AbstractUser implements User, Serializable {
 			throw new IllegalStateException("Usertype invalid");
 		}
 	}
-	
 
 }
 

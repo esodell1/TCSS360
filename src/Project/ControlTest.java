@@ -206,4 +206,93 @@ public class ControlTest {
 		assertTrue(jobCount == controlClass.jobCount() - 1);
 	}
 
+	/**
+	 * Test method for (@link {@link Project.Control#isWeekOpen()}.
+	 */
+	@Test
+	public void testAllowedJobCount() {
+		controlClass.jobs.clear();
+		assertTrue(controlClass.allowedJobCount());
+		for(int i = 0; i < 31; i++)
+			controlClass.jobs.add(new Job());
+		assertFalse(controlClass.allowedJobCount());
+	}
+	
+	/**
+	 * Test method for ({@link Project.Control#isWeekOpen()}
+	 */
+	@Test
+	public void testIsWeekOpen() {
+		controlClass.jobs.clear();
+		assertTrue(controlClass.isWeekOpen());
+		for(int i = 1; i < 7; i++) {
+			Job j = new Job();
+			j.setStartDate(2016, 03, i, 12, 00);
+			j.setEndDate(2016, 03, i, 14, 00);
+			controlClass.jobs.add(j);
+		}
+		Job j = new Job();
+		j.setStartDate(2016, 3, 3, 12, 00);
+		j.setStartDate(2016, 3, 3, 14, 00);
+		controlClass.setCurrentJob(j);
+		assertFalse(controlClass.isWeekOpen());
+	}
+	
+	@Test
+	public void testIsDayOpen() {
+		Volunteer volunteer = new Volunteer("Bob", "Smith", "foo@bar.com", WorkLoad.MEDIUM);
+		Job j1 = new Job();
+		j1.setStartDate(2016, 3, 3, 12, 00);
+		j1.setStartDate(2016, 3, 3, 14, 00);
+		volunteer.signUp(j1);
+		controlClass.users.clear();
+		controlClass.users.add(volunteer);
+		controlClass.setCurrentUser(0);
+		Job j2 = new Job();
+		j2.setStartDate(2016, 3, 3, 12, 00);
+		j2.setStartDate(2016, 3, 3, 14, 00);
+		controlClass.setCurrentJob(j2);
+		assertFalse(controlClass.isDayOpen());
+	}
+	
+	@Test
+	public void testIsDurationAllowed() {
+		Calendar cal = new GregorianCalendar();
+		cal.set(2016, 2, 5, 14, 30);
+		Calendar cal2 = new GregorianCalendar();
+		cal2.set(2016, 2, 5, 16, 30);
+		assertTrue(controlClass.isDurationAllowed(cal, cal2));
+		cal.set(2016, 2, 5, 14, 30);
+		cal2.set(2017, 2, 5, 14, 30);
+		assertFalse(controlClass.isDurationAllowed(cal, cal2));
+		cal.set(2016, 2, 5, 14, 30);
+		cal2.set(2016, 6, 5, 14, 30);
+		assertFalse(controlClass.isDurationAllowed(cal, cal2));
+		cal.set(2016, 2, 5, 14, 30);
+		cal2.set(2016, 2, 9, 14, 30);
+		assertFalse(controlClass.isDurationAllowed(cal, cal2));
+		cal.set(2016, 2, 5, 14, 30);
+		cal2.set(2016, 2, 7, 15, 30);
+		assertFalse(controlClass.isDurationAllowed(cal, cal2));
+		cal.set(2016, 2, 5, 14, 30);
+		cal2.set(2016, 2, 7, 14, 31);
+		assertFalse(controlClass.isDurationAllowed(cal, cal2));
+	}
+	
+	@Test
+	public void testIsJobPast() {
+		Calendar cal = new GregorianCalendar();
+		cal.set(2016, 2, 20, 14, 30);
+		assertFalse(controlClass.isJobPast(cal));
+		cal.set(2015, 2, 20, 14, 30);
+		assertTrue(controlClass.isJobPast(cal));
+		cal.set(2016, 1, 20, 14, 30);
+		assertTrue(controlClass.isJobPast(cal));
+		cal.set(2016, 2, 14, 14, 30);
+		assertTrue(controlClass.isJobPast(cal));
+		cal.set(2016, 2, 15, 14, 30);
+		assertTrue(controlClass.isJobPast(cal));
+		cal.set(2016, 2, 15, 17, 30);
+		assertTrue(controlClass.isJobPast(cal));
+	}
 }

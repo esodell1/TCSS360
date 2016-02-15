@@ -183,13 +183,7 @@ public class Control {
 	 * @return true if the Job may be added, false otherwise.
 	 */
 	protected boolean allowedJobCount() {
-		int count = 0;
-		for (Job theJob : jobs) {
-			if (theJob.getStartDate().after(Calendar.getInstance())) {
-				count++;
-			}
-		}
-		return (count < 30);
+		return (jobs.size() <= 30);
 	}
 	
 	/**
@@ -199,7 +193,7 @@ public class Control {
 	 */
 	protected boolean isWeekOpen() {
 		int count = 0;
-		Calendar now = currentJob.getStartDate();
+		Calendar now = (currentJob == null)?null : currentJob.getStartDate();
 		for (Job theJob : jobs) {
 			if ((theJob.getStartDate().get(Calendar.YEAR) == now.get(Calendar.YEAR))
 					&& (theJob.getStartDate().get(Calendar.MONTH) == now.get(Calendar.MONTH))
@@ -208,6 +202,7 @@ public class Control {
 				count++;
 			}
 		}
+		System.out.println(count);
 		return (count < 5);
 	}
 	
