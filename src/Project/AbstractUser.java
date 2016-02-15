@@ -47,14 +47,6 @@ public abstract class AbstractUser implements User, Serializable {
 		return myEmail.equals(theEmail);
 	}
 	
-	/** Creates a new blank Job object and returns it.
-	 * @return A new blank job.
-	 */
-	public Job newJob() {
-		Job newJob = new Job();
-		return newJob;
-	}
-	
 	/**
 	 * Gets First Name.
 	 * @return String of first name.

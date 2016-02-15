@@ -351,7 +351,7 @@ public enum State {
 				else if(command == 2) return CREATE_JOB_2;
 				else if(command == 3) return CREATE_JOB_3;
 				else if(command == 4) return CREATE_JOB_4;
-				else return CREATE_JOB_5;
+				else return CREATE_JOB_6;
 			}
 		}
 			

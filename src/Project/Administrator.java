@@ -22,16 +22,6 @@ public abstract class Administrator extends AbstractUser implements Serializable
 	}
 	
 	/**
-	 * This assumes we want to make the Job class immutable... Do we want to do that?
-	 * @param theJob The job to be edited.
-	 * @return a new Job object with updated information.
-	 */
-	public Job editJob(Job theJob, Park thePark, String theEventName, int theEasyPositions, int theMedPositions, 
-			int theHardPositions, int theStartDate, int theEndDate) {
-		return null;
-	}
-	
-	/**
 	 * Adds a park to this Usertype.
 	 * @param thePark The park to be added
 	 */
