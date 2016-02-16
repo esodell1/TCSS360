@@ -8,6 +8,7 @@ public class Park implements Serializable {
 	
 	private static final long serialVersionUID = -5896375771655268671L;
 	
+	/** Instance Fields */
 	private String name;
 	private String location;
 	private User manager;

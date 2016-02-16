@@ -12,14 +12,29 @@ public class Volunteer extends AbstractUser implements Serializable {
 	/** Boolean to store whether volunteer is blackballed. */
 	boolean myBlackBalled = false;
 	
+	/**
+	 * Creates Volunteer object.
+	 * @param theFirstName First name of volunteer
+	 * @param theLastName Last name of volunteer
+	 * @param theEmail Email address of volunteer
+	 * @param theWl WorkLoad of volunteer
+	 */
 	public Volunteer(String theFirstName, String theLastName, String theEmail, WorkLoad theWl) {
 		super(theFirstName, theLastName, theEmail, theWl);
 	}
 	
+	/**
+	 * Signs up a user for a job.
+	 * @param theJob Job that user will sign up for.
+	 */
 	public void signUp(Job theJob) {
 		myJobs.add(theJob);
 	}
 	
+	/**
+	 * Removes job from user's signed up jobs.
+	 * @param theJob The job to be deleted from user's signed up jobs.
+	 */
 	public void cancelSignUp(Job theJob) {
 		if (myJobs.contains(theJob)) {
 			myJobs.remove(theJob);
@@ -28,6 +43,9 @@ public class Volunteer extends AbstractUser implements Serializable {
 		}
 	}
 	
+	/**
+	 * Returns menu options based on current state.
+	 */
 	public List<String> getMenuOptions(State currentState) {
 		List<String> options = new ArrayList<String>();
 		if (currentState == State.MAIN) {
@@ -42,6 +60,9 @@ public class Volunteer extends AbstractUser implements Serializable {
 		return options;
 	}
 	
+	/**
+	 * Returns next state based on current state and command.
+	 */
 	public State getNextState(State currentState, int command) {
 		State nextState = State.MAIN;
 		switch (currentState) {
@@ -60,10 +81,16 @@ public class Volunteer extends AbstractUser implements Serializable {
 		return nextState;
 	}
 	
+	/**
+	 * Flags the volunteer.
+	 */
 	public void flag() {
 		myFlagged = true;
 	}
 	
+	/**
+	 * Tests contents of volunteers to see if they are equal.
+	 */
 	@Override
     public boolean equals(Object obj) {
         if (this == obj)

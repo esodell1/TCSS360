@@ -35,6 +35,9 @@ public class Staff extends Administrator implements Serializable {
 		return options;
 	}
 	
+	/**
+	 * Returns next state based on current state and command.
+	 */
 	public State getNextState(State currentState, int command) {
 		State nextState = State.MAIN;
 		switch (currentState) {
@@ -52,6 +55,9 @@ public class Staff extends Administrator implements Serializable {
 		return nextState;
 	}
 	
+	/**
+	 * Tests contents of volunteers to see if they are equal.
+	 */
 	@Override
     public boolean equals(Object obj) {
         if (this == obj)
