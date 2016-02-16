@@ -183,7 +183,7 @@ public class Control {
 	 * @return true if the Job may be added, false otherwise.
 	 */
 	protected boolean allowedJobCount() {
-		return (jobs.size() <= 30);
+		return (jobs.size() < 30);
 	}
 	
 	/**
@@ -280,26 +280,40 @@ public class Control {
 		users = new ArrayList<User>();
 		search = new ArrayList<User>();
 		db = new Persistent();
-		jobEdit = false;
-		User newUser = new Staff("Eric", "Odell", "staff@uw.edu", WorkLoad.HIGH);
-		User newUser2 = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
-		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.MEDIUM);
-		Park newPark = new Park("Central Park", "123 East Main Street", newUser2);
-		Calendar cal = new GregorianCalendar();
-		cal.set(2016, 2, 3, 14, 30);
-		Calendar cal2 = new GregorianCalendar();
-		cal2.set(2016, 2, 3, 16, 30);
-		Job newJob = new Job("Trash Pickup", newPark, cal, cal2,
-				"This job will just be picking up trash.", new ArrayList<User>(), 5, 2, 0);
-		newJob.addVolunteer((Volunteer) newUser3, WorkLoad.MEDIUM);
-		newPark.addJob(newJob);
-		newUser2.getMyJobs().add(newJob);
-		users.add(newUser);
-		users.add(newUser2);
-		users.add(newUser3);
-		parks.add(newPark);
-		jobs.add(newJob);
-		db.saveData(jobs, parks, users);
+//		jobEdit = false;
+//		User newUser = new Staff("Eric", "Odell", "staff@uw.edu", WorkLoad.HIGH);
+//		Administrator newUser2 = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
+//		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.MEDIUM);
+//		Manager newUser4 = new Manager("Tyler", "Braden", "manager2@uw.edu", WorkLoad.MEDIUM);
+//		Park newPark = new Park("Central Park", "123 East Main Street", newUser2);
+//		Park newPark2 = new Park("Central Park West", "345 East Main Street", newUser4);
+//		newUser2.addPark(newPark);
+//		newUser4.addPark(newPark2);
+//		Calendar cal = new GregorianCalendar();
+//		cal.set(2016, 1, 17, 12, 30);
+//		Calendar cal2 = new GregorianCalendar();
+//		cal2.set(2016, 1, 17, 13, 30);
+//		Job newJob = new Job("Trash Pickup", newPark, cal, cal2,
+//				"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
+//		Calendar cal3 = new GregorianCalendar();
+//		cal3.set(2016, 1, 17, 14, 30);
+//		Calendar cal4 = new GregorianCalendar();
+//		cal4.set(2016, 1, 17, 16, 30);
+//		Job newJob2 = new Job("Trash Pickup 2", newPark, cal3, cal4,
+//				"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
+//		newJob.addVolunteer((Volunteer) newUser3, WorkLoad.MEDIUM);
+//		newPark.addJob(newJob);
+//		newUser2.getMyJobs().add(newJob);
+//		jobs.add(newJob);
+//		jobs.add(newJob2);
+//		users.add(newUser);
+//		users.add(newUser2);
+//		users.add(newUser3);
+//		users.add(newUser4);
+//		parks.add(newPark);
+//		parks.add(newPark2);
+//		
+//		db.saveData(jobs, parks, users);
 		db.loadData();
 		jobs = db.getJobs();
 		parks = db.getParks();

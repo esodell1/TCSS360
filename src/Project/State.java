@@ -115,9 +115,6 @@ public enum State {
 			Administrator currentUser = (Administrator) ctrl.getCurrentUser();
 			List<Park> parks = currentUser.getParks();
 			List<String> opts = new ArrayList<String>();
-			if (parks.size() <= 0) {
-				parks = ctrl.getParks();
-			}
 			for (Park p : parks) {
 				opts.add(p.getName());
 			}
