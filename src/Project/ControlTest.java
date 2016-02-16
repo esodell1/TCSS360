@@ -302,5 +302,6 @@ public class ControlTest {
 		controlClass.users.add(volunteer);
 		controlClass.searchUsers("last", "Braden");
 		assertTrue(controlClass.search.size() == 1);
+		assertEquals(controlClass.search.get(0), volunteer);
 	}
 }
