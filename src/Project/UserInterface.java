@@ -7,7 +7,7 @@ import java.util.List;
 public class UserInterface {
 
 	private static final int DEFAULT_WIDTH = 80;
-	private static final int DEFAULT_HEIGHT = 24;
+//	private static final int DEFAULT_HEIGHT = 24;
 
 	private static final String CURSOR = "> ";
 
