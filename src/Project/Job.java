@@ -1,5 +1,11 @@
 package Project;
-
+/**
+ *  This class is a model of a Job.
+ *  
+ *  @author Tyler Braden
+ *  @date 5/15/16
+ * 
+ * */
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -50,6 +56,7 @@ public class Job implements Serializable {
 		this.enrolledVolunteers = new LinkedList<User>();
 	}
 	
+	/**Adds a volunteer to the job if there is room based on difficulty of job.*/
 	public boolean addVolunteer(Volunteer volunteer, WorkLoad workLoad) {
 		if ((workLoad == WorkLoad.HIGH)
 				&& (this.highCount < this.high)) {
@@ -122,6 +129,7 @@ public class Job implements Serializable {
 		return enrolledVolunteers;
 	}
 
+	/**outputs all information regarding our Job class.*/
 	@Override
 	public String toString() {
 		DateFormat date = new SimpleDateFormat("EEEE MMM d yyyy");

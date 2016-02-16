@@ -1,5 +1,11 @@
 package Project;
-
+/**
+ *  This class is a model of a Park.
+ *  
+ *  @author Tyler Braden
+ *  @date 5/15/16
+ * 
+ * */
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +58,7 @@ public class Park implements Serializable {
 	public void addJob(Job newJob) {
 		this.myJobs.add(newJob);
 	}
-
+	/**outputs all information regarding the park.*/
 	public String toString() {
 		StringBuilder park_info = new StringBuilder();
 		park_info.append("\n\tPark: \t\t");
