@@ -135,18 +135,25 @@ public enum State {
 			if(tokens.length != 5) {
 				return CREATE_JOB_4;
 			}
+			Calendar start = ctrl.getCurrentJob().getStartDate();
 			ctrl.getCurrentJob().setStartDate(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
 			if (!ctrl.isWeekOpen()) {
 				ctrl.userMessage = "This week is already full (5).";
+				ctrl.getCurrentJob().setStartDate(start.get(Calendar.YEAR), 
+						start.get(Calendar.MONTH), start.get(Calendar.DATE),
+						start.get(Calendar.HOUR), start.get(Calendar.MINUTE));
 				return ERROR_MSG;
 			}
 			if (ctrl.isJobPast(ctrl.getCurrentJob().getStartDate())) {
 				ctrl.userMessage = "Must schedule jobs for future dates, and no more than 3 months in advance.";
+				ctrl.getCurrentJob().setStartDate(start.get(Calendar.YEAR), 
+						start.get(Calendar.MONTH), start.get(Calendar.DATE),
+						start.get(Calendar.HOUR), start.get(Calendar.MINUTE));
 				return ERROR_MSG;
 			}
-			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_5;
+			return CREATE_JOB_5;
 		}
 	},
 	CREATE_JOB_5 {
@@ -159,15 +166,28 @@ public enum State {
 			if(tokens.length != 5) {
 				return CREATE_JOB_5;
 			}
+			Calendar end = ctrl.getCurrentJob().getStartDate();
 			ctrl.getCurrentJob().setEndDate(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
 			if (!ctrl.isWeekOpen()) {
 				ctrl.userMessage = "This week is already full (5).";
+				ctrl.getCurrentJob().setEndDate(end.get(Calendar.YEAR), 
+						end.get(Calendar.MONTH), end.get(Calendar.DATE),
+						end.get(Calendar.HOUR), end.get(Calendar.MINUTE));
+				return ERROR_MSG;
+			}  else if (ctrl.isJobPast(ctrl.getCurrentJob().getEndDate())) {
+				ctrl.userMessage = "Must schedule jobs for future dates, and no more than 3 months in advance.";
+				ctrl.getCurrentJob().setEndDate(end.get(Calendar.YEAR), 
+						end.get(Calendar.MONTH), end.get(Calendar.DATE),
+						end.get(Calendar.HOUR), end.get(Calendar.MINUTE));
 				return ERROR_MSG;
 			} else if (!ctrl.isDurationAllowed(ctrl.getCurrentJob().getStartDate(), 
 					ctrl.getCurrentJob().getEndDate())) {
-				ctrl.userMessage = "That job dureation is too long (Max 2 days).";
+				ctrl.userMessage = "That job duration is too long (Max 2 days).";
+				ctrl.getCurrentJob().setEndDate(end.get(Calendar.YEAR), 
+						end.get(Calendar.MONTH), end.get(Calendar.DATE),
+						end.get(Calendar.HOUR), end.get(Calendar.MINUTE));
 				return ERROR_MSG;
 			}
 			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_6;
