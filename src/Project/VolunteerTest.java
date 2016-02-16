@@ -41,5 +41,17 @@ public class VolunteerTest {
 		vol.flag();
 		assertTrue(vol.myFlagged);
 	}
-
+	
+	/**
+	 * Test method for {@link Project.Volunteer#equals(Object)}
+	 */
+	@Test
+	public void testEquals() {
+		Volunteer vol2 = new Volunteer("Bob", "Smith", "vol@uw.edu", WorkLoad.HIGH);		
+		assertEquals(vol, vol2);
+		vol2 = new Volunteer("Bob", "Smith", "vol@uw.eduu", WorkLoad.HIGH);		
+		assertNotEquals(vol, vol2);
+		vol2 = new Volunteer("Bob", "Smith", "vol@uw.edu", WorkLoad.MEDIUM);		
+		assertNotEquals(vol, vol2);
+	}
 }

@@ -73,15 +73,15 @@ public class Volunteer extends AbstractUser implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Volunteer other = (Volunteer) obj;
-    	if (myFirstName != other.myFirstName)
+    	if (!myFirstName.equals(other.myFirstName))
             return false;
-        if (myLastName != other.myLastName)
+        if (!myLastName.equals(other.myLastName))
             return false;
-        if (myEmail != other.myEmail)
+        if (!myEmail.equals(other.myEmail))
             return false;
-        if (myWorkLoad != other.myWorkLoad)
+        if (!myWorkLoad.equals(other.myWorkLoad))
             return false;
-        if (myJobs != other.myJobs)
+        if (!myJobs.equals(other.myJobs))
             return false;
         return true;
     }
