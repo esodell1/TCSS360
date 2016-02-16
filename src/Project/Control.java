@@ -2,7 +2,6 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -271,6 +270,10 @@ public class Control {
 		return jobs.size();
 	}
 	
+	protected void updatePersistence() {
+		db.saveData(jobs, parks, users);
+	}
+	
 	/**
 	 * Default constructor, no parameters accepted.
 	 */
@@ -280,40 +283,53 @@ public class Control {
 		users = new ArrayList<User>();
 		search = new ArrayList<User>();
 		db = new Persistent();
-//		jobEdit = false;
+		jobEdit = false;
+		
+		// Setup Code:
+		
 //		User newUser = new Staff("Eric", "Odell", "staff@uw.edu", WorkLoad.HIGH);
 //		Administrator newUser2 = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
-//		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.MEDIUM);
-//		Manager newUser4 = new Manager("Tyler", "Braden", "manager2@uw.edu", WorkLoad.MEDIUM);
+//		User newUser3 = new Volunteer("Tyler", "Braden", "volunteer2@uw.edu", WorkLoad.MEDIUM);
+//		Administrator newUser4 = new Manager("Travis", "Stinebaugh", "manager2@uw.edu", WorkLoad.MEDIUM);
+//		User newUser5 = new Volunteer("Eric", "Odell", "volunteer@uw.edu", WorkLoad.MEDIUM);
 //		Park newPark = new Park("Central Park", "123 East Main Street", newUser2);
-//		Park newPark2 = new Park("Central Park West", "345 East Main Street", newUser4);
+//		Park newPark2 = new Park("Main Park West", "345 East Market Street", newUser4);
 //		newUser2.addPark(newPark);
 //		newUser4.addPark(newPark2);
-//		Calendar cal = new GregorianCalendar();
-//		cal.set(2016, 1, 17, 12, 30);
-//		Calendar cal2 = new GregorianCalendar();
-//		cal2.set(2016, 1, 17, 13, 30);
-//		Job newJob = new Job("Trash Pickup", newPark, cal, cal2,
-//				"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
-//		Calendar cal3 = new GregorianCalendar();
-//		cal3.set(2016, 1, 17, 14, 30);
-//		Calendar cal4 = new GregorianCalendar();
-//		cal4.set(2016, 1, 17, 16, 30);
-//		Job newJob2 = new Job("Trash Pickup 2", newPark, cal3, cal4,
-//				"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
-//		newJob.addVolunteer((Volunteer) newUser3, WorkLoad.MEDIUM);
-//		newPark.addJob(newJob);
-//		newUser2.getMyJobs().add(newJob);
-//		jobs.add(newJob);
-//		jobs.add(newJob2);
+//		for (int i = 0; i < 2; i++) {
+//			Calendar cal = new java.util.GregorianCalendar();
+//			cal.set(2016, 1, 17, 12, 30);
+//			Calendar cal2 = new java.util.GregorianCalendar();
+//			cal2.set(2016, 1, 17, 13, 30);
+//			Job newJob = new Job("Park Cleanup", newPark, cal, cal2,
+//					"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
+//			
+//			//newJob.addVolunteer((Volunteer) newUser5, WorkLoad.MEDIUM);
+//			newPark.addJob(newJob);
+//			newUser2.getMyJobs().add(newJob);
+//			jobs.add(newJob);
+//			Calendar cal3 = new java.util.GregorianCalendar();
+//			cal3.set(2016, 1, 17, 16, 30);
+//			Calendar cal4 = new java.util.GregorianCalendar();
+//			cal4.set(2016, 1, 17, 17, 30);
+//			Job newJob2 = new Job("Planting Trees", newPark, cal, cal2,
+//					"This job will planting new trees.", new ArrayList<User>(), 3, 2, 3);
+//			
+//			//newJob2.addVolunteer((Volunteer) newUser5, WorkLoad.MEDIUM);
+//			newPark.addJob(newJob2);
+//			newUser2.getMyJobs().add(newJob2);
+//			jobs.add(newJob2);
+//		}
 //		users.add(newUser);
 //		users.add(newUser2);
 //		users.add(newUser3);
 //		users.add(newUser4);
+//		users.add(newUser5);
 //		parks.add(newPark);
 //		parks.add(newPark2);
 //		
 //		db.saveData(jobs, parks, users);
+
 		db.loadData();
 		jobs = db.getJobs();
 		parks = db.getParks();

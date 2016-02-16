@@ -78,6 +78,7 @@ public enum State {
 				return MAIN;
 			} else {
 				ctrl.deleteCurrentJob();
+				ctrl.updatePersistence();
 				return VIEW_ALL_JOBS;
 			}
 		}
@@ -200,10 +201,9 @@ public enum State {
 				return MAIN;
 			} else {
 				ctrl.saveCurrentJob();
-				System.out.println(ctrl.getCurrentPark());
-				System.out.println(ctrl.getCurrentJob());
 				ctrl.getCurrentPark().addJob(ctrl.getCurrentJob());
 				ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
+				ctrl.updatePersistence();
 				return VIEW_JOB;
 			}
 		}
@@ -265,7 +265,8 @@ public enum State {
 						.addVolunteer((Volunteer)ctrl.getCurrentUser(), WorkLoad.HIGH);
 				
 				if (success) {
-					ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
+					//ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
+					ctrl.updatePersistence();
 					return VIEW_JOB;
 				} else {
 					ctrl.userMessage = "This job is full based on your selected work grade.";

@@ -74,15 +74,15 @@ public class ControlTest {
 		// Expects a list of Parks (1 park added)
 		List<Park> expected = new ArrayList<Park>();
 		expected.add(initialPark);
-		expected.add(initialPark);
 		
 		// Adds the park to the control class
+		controlClass.parks.clear();
 		controlClass.parks.add(initialPark);
-		controlClass.setCurrentPark(1);
+		controlClass.setCurrentPark(controlClass.parks.size()-1);
 		assertEquals(initialPark, controlClass.getCurrentPark());
 		
 		// Assert the expected and actual are equivalent
-		//assertEquals(expected, controlClass.getParks());
+		assertEquals(expected, controlClass.getParks());
 	}
 
 	/**
