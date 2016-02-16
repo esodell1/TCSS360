@@ -1,5 +1,12 @@
 package Project;
 
+/**
+ * This class displays the program functionality in a simple 
+ * console based user interface.
+ * 
+ * @author Edgardo Gutierrez
+ * @date 2/10/2016
+ */
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -7,10 +14,7 @@ import java.util.List;
 public class UserInterface {
 
 	private static final int DEFAULT_WIDTH = 80;
-//	private static final int DEFAULT_HEIGHT = 24;
-
 	private static final String CURSOR = "> ";
-
 	public Scanner myScanner;
 	public String myFirstName;
 	public String myLastName;
@@ -45,8 +49,8 @@ public class UserInterface {
 		for (int i = 0; i < theScreenWidth; i++) {
 			System.out.print("_");
 		}
-		System.out.println("\n");
-		System.out.print(CURSOR);
+//		System.out.println("\n");
+		System.out.print("\n" + CURSOR);
 	}
 
 	private String getUserInfo() {
@@ -83,14 +87,10 @@ public class UserInterface {
 	public int optionsInt(String title, List<?> options) {
 		int input = -100;
 		do {
-			
 			printTopBorder(DEFAULT_WIDTH);
-			
 			printCentered(getUserInfo());
-			
 			// Title
 			printCentered(title);
-			
 			// Options
 			for (int i = 0; i < options.size(); i++) {
 				System.out.println((i + 1) + ".\t" + options.get(i));
@@ -103,14 +103,10 @@ public class UserInterface {
 
 	public String detailsString(String title, String details) {
 		myScanner = new Scanner(System.in);
-		
 		printTopBorder(DEFAULT_WIDTH);
-		
 		printCentered(getUserInfo());
-		
 		// Title
 		printCentered(title);
-		
 		// Details
 		System.out.println(details);
 		printBottomBorder(DEFAULT_WIDTH);
@@ -120,14 +116,10 @@ public class UserInterface {
 	public int listInt(String title, List<String> items, List<String> options) {
 		int input = -100;
 		do {
-			
 			printTopBorder(DEFAULT_WIDTH);
-			
 			printCentered(getUserInfo());
-			
 			// Title
 			printCentered(title);
-			
 			// List
 			for (int i = 0; i < items.size(); i++) {
 				System.out.println(items.get(i));
@@ -145,24 +137,17 @@ public class UserInterface {
 	public int detailsInt(String title, String details, List<String> options) {
 		int input = -100;
 		do {
-			
 			printTopBorder(DEFAULT_WIDTH);
-			
 			printCentered(getUserInfo());
-			
 			// Title
 			printCentered(title);
-			
 			// Details
 			System.out.println(details);
-			
 			// Options
 			for (int i = 0; i < options.size(); i++) {
 				System.out.println((i + 1) + ".\t" + options.get(i));
 			}
-			
 			printBottomBorder(DEFAULT_WIDTH);
-			
 			input = getInt(1, options.size());
 		} while (input == -100);
 		return input;

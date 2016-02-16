@@ -297,6 +297,7 @@ public enum State {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			ctrl.setCurrentUser(-1);
+			ui.setUser("NOT", "SIGNED IN :", "");
 			return LOGIN;
 		}
 	},
