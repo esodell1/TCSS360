@@ -11,6 +11,10 @@ public class Manager extends Administrator implements Serializable {
 		super(theFirstName, theLastName, theEmail, theWl);
 	}
 	
+	/**
+	 * Gets menu options for a Staff member based on current state.
+	 * @return ArrayList of Strings with menu options.
+	 */
 	public List<String> getMenuOptions(State currentState) {
 		List<String> options = new ArrayList<String>();
 		if (currentState == State.MAIN) {
@@ -28,6 +32,9 @@ public class Manager extends Administrator implements Serializable {
 		return options;
 	}
 	
+	/**
+	 * Returns next state based on current state and command.
+	 */
 	public State getNextState(State currentState, int command) {
 		State nextState = State.MAIN;
 		switch (currentState) {
@@ -49,6 +56,9 @@ public class Manager extends Administrator implements Serializable {
 		return nextState;
 	}
 	
+	/**
+	 * Tests contents of volunteers to see if they are equal.
+	 */
 	@Override
     public boolean equals(Object obj) {
         if (this == obj)
