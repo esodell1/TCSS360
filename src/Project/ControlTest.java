@@ -295,4 +295,12 @@ public class ControlTest {
 		cal.set(2016, 1, 15, 15, 30);
 		assertTrue(controlClass.isJobPast(cal));
 	}
+	
+	@Test
+	public void testSearchUsers() {
+		controlClass.users.clear();
+		controlClass.users.add(volunteer);
+		controlClass.searchUsers("last", "Braden");
+		assertTrue(controlClass.search.size() == 1);
+	}
 }
