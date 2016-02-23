@@ -1,5 +1,11 @@
 package Project;
 
+import java.util.Scanner;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.InputMismatchException;
+import java.util.List;
+
 /**
  * This class displays the program functionality in a simple 
  * console based user interface.
@@ -7,21 +13,20 @@ package Project;
  * @author Edgardo Gutierrez
  * @date 2/10/2016
  */
-import java.util.Scanner;
-import java.util.InputMismatchException;
-import java.util.List;
-
 public class UserInterface {
-
 	private static final int DEFAULT_WIDTH = 80;
 	private static final String CURSOR = "> ";
+	protected InputStream input;
+	protected PrintStream output;
 	public Scanner myScanner;
 	public String myFirstName;
 	public String myLastName;
 	public String myUserType;
 
 	public UserInterface() {
-		myScanner = new Scanner(System.in);
+		input = System.in;
+		output = System.out;
+		myScanner = new Scanner(input);
 		myFirstName = "NOT";
 		myLastName = "SIGNED IN :";
 		myUserType = "";
@@ -36,21 +41,21 @@ public class UserInterface {
 	private void printTopBorder(int theScreenWidth) {
 		int halfScreen = (theScreenWidth - 12) / 2;
 		for (int i = 0; i < halfScreen; i++) {
-			System.out.print("_");
+			output.print("_");
 		}
-		System.out.print("URBAN PARKS_");
+		output.print("URBAN PARKS_");
 		for (int i = 0; i < halfScreen; i++) {
-			System.out.print("_");
+			output.print("_");
 		}
-		System.out.println();
+		output.println();
 	}
 
 	private void printBottomBorder(int theScreenWidth) {
 		for (int i = 0; i < theScreenWidth; i++) {
-			System.out.print("_");
+			output.print("_");
 		}
-//		System.out.println("\n");
-		System.out.print("\n" + CURSOR);
+//		output.println("\n");
+		output.print("\n" + CURSOR);
 	}
 
 	private String getUserInfo() {
@@ -65,9 +70,9 @@ public class UserInterface {
 		
 		int spaces = (DEFAULT_WIDTH - stringLength) / 2;
 		for (int i = 0; i < spaces; i++) {
-			System.out.print(" ");
+			output.print(" ");
 		}
-		System.out.println(theString);
+		output.println(theString);
 	}
 
 	private int getInt(int theLowerBound, int theUpperBound) {
@@ -93,7 +98,7 @@ public class UserInterface {
 			printCentered(title);
 			// Options
 			for (int i = 0; i < options.size(); i++) {
-				System.out.println((i + 1) + ".\t" + options.get(i));
+				output.println((i + 1) + ".\t" + options.get(i));
 			}
 			printBottomBorder(DEFAULT_WIDTH);
 			input = getInt(1, options.size());
@@ -108,7 +113,7 @@ public class UserInterface {
 		// Title
 		printCentered(title);
 		// Details
-		System.out.println(details);
+		output.println(details);
 		printBottomBorder(DEFAULT_WIDTH);
 		return myScanner.nextLine();
 	}
@@ -122,11 +127,11 @@ public class UserInterface {
 			printCentered(title);
 			// List
 			for (int i = 0; i < items.size(); i++) {
-				System.out.println(items.get(i));
+				output.println(items.get(i));
 			}
 			// Options
 			for (int i = 0; i < options.size(); i++) {
-				System.out.println((i + 1) + ".\t" + options.get(i));
+				output.println((i + 1) + ".\t" + options.get(i));
 			}
 			printBottomBorder(DEFAULT_WIDTH);
 			input = getInt(1, options.size());
@@ -142,10 +147,10 @@ public class UserInterface {
 			// Title
 			printCentered(title);
 			// Details
-			System.out.println(details);
+			output.println(details);
 			// Options
 			for (int i = 0; i < options.size(); i++) {
-				System.out.println((i + 1) + ".\t" + options.get(i));
+				output.println((i + 1) + ".\t" + options.get(i));
 			}
 			printBottomBorder(DEFAULT_WIDTH);
 			input = getInt(1, options.size());
