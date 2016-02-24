@@ -26,6 +26,7 @@ public class StateController {
 		StateController stateControl = new StateController();
 		while (true) {
 			stateControl.state = stateControl.state.nextState(ui, ctrl);
+			
 		}
 	}
 	

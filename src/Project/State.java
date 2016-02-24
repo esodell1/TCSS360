@@ -2,6 +2,7 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -20,9 +21,7 @@ public enum State {
 			int result = ctrl.login(input);
 			if(result >= 0) {
 				User currentUser = ctrl.getCurrentUser();
-				ui.setUser(	currentUser.getFirstName(), 
-							currentUser.getLastName(), 
-							currentUser.getUserType());
+				ui.setUser(currentUser);
 				return MAIN;
 			}
 			else {
@@ -88,11 +87,9 @@ public enum State {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
-			if (!ctrl.jobEdit) {	// Check for max job count
-				if (!ctrl.allowedJobCount()) {
-					ctrl.userMessage = "You have reached the maximum number of jobs (30).";
-					return ERROR_MSG;
-				}
+			if (!ctrl.jobEdit && !ctrl.allowedJobCount()) {
+				ctrl.userMessage = "You have reached the maximum number of jobs (30).";
+				return ERROR_MSG;
 			}
 			String name = ui.detailsString(title, "Please enter a job name: ");
 			if (!ctrl.jobEdit) ctrl.setCurrentJob(new Job());
@@ -130,25 +127,15 @@ public enum State {
 			String[] tokens = date.split("/| |:");
 			if(tokens.length != 5) {
 				return CREATE_JOB_4;
-			}
-			Calendar start = ctrl.getCurrentJob().getStartDate();
-			ctrl.getCurrentJob().setStartDate(Integer.parseInt(tokens[2]), 
+			} 
+			Calendar start = new GregorianCalendar(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
-			if (!ctrl.isWeekOpen()) {
-				ctrl.userMessage = "This week is already full (5).";
-				ctrl.getCurrentJob().setStartDate(start.get(Calendar.YEAR), 
-						start.get(Calendar.MONTH), start.get(Calendar.DATE),
-						start.get(Calendar.HOUR), start.get(Calendar.MINUTE));
-				return ERROR_MSG;
-			}
-			if (ctrl.isJobPast(ctrl.getCurrentJob().getStartDate())) {
+			if (ctrl.isJobPast(start)) {
 				ctrl.userMessage = "Must schedule jobs for future dates, and no more than 3 months in advance.";
-				ctrl.getCurrentJob().setStartDate(start.get(Calendar.YEAR), 
-						start.get(Calendar.MONTH), start.get(Calendar.DATE),
-						start.get(Calendar.HOUR), start.get(Calendar.MINUTE));
 				return ERROR_MSG;
 			}
+			ctrl.getCurrentJob().setStartDate(start);
 			return CREATE_JOB_5;
 		}
 	},
@@ -162,28 +149,18 @@ public enum State {
 			if(tokens.length != 5) {
 				return CREATE_JOB_5;
 			}
-			Calendar end = ctrl.getCurrentJob().getStartDate();
-			ctrl.getCurrentJob().setEndDate(Integer.parseInt(tokens[2]), 
+			Calendar start = ctrl.getCurrentJob().getStartDate();
+			Calendar end = new GregorianCalendar(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
-			if (!ctrl.isWeekOpen()) {
+			if (!ctrl.isWeekOpen(start)) {
 				ctrl.userMessage = "This week is already full (5).";
-				ctrl.getCurrentJob().setEndDate(end.get(Calendar.YEAR), 
-						end.get(Calendar.MONTH), end.get(Calendar.DATE),
-						end.get(Calendar.HOUR), end.get(Calendar.MINUTE));
 				return ERROR_MSG;
-			}  else if (ctrl.isJobPast(ctrl.getCurrentJob().getEndDate())) {
+			}  else if (ctrl.isJobPast(end)) {
 				ctrl.userMessage = "Must schedule jobs for future dates, and no more than 3 months in advance.";
-				ctrl.getCurrentJob().setEndDate(end.get(Calendar.YEAR), 
-						end.get(Calendar.MONTH), end.get(Calendar.DATE),
-						end.get(Calendar.HOUR), end.get(Calendar.MINUTE));
 				return ERROR_MSG;
-			} else if (!ctrl.isDurationAllowed(ctrl.getCurrentJob().getStartDate(), 
-					ctrl.getCurrentJob().getEndDate())) {
+			} else if (!ctrl.isDurationAllowed(start, end)) {
 				ctrl.userMessage = "That job duration is too long (Max 2 days).";
-				ctrl.getCurrentJob().setEndDate(end.get(Calendar.YEAR), 
-						end.get(Calendar.MONTH), end.get(Calendar.DATE),
-						end.get(Calendar.HOUR), end.get(Calendar.MINUTE));
 				return ERROR_MSG;
 			}
 			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_6;
@@ -216,10 +193,9 @@ public enum State {
 				ctrl.setCurrentJob(-1);
 				return MAIN;
 			} else {
-				ctrl.saveCurrentJob();
 				ctrl.getCurrentPark().addJob(ctrl.getCurrentJob());
 				ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
-				ctrl.updatePersistence();
+				ctrl.saveCurrentJob();
 				return VIEW_JOB;
 			}
 		}
@@ -256,19 +232,15 @@ public enum State {
 				return ERROR_MSG;
 			}
 			// Check if the volunteer is already signed up on this day:
-			if (!ctrl.isDayOpen()) {
+			if (!ctrl.isDayOpen(ctrl.getCurrentJob().getStartDate())) {
 				ctrl.userMessage = "Cannot sign up for multiple jobs on the same day.";
 				return ERROR_MSG;
 			}
 			String job = ctrl.getCurrentJob().toString();
 			job = job + "\n\tWhat work grade would you like to sign up for?";
-			List<String> opts = new ArrayList<String>();
-			opts.add("Low");
-			opts.add("Medium");
-			opts.add("High");
-			opts.add("Return to job view");
-			opts.add("Return to Main Menu");
+			List<String> opts = ctrl.getCurrentUser().getMenuOptions(JOB_SIGNUP);
 			int command = ui.detailsInt("Job Sign Up", job, opts);
+			// TODO Push this logic somewhere more appropriate:
 			if (command == 4) return VIEW_JOB;
 			else if (command == 5) return MAIN;
 			else {
@@ -281,7 +253,7 @@ public enum State {
 						.addVolunteer((Volunteer)ctrl.getCurrentUser(), WorkLoad.HIGH);
 				
 				if (success) {
-					//ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
+					ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
 					ctrl.updatePersistence();
 					return VIEW_JOB;
 				} else {
@@ -296,15 +268,12 @@ public enum State {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			String str = "Volunteers signed up for: " + ctrl.getCurrentJob().getName() + "\n";
-			for (User vol : ctrl.getCurrentJob().getEnrolledVolunteers()) {
-				str = str + "\tName: \t" + vol.getLastName() + ", " + vol.getFirstName()
-					+ "\tGrade: " + vol.getWorkLoad() + "\n";
-			}
 			List<String> opts = new ArrayList<String>();
 			opts.add("Return to job view");
 			opts.add("Return to jobs list");
 			opts.add("Return to Main Menu");
-			int command = ui.detailsInt("View Job", str, opts);
+			int command = ui.detailsInt("View Job", str + 
+					ctrl.getCurrentJob().getEnrolledVolunteersString(), opts);
 			if (command == 1) return VIEW_JOB;
 			else if (command == 2) return VIEW_ALL_JOBS;
 			else return MAIN;
@@ -314,7 +283,7 @@ public enum State {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			ctrl.setCurrentUser(-1);
-			ui.setUser("NOT", "SIGNED IN :", "");
+			ui.setUser(null);
 			return LOGIN;
 		}
 	},

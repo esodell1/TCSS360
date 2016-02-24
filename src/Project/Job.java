@@ -109,6 +109,10 @@ public class Job implements Serializable {
 		this.startDate.set(year, month, day, hour, minute);
 	}
 	
+	public void setStartDate(Calendar start) {
+		this.startDate = start;
+	}
+	
 	public Calendar getEndDate() {
 		return endDate;
 	}
@@ -127,6 +131,20 @@ public class Job implements Serializable {
 
 	public List<User> getEnrolledVolunteers() {
 		return enrolledVolunteers;
+	}
+	
+	public String getEnrolledVolunteersString() {
+		StringBuilder sb = new StringBuilder();
+		for (User vol : this.getEnrolledVolunteers()) {
+			sb.append("\tName: \t");
+			sb.append(vol.getLastName());
+			sb.append(", ");
+			sb.append(vol.getFirstName());
+			sb.append("\tGrade: ");
+			sb.append(vol.getWorkLoad());
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 
 	/**outputs all information regarding our Job class.*/

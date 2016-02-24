@@ -143,6 +143,7 @@ public class Control {
 	 */
 	public void saveCurrentJob() {
 		this.jobs.add(this.currentJob);
+		this.updatePersistence();
 	}
 
 	/**
@@ -194,14 +195,13 @@ public class Control {
 	 * jobs during a consecutive 7 day span may exist in the system.
 	 * @return true if the job may be created, false otherwise.
 	 */
-	protected boolean isWeekOpen() {
+	protected boolean isWeekOpen(Calendar date) {
 		int count = 0;
-		Calendar now = (currentJob == null)?null : currentJob.getStartDate();
 		for (Job theJob : jobs) {
-			if ((theJob.getStartDate().get(Calendar.YEAR) == now.get(Calendar.YEAR))
-					&& (theJob.getStartDate().get(Calendar.MONTH) == now.get(Calendar.MONTH))
+			if ((theJob.getStartDate().get(Calendar.YEAR) == date.get(Calendar.YEAR))
+					&& (theJob.getStartDate().get(Calendar.MONTH) == date.get(Calendar.MONTH))
 					&& (Math.abs(theJob.getStartDate().get(Calendar.DATE) 
-							- now.get(Calendar.DATE))) <= 3) {
+							- date.get(Calendar.DATE))) <= 3) {
 				count++;
 			}
 		}
@@ -213,12 +213,11 @@ public class Control {
 	 * condition that they may not sign up for more than one job on any given date.
 	 * @return true if they are allowed to sign up, false otherwise.
 	 */
-	protected boolean isDayOpen() {
-		Calendar now = currentJob.getStartDate();
+	protected boolean isDayOpen(Calendar date) {
 		for (Job theJob : currentUser.getMyJobs()) {
-			if ((theJob.getStartDate().get(Calendar.YEAR) == now.get(Calendar.YEAR))
-					&& (theJob.getStartDate().get(Calendar.MONTH) == now.get(Calendar.MONTH))
-					&& (theJob.getStartDate().get(Calendar.DATE) == now.get(Calendar.DATE))) {
+			if ((theJob.getStartDate().get(Calendar.YEAR) == date.get(Calendar.YEAR))
+					&& (theJob.getStartDate().get(Calendar.MONTH) == date.get(Calendar.MONTH))
+					&& (theJob.getStartDate().get(Calendar.DATE) == date.get(Calendar.DATE))) {
 				return false;
 			}
 		}

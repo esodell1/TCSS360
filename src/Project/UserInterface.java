@@ -32,10 +32,16 @@ public class UserInterface {
 		myUserType = "";
 	}
 
-	public void setUser(String theFirstName, String theLastName, String theUserType) {
-		myFirstName = theFirstName;
-		myLastName = theLastName;
-		myUserType = theUserType;
+	public void setUser(User currentUser) {
+		if (currentUser != null) {
+			myFirstName = currentUser.getFirstName();
+			myLastName = currentUser.getLastName();
+			myUserType = currentUser.getUserType();
+		} else {
+			myFirstName = "NOT";
+			myLastName = "SIGNED IN :";
+			myUserType = "";
+		}
 	}
 
 	private void printTopBorder(int theScreenWidth) {

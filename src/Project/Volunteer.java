@@ -56,7 +56,13 @@ public class Volunteer extends AbstractUser implements Serializable {
 			options.add("Sign up for job");
 			options.add("Return to job list");
 			options.add("Return to main menu");
-		} 
+		} else if (currentState == State.JOB_SIGNUP) {
+			options.add("Low");
+			options.add("Medium");
+			options.add("High");
+			options.add("Return to job view");
+			options.add("Return to Main Menu");
+		}
 		return options;
 	}
 	

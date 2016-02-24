@@ -24,6 +24,8 @@ public class ControlTest {
 	User staff;
 	User manager;
 	User volunteer;
+	Calendar cal;
+	Calendar cal2;
 
 	/**
 	 * @throws java.lang.Exception
@@ -35,9 +37,9 @@ public class ControlTest {
 		manager = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
 		volunteer = new Volunteer("Tyler", "Braden", "volunteer@uw.edu", WorkLoad.MEDIUM);
 		initialPark = new Park("Central Park", "123 East Main Street", manager);
-		Calendar cal = new GregorianCalendar();
+		cal = new GregorianCalendar();
 		cal.set(2016, 2, 3, 14, 30);
-		Calendar cal2 = new GregorianCalendar();
+		cal2 = new GregorianCalendar();
 		cal2.set(2016, 2, 3, 16, 30);
 		initialJob = new Job("Trash Pickup", initialPark, cal, cal2,
 				"This job will just be picking up trash.", new ArrayList<User>(), 5, 2, 0);
@@ -72,8 +74,8 @@ public class ControlTest {
 	@Test
 	public void testGetParks() {
 		// Expects a list of Parks (1 park added)
-		List<Park> expected = new ArrayList<Park>();
-		expected.add(initialPark);
+		List<String> expected = new ArrayList<String>();
+		expected.add(initialPark.getName());
 		
 		// Adds the park to the control class
 		controlClass.parks.clear();
@@ -224,7 +226,7 @@ public class ControlTest {
 	@Test
 	public void testIsWeekOpen() {
 		controlClass.jobs.clear();
-		assertTrue(controlClass.isWeekOpen());
+		assertTrue(controlClass.isWeekOpen(cal));
 		for(int i = 1; i < 7; i++) {
 			Job j = new Job();
 			j.setStartDate(2016, 03, i, 12, 00);
@@ -235,7 +237,7 @@ public class ControlTest {
 		j.setStartDate(2016, 3, 3, 12, 00);
 		j.setStartDate(2016, 3, 3, 14, 00);
 		controlClass.setCurrentJob(j);
-		assertFalse(controlClass.isWeekOpen());
+		assertFalse(controlClass.isWeekOpen(controlClass.getCurrentJob().getStartDate()));
 	}
 	
 	@Test
@@ -252,7 +254,7 @@ public class ControlTest {
 		j2.setStartDate(2016, 3, 3, 12, 00);
 		j2.setStartDate(2016, 3, 3, 14, 00);
 		controlClass.setCurrentJob(j2);
-		assertFalse(controlClass.isDayOpen());
+		assertFalse(controlClass.isDayOpen(controlClass.getCurrentJob().getStartDate()));
 	}
 	
 	@Test
@@ -282,7 +284,7 @@ public class ControlTest {
 	@Test
 	public void testIsJobPast() {
 		Calendar cal = new GregorianCalendar();
-		cal.set(2016, 1, 20, 14, 30);
+		cal.set(2016, 2, 20, 14, 30);
 		assertFalse(controlClass.isJobPast(cal));
 		cal.set(2015, 1, 20, 14, 30);
 		assertTrue(controlClass.isJobPast(cal));
