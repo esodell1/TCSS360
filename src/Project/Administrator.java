@@ -1,6 +1,7 @@
 package Project;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,6 +38,18 @@ public abstract class Administrator extends AbstractUser implements Serializable
 	 */
 	public List<Park> getParks() {
 		return myParks;
+	}
+	
+	/**
+	 * Returns a List of park names added to this user type.
+	 * @return List of Strings of park names.
+	 */
+	public List<String> getParkNames() {
+		List<String> options = new ArrayList<String>();
+		for (int i = 0; i < myParks.size(); i++) {
+			options.add(myParks.get(i).getName());
+		}
+		return options;
 	}
 	
 	/**

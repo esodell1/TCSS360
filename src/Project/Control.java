@@ -38,11 +38,15 @@ public class Control {
 	}
 		
 	/**
-	 * Returns a list of all known parks.
+	 * Returns a list of all known park names as a List<String>.
 	 * @return List<Park>
 	 */
-	public List<Park> getParks() {
-		return parks;
+	public List<String> getParks() {
+		List<String> options = new ArrayList<String>();
+		for (int i = 0; i < parks.size(); i++) {
+			options.add(parks.get(i).getName());
+		}
+		return options;
 	}
 
 	/**

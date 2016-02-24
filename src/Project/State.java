@@ -114,11 +114,7 @@ public enum State {
 		State nextState(UserInterface ui, Control ctrl) {
 			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
 			Administrator currentUser = (Administrator) ctrl.getCurrentUser();
-			List<Park> parks = currentUser.getParks();
-			List<String> opts = new ArrayList<String>();
-			for (Park p : parks) {
-				opts.add(p.getName());
-			}
+			List<String> opts = currentUser.getParkNames();
 			int park = ui.optionsInt(title, opts);
 			ctrl.setCurrentPark(park - 1);
 			ctrl.getCurrentJob().setPark(ctrl.getCurrentPark());
