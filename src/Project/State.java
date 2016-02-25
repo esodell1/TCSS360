@@ -20,13 +20,9 @@ public enum State {
 			String input = ui.detailsString("Login", "Enter an email address:");
 			int result = ctrl.login(input);
 			if(result >= 0) {
-				User currentUser = ctrl.getCurrentUser();
-				ui.setUser(currentUser);
+				ui.setUser(ctrl.getCurrentUser());
 				return MAIN;
-			}
-			else {
-				return LOGIN;
-			}
+			} else return LOGIN;
 		}
 	},
 	MAIN {
@@ -42,15 +38,12 @@ public enum State {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
 			List<String> opts = ctrl.getAllJobs();
-			int size = opts.size();
 			opts.add("Return to Main Menu");
 			int command = ui.optionsInt("View All Jobs", opts);
-			if (command <= size) {
+			if (command <= opts.size() - 1) {
 				ctrl.setCurrentJob(command - 1);
 				return VIEW_JOB;
-			} else {
-				return MAIN;
-			}
+			} else return MAIN;
 		}
 	},
 	VIEW_JOB {
@@ -73,9 +66,8 @@ public enum State {
 			opts.add("No");
 			opts.add("Yes");
 			int command = ui.detailsInt("Confirm Job Deletion", job, opts);
-			if(command == 1) {
-				return MAIN;
-			} else {
+			if(command == 1) return MAIN;
+			else {
 				ctrl.deleteCurrentJob();
 				ctrl.updatePersistence();
 				return VIEW_ALL_JOBS;
@@ -125,14 +117,15 @@ public enum State {
 			String date = ui.detailsString(title, 
 					"Please enter a job start date and time: MM/DD/YYYY HH:MM");
 			String[] tokens = date.split("/| |:");
-			if(tokens.length != 5) {
-				return CREATE_JOB_4;
-			} 
+			if(tokens.length != 5) return CREATE_JOB_4; 
 			Calendar start = new GregorianCalendar(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
 			if (ctrl.isJobPast(start)) {
 				ctrl.userMessage = "Must schedule jobs for future dates, and no more than 3 months in advance.";
+				return ERROR_MSG;
+			} else if (!ctrl.isWeekOpen(start)) {
+				ctrl.userMessage = "This week is already full (5).";
 				return ERROR_MSG;
 			}
 			ctrl.getCurrentJob().setStartDate(start);
@@ -146,18 +139,16 @@ public enum State {
 			String date = ui.detailsString(title, 
 					"Please enter a job end date and time: MM/DD/YYYY HH:MM");
 			String[] tokens = date.split("/| |:");
-			if(tokens.length != 5) {
-				return CREATE_JOB_5;
-			}
+			if(tokens.length != 5) return CREATE_JOB_5;
 			Calendar start = ctrl.getCurrentJob().getStartDate();
 			Calendar end = new GregorianCalendar(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
-			if (!ctrl.isWeekOpen(start)) {
-				ctrl.userMessage = "This week is already full (5).";
-				return ERROR_MSG;
-			}  else if (ctrl.isJobPast(end)) {
+			if (ctrl.isJobPast(end)) {
 				ctrl.userMessage = "Must schedule jobs for future dates, and no more than 3 months in advance.";
+				return ERROR_MSG;
+			} else if (!ctrl.isWeekOpen(end)) {
+				ctrl.userMessage = "This week is already full (5).";
 				return ERROR_MSG;
 			} else if (!ctrl.isDurationAllowed(start, end)) {
 				ctrl.userMessage = "That job duration is too long (Max 2 days).";
@@ -172,9 +163,7 @@ public enum State {
 			String title = (ctrl.jobEdit) ? "Edit job details" : "Create a New Job";
 			String date = ui.detailsString(title, "Please enter a number for each required work load: H/M/L");
 			String[] tokens = date.split("/");
-			if(tokens.length != 3) {
-				return CREATE_JOB_5;
-			}
+			if(tokens.length != 3) return CREATE_JOB_5;
 			ctrl.getCurrentJob().high = Integer.parseInt(tokens[0]);
 			ctrl.getCurrentJob().medium = Integer.parseInt(tokens[1]);
 			ctrl.getCurrentJob().low = Integer.parseInt(tokens[2]);
@@ -211,9 +200,7 @@ public enum State {
 					details = details + "\t" + vol.getLastName() + ", " + vol.getFirstName()
 						+ " \t" + vol.getEmail() + "\n";
 				}
-			} else {
-				details = details + "\tThere we no matches from the search.\n";
-			}
+			} else details = details + "\tThere we no matches from the search.\n";
 			ctrl.search.clear();
 			List<String> options = new ArrayList<String>();
 			options.add("Search again");
@@ -292,51 +279,28 @@ public enum State {
 		State nextState(UserInterface ui, Control ctrl) {
 			List<String> jobs = ctrl.getCurrentUser().getMyJobNames();
 			if (jobs.size() > 0) {
-				int size = jobs.size();
 				jobs.add("Return to Main Menu");
 				int command = ui.optionsInt("My Jobs", jobs);
-				if (command <= size) {
+				if (command <= jobs.size() - 1) {
 					ctrl.setCurrentJob(ctrl.getCurrentUser().getMyJobs().get(command - 1));
 					return VIEW_JOB;
 				} else {
 					return MAIN;
 				}
 			} else {
-				List<String> opts = new ArrayList<String>();
-				opts.add("View all jobs");
-				opts.add("Return to Main Menu");
-				int command = ui.detailsInt("My Jobs", "You don't have any jobs.", opts);
-				if (command == 1) {
-					return VIEW_ALL_JOBS;
-				} else {
-					return MAIN;
-				}
+				ctrl.userMessage = "You don't have any jobs.";
+				return SUCCESS_MSG;
 			}
 		}
 	},
 	EDIT_JOB_DETAILS {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
-			List<String> opts = new ArrayList<String>();
 			String details = ctrl.getCurrentJob().toString() + "What would you like to change?";
-			opts.add("Name");
-			opts.add("Description");
-			opts.add("Park");
-			opts.add("Date/Time");
-			opts.add("Workload");
-			opts.add("Return to job");
-			opts.add("Return to Main Menu");
-			int command = ui.detailsInt("Edit Job Details", details, opts);
-			if (command == 6) return VIEW_JOB;
-			else if (command == 7) return MAIN;
-			else {
-				ctrl.jobEdit = true;
-				if(command == 1) return CREATE_JOB;
-				else if(command == 2) return CREATE_JOB_2;
-				else if(command == 3) return CREATE_JOB_3;
-				else if(command == 4) return CREATE_JOB_4;
-				else return CREATE_JOB_6;
-			}
+			int command = ui.detailsInt("Edit Job Details", details, 
+					ctrl.getCurrentUser().getMenuOptions(EDIT_JOB_DETAILS));
+			if (command >= 1 && command <= 5) ctrl.jobEdit = true;
+			return ctrl.getCurrentUser().getNextState(EDIT_JOB_DETAILS, command);
 		}
 			
 	},

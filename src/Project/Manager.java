@@ -28,6 +28,14 @@ public class Manager extends Administrator implements Serializable {
 			options.add("Delete job");
 			options.add("Return to job list");
 			options.add("Return to main menu");
+		} else if (currentState == State.EDIT_JOB_DETAILS) {
+			options.add("Name");
+			options.add("Description");
+			options.add("Park");
+			options.add("Date/Time");
+			options.add("Workload");
+			options.add("Return to job");
+			options.add("Return to Main Menu");
 		}
 		return options;
 	}
@@ -51,6 +59,14 @@ public class Manager extends Administrator implements Serializable {
 				else if (command == 4) nextState = State.VIEW_ALL_JOBS;
 				else if (command == 5) nextState = State.MAIN;
 				break;
+			case EDIT_JOB_DETAILS:
+				if(command == 1) return State.CREATE_JOB;
+				else if(command == 2) return State.CREATE_JOB_2;
+				else if(command == 3) return State.CREATE_JOB_3;
+				else if(command == 4) return State.CREATE_JOB_4;
+				else if(command == 5) return State.CREATE_JOB_6;
+				else if(command == 6) return State.VIEW_JOB;
+				else if(command == 7) return State.MAIN;
 			default:
 		}
 		return nextState;
