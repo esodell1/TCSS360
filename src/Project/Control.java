@@ -3,6 +3,7 @@ package Project;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.function.Consumer;
 
 
 /**
@@ -90,10 +91,16 @@ public class Control {
 	}
 	
 	/**
-	 * Deletes the Job object pointed to by currentJob.
+	 * Deletes the Job object pointed to by currentJob, and deletes any
+	 * and all existing links from volunteers who have signed up for the job.
 	 */
 	public void deleteCurrentJob() {
 		if (currentJob != null) {
+			List<User> volunteers = currentJob.getEnrolledVolunteers();
+			for(int i = 0; i < volunteers.size(); i++) {
+				int index = volunteers.get(i).getMyJobs().indexOf(currentJob);
+				volunteers.get(i).getMyJobs().remove(index);
+			}
 			int idx = jobs.indexOf(currentJob);
 			if (idx >= 0) {
 				jobs.remove(idx);
@@ -299,30 +306,28 @@ public class Control {
 //		Park newPark2 = new Park("Main Park West", "345 East Market Street", newUser4);
 //		newUser2.addPark(newPark);
 //		newUser4.addPark(newPark2);
-//		for (int i = 0; i < 2; i++) {
-//			Calendar cal = new java.util.GregorianCalendar();
-//			cal.set(2016, 1, 17, 12, 30);
-//			Calendar cal2 = new java.util.GregorianCalendar();
-//			cal2.set(2016, 1, 17, 13, 30);
-//			Job newJob = new Job("Park Cleanup", newPark, cal, cal2,
-//					"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
-//			
-//			//newJob.addVolunteer((Volunteer) newUser5, WorkLoad.MEDIUM);
-//			newPark.addJob(newJob);
-//			newUser2.getMyJobs().add(newJob);
-//			jobs.add(newJob);
-//			Calendar cal3 = new java.util.GregorianCalendar();
-//			cal3.set(2016, 1, 17, 16, 30);
-//			Calendar cal4 = new java.util.GregorianCalendar();
-//			cal4.set(2016, 1, 17, 17, 30);
-//			Job newJob2 = new Job("Planting Trees", newPark, cal, cal2,
-//					"This job will planting new trees.", new ArrayList<User>(), 3, 2, 3);
-//			
-//			//newJob2.addVolunteer((Volunteer) newUser5, WorkLoad.MEDIUM);
-//			newPark.addJob(newJob2);
-//			newUser2.getMyJobs().add(newJob2);
-//			jobs.add(newJob2);
-//		}
+//		
+//		Calendar cal = new java.util.GregorianCalendar();
+//		cal.set(2016, 2, 17, 12, 30);
+//		Calendar cal2 = new java.util.GregorianCalendar();
+//		cal2.set(2016, 2, 17, 13, 30);
+//		Job newJob = new Job("Park Cleanup", newPark, cal, cal2,
+//				"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
+//		
+//		newPark.addJob(newJob);
+//		newUser2.getMyJobs().add(newJob);
+//		jobs.add(newJob);
+//		Calendar cal3 = new java.util.GregorianCalendar();
+//		cal3.set(2016, 2, 18, 16, 30);
+//		Calendar cal4 = new java.util.GregorianCalendar();
+//		cal4.set(2016, 2, 18, 17, 30);
+//		Job newJob2 = new Job("Planting Trees", newPark, cal3, cal4,
+//				"This job will planting new trees.", new ArrayList<User>(), 3, 2, 3);
+//		
+//		newPark.addJob(newJob2);
+//		newUser2.getMyJobs().add(newJob2);
+//		jobs.add(newJob2);
+//		
 //		users.add(newUser);
 //		users.add(newUser2);
 //		users.add(newUser3);
