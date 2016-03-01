@@ -296,6 +296,10 @@ public enum State {
 	EDIT_JOB_DETAILS {
 		@Override
 		State nextState(UserInterface ui, Control ctrl) {
+			if(ctrl.getCurrentJob().getEnrolledVolunteers().size() > 0) {
+				ctrl.userMessage = "You can't edit a job once volunteers have signed up.";
+				return ERROR_MSG;
+			}
 			String details = ctrl.getCurrentJob().toString() + "What would you like to change?";
 			int command = ui.detailsInt("Edit Job Details", details, 
 					ctrl.getCurrentUser().getMenuOptions(EDIT_JOB_DETAILS));
