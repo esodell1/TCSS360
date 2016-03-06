@@ -48,7 +48,7 @@ public class StateTest {
 	}
 	
 	@Test
-	public void testMainAsManager() {
+	public void testLoginAsManager() {
 		currentState = State.LOGIN;
 		inputHelper("manager@uw.edu");
 		next();	
@@ -56,7 +56,7 @@ public class StateTest {
 	}
 	
 	@Test
-	public void testMainAsStaff() {
+	public void testLoginAsStaff() {
 		currentState = State.LOGIN;
 		inputHelper("staff@uw.edu");
 		next();	
@@ -64,7 +64,7 @@ public class StateTest {
 	}
 	
 	@Test
-	public void testMainAsVolunteer() {
+	public void testLoginAsVolunteer() {
 		currentState = State.LOGIN;
 		inputHelper("volunteer@uw.edu");
 		next();	
@@ -72,7 +72,35 @@ public class StateTest {
 	}
 	
 	@Test
+	public void testMainAsManager() {
+		currentState = State.LOGIN;
+		inputHelper("manager@uw.edu");
+		next();	
+		User manager = ctrl.getCurrentUser();
+		assertTrue(manager.getMenuOptions(currentState).toString().equals("[View all Jobs, View my Jobs, Submit new Job, Logout]"));
+	}
+	
+	@Test
+	public void testMainAsStaff() {
+		currentState = State.LOGIN;
+		inputHelper("staff@uw.edu");
+		next();	
+		User staff = ctrl.getCurrentUser();
+		assertTrue(staff.getMenuOptions(currentState).toString().equals("[View all Jobs, Search volunteers by Last Name, Logout]"));
+	}
+	
+	@Test
+	public void testMainAsVolunteer() {
+		currentState = State.LOGIN;
+		inputHelper("staff@uw.edu");
+		next();	
+		User volunteer = ctrl.getCurrentUser();
+		assertTrue(volunteer.getMenuOptions(currentState).toString().equals("[View all Jobs, Search volunteers by Last Name, Logout]"));
+	}
+	
+	@Test
 	public void testViewAllJobs() {
+		
 		assertTrue(false);
 	}
 	
