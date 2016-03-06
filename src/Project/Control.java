@@ -26,13 +26,15 @@ public class Control {
 	private Job currentJob;
 	
 	/**
-	 * This method returns a list of job names of type List<String>
+	 * This method returns a list of upcoming job names of type List<String>
 	 * @return List<String> Jobs
 	 */
 	public List<String> getAllJobs() {
 		List<String> options = new ArrayList<String>();
 		for (int i = 0; i < jobs.size(); i++) {
-			options.add(jobs.get(i).getName());
+			if (jobs.get(i).getStartDate().after(Calendar.getInstance())) {
+				options.add(jobs.get(i).getName());
+			}
 		}
 		return options;
 	}

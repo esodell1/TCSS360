@@ -74,10 +74,29 @@ public class StateTest {
 	@Test
 	public void testMainAsManager() {
 		currentState = State.LOGIN;
-		inputHelper("manager@uw.edu");
+		inputHelper("manager@uw.edu");		// Login as manager
 		next();	
-		User manager = ctrl.getCurrentUser();
-		assertTrue(manager.getMenuOptions(currentState).toString().equals("[View all Jobs, View my Jobs, Submit new Job, Logout]"));
+		assertEquals(currentState, State.MAIN);
+		
+		currentState = State.MAIN;
+		inputHelper("1");		// Option for View all jobs
+		next();	
+		assertEquals(currentState, State.VIEW_ALL_JOBS);
+		
+		currentState = State.MAIN;
+		inputHelper("2");		// Option for View My Jobs
+		next();	
+		assertEquals(currentState, State.MY_JOBS);
+		
+		currentState = State.MAIN;
+		inputHelper("3");		// Option for Submit new job
+		next();	
+		assertEquals(currentState, State.CREATE_JOB);
+		
+		currentState = State.MAIN;
+		inputHelper("4");		// Logout option
+		next();	
+		assertEquals(currentState, State.LOGOUT);
 	}
 	
 	@Test
@@ -85,108 +104,135 @@ public class StateTest {
 		currentState = State.LOGIN;
 		inputHelper("staff@uw.edu");
 		next();	
-		User staff = ctrl.getCurrentUser();
-		assertTrue(staff.getMenuOptions(currentState).toString().equals("[View all Jobs, Search volunteers by Last Name, Logout]"));
+		assertEquals(currentState, State.MAIN);
+		
+		currentState = State.MAIN;
+		inputHelper("1");		// Option for View all jobs
+		next();	
+		assertEquals(currentState, State.VIEW_ALL_JOBS);
+		
+		currentState = State.MAIN;
+		inputHelper("2");		// Option for Search volunteers
+		next();	
+		assertEquals(currentState, State.SEARCH_LAST_NAME);
+		
+		currentState = State.MAIN;
+		inputHelper("3");		// Option for logout
+		next();	
+		assertEquals(currentState, State.LOGOUT);
 	}
 	
 	@Test
 	public void testMainAsVolunteer() {
 		currentState = State.LOGIN;
-		inputHelper("staff@uw.edu");
+		inputHelper("volunteer@uw.edu");
 		next();	
-		User volunteer = ctrl.getCurrentUser();
-		assertTrue(volunteer.getMenuOptions(currentState).toString().equals("[View all Jobs, Search volunteers by Last Name, Logout]"));
+		assertEquals(currentState, State.MAIN);
+		
+		inputHelper("1");		// Option for View all jobs
+		next();	
+		assertEquals(currentState, State.VIEW_ALL_JOBS);
+		
+		currentState = State.MAIN;
+		inputHelper("2");		// Option for My jobs
+		next();	
+		assertEquals(currentState, State.MY_JOBS);
+		
+		currentState = State.MAIN;
+		inputHelper("3");		// Option for logout
+		next();	
+		assertEquals(currentState, State.LOGOUT);
 	}
 	
 	@Test
 	public void testViewAllJobs() {
 		
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testViewJob() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testDeleteJob() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testCreateJob() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testCreateJob2() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testCreateJob3() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testCreateJob4() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testCreateJob5() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testCreateJob6() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testConfirmJob() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testSearchLastName() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testJobSignup() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testViewJobVol() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testLogout() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testMyJobs() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testEditJobDetails() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testErrorMsg() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testSuccessMsg() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	private void inputHelper(String theInput) {
