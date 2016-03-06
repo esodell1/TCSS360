@@ -38,150 +38,129 @@ public class StateTest {
 	public void next() {
 		currentState = currentState.nextState(ui, ctrl);
 	}
-
-//	/**
-//	 * Test method for {@link Project.State#nextState(Project.UserInterface, Project.Control)}.
-//	 */
-//	@Test
-//	public void test() {
-//		// fullTest is a compilation of all tests
-//		boolean fullTest = false;
-//		
-//		fullTest = (testLogin() && testMain() && testViewAllJobs()
-//				&& testViewJob() && testDeleteJob() && testCreateJob()
-//				&& testCreateJob2() && testCreateJob3() && testCreateJob4()
-//				&& testCreateJob5() && testCreateJob6() && testConfirmJob()
-//				&& testSearchLastName() && testJobSignup() && testViewJobVol()
-//				&& testLogout() && testMyJobs() && testEditJobDetails() 
-//				&& testErrorMsg() && testSuccessMsg());
-//		assertTrue(fullTest);
-//	}
 	
 	@Test
-	private void testLoginValidUser() {
-		// Testing a valid user, should result in the progression to main menu.
+	public void testLoginInvalidUser() {
 		currentState = State.LOGIN;
-		inputHelper("manager@uw.edu");
-		next();
-		assertTrue(currentState == State.MAIN);
-	}	
-	
-	@Test
-	private void testLoginInvalidUser() {
-		// Testing a invalid user, should result in login state again.
-		currentState = State.LOGIN;
-		input = new ByteArrayInputStream("invalid@uw.edu".getBytes());
-		System.setIn(input);
+		inputHelper("invalid@uw.edu");
 		next();	
 		assertTrue(currentState == State.LOGIN);
 	}
 	
 	@Test
-	private boolean testMain() {
-		// Testing menu as staff.
+	public void testMainAsManager() {
 		currentState = State.LOGIN;
-
-		
-		// Testing menu as manager.
-
-		// Testing menu as volunteer.
-
-		
-		
-		return true;
+		inputHelper("manager@uw.edu");
+		next();	
+		assertTrue(currentState == State.MAIN);
 	}
 	
 	@Test
-	private boolean testViewAllJobs() {
-		return true;
+	public void testMainAsStaff() {
+		currentState = State.LOGIN;
+		inputHelper("staff@uw.edu");
+		next();	
+		assertTrue(currentState == State.MAIN);
 	}
 	
 	@Test
-	private boolean testViewJob() {
-		return true;
+	public void testMainAsVolunteer() {
+		currentState = State.LOGIN;
+		inputHelper("volunteer@uw.edu");
+		next();	
+		assertTrue(currentState == State.MAIN);
 	}
 	
 	@Test
-	private boolean testDeleteJob() {
-		return true;
+	public void testViewAllJobs() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testCreateJob() {
-		return true;
+	public void testViewJob() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testCreateJob2() {
-		return true;
+	public void testDeleteJob() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testCreateJob3() {
-		return true;
+	public void testCreateJob() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testCreateJob4() {
-		return true;
+	public void testCreateJob2() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testCreateJob5() {
-		return true;
+	public void testCreateJob3() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testCreateJob6() {
-		return true;
+	public void testCreateJob4() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testConfirmJob() {
-		return true;
+	public void testCreateJob5() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testSearchLastName() {
-		return true;
+	public void testCreateJob6() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testJobSignup() {
-		return true;
+	public void testConfirmJob() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testViewJobVol() {
-		return true;
+	public void testSearchLastName() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testLogout() {
-		return true;
+	public void testJobSignup() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testMyJobs() {
-		return true;
+	public void testViewJobVol() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testEditJobDetails() {
-		return true;
+	public void testLogout() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testErrorMsg() {
-		return true;
+	public void testMyJobs() {
+		assertTrue(false);
 	}
 	
 	@Test
-	private boolean testSuccessMsg() {
-		return true;
+	public void testEditJobDetails() {
+		assertTrue(false);
 	}
 	
 	@Test
+	public void testErrorMsg() {
+		assertTrue(false);
+	}
+	
+	@Test
+	public void testSuccessMsg() {
+		assertTrue(false);
+	}
+	
 	private void inputHelper(String theInput) {
 		System.setIn(new ByteArrayInputStream(theInput.getBytes()));
 	}
