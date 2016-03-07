@@ -118,6 +118,12 @@ public class Park implements Serializable {
 		return park_info.toString();
 	}
 	
+	/**
+	 * Tests contents of parks to see if they are equal.
+	 * 
+	 * @param obj is our object we are comparing to this Park object.
+	 * @return returns a true/false to let us know of the object is equal to this object.
+	 */
 	@Override
     public boolean equals(Object obj) {
         if (this == obj)

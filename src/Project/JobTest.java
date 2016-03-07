@@ -23,7 +23,7 @@ public class JobTest {
 	Calendar cal, cal2, calTest;
 
 	/**
-	 * This method sets up values needed for testing our Job class.
+	 * This method sets up objects needed for testing our Job class.
 	 * 
 	 * @throws Exception
 	 */
