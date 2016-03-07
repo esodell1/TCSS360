@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class contains methods and states unique to the Park Manager position.
+ * 
+ * @author Travis Stinebaugh
+ * @author Eric Odell
+ * @date 2/10/2016
+ */
 public class Manager extends Administrator implements Serializable {
 	private static final long serialVersionUID = -7518771764293378227L;
 	
@@ -42,6 +49,8 @@ public class Manager extends Administrator implements Serializable {
 	
 	/**
 	 * Returns next state based on current state and command.
+	 * 
+	 * @return State containing next State depending on currentState and command.
 	 */
 	public State getNextState(State currentState, int command) {
 		State nextState = State.MAIN;
@@ -74,6 +83,9 @@ public class Manager extends Administrator implements Serializable {
 	
 	/**
 	 * Tests contents of volunteers to see if they are equal.
+	 * 
+	 * @return True if all object fields are the same, false if one or more
+	 * fields are not equal.
 	 */
 	@Override
     public boolean equals(Object obj) {

@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class contains methods and states unique to the Staff member position.
+ * 
+ * @author Travis Stinebaugh
+ * @author Eric Odell
+ * @date 2/10/2016
+ */
 public class Staff extends Administrator implements Serializable {
 	private static final long serialVersionUID = 5682221508960104447L;
 	

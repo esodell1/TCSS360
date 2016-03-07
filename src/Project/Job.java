@@ -56,7 +56,13 @@ public class Job implements Serializable {
 		this.enrolledVolunteers = new LinkedList<User>();
 	}
 	
-	/**Adds a volunteer to the job if there is room based on difficulty of job.*/
+	/**
+	 * Adds a volunteer to the Job.
+	 * 
+	 * @param volunteer Volunteer to be added to Job.
+	 * @param workLoad WorkLoad the Volunteer will be signed up for.
+	 * @return
+	 */
 	public boolean addVolunteer(Volunteer volunteer, WorkLoad workLoad) {
 		if ((workLoad == WorkLoad.HIGH)
 				&& (this.highCount < this.high)) {
@@ -80,59 +86,138 @@ public class Job implements Serializable {
 		return false;
 	}
 	
+	/**
+	 * Removes a Volunteer from the Job
+	 * 
+	 * @param vol Volunteer to be removed from Job.
+	 */
 	public void removeVolunteer(User vol) {
 		int index = this.enrolledVolunteers.indexOf(vol);
 		this.enrolledVolunteers.remove(index);
 	}
 
+	/**
+	 * Gets the name of the Job.
+	 * 
+	 * @return String of Job name.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets the name of the Job.
+	 * 
+	 * @param name new name to set Job name to.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns Park associated with Job.
+	 * 
+	 * @return Park associated with the Job.
+	 */
 	public Park getPark() {
 		return park;
 	}
 
+	/**
+	 * Sets the Park associated with the Job.
+	 * 
+	 * @param park Park to be associated with the Job.
+	 */
 	public void setPark(Park park) {
 		this.park = park;
 	}
 
+	/**
+	 * Gets starting date for Job.
+	 * 
+	 * @return Calendar object containing start date of Job.
+	 */
 	public Calendar getStartDate() {
 		return startDate;
 	}
 
+	/**
+	 * Sets start date of this Job
+	 * 
+	 * @param year Starting year of the Job.
+	 * @param month Starting month of the Job.
+	 * @param day Starting day of the Job.
+	 * @param hour Starting hour of the Job.
+	 * @param minute Starting minute of the Job.
+	 */
 	public void setStartDate(int year, int month, int day, int hour, int minute) {
 		this.startDate.set(year, month, day, hour, minute);
 	}
 	
+	/**
+	 * Sets the start date with a Calendar object.
+	 * 
+	 * @param start Calendar object containing start date of Job.
+	 */
 	public void setStartDate(Calendar start) {
 		this.startDate = start;
 	}
 	
+	/**
+	 * Gets the end date of the Job.
+	 * 
+	 * @return End date of the Job.
+	 */
 	public Calendar getEndDate() {
 		return endDate;
 	}
 
+	/**
+	 * Sets the End Date of the Job.
+	 * 
+	 * @param year Ending year of the Job.
+	 * @param month Ending month of the Job.
+	 * @param day Ending day of the Job.
+	 * @param hour Ending hour of the Job.
+	 * @param minute Ending minute of the Job.
+	 */
 	public void setEndDate(int year, int month, int day, int hour, int minute) {
 		this.endDate.set(year, month, day, hour, minute);
 	}
 
+	/**
+	 * Returns a description about the Job.
+	 * 
+	 * @return String containing Job description
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * Sets the Job description.
+	 * 
+	 * @param description String representing Job description.
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * Gets volunteers enrolled in Job.
+	 * 
+	 * @return A list of Users enrolled in the Job.
+	 */
 	public List<User> getEnrolledVolunteers() {
 		return enrolledVolunteers;
 	}
 	
+	/**
+	 * Gets a String representation of the enrolled volunteers.
+	 * 
+	 * @return Formatted String containing last name, first name, workload of each Volunteer 
+	 * 		   signed up for the Job.
+	 */
 	public String getEnrolledVolunteersString() {
 		StringBuilder sb = new StringBuilder();
 		for (User vol : this.getEnrolledVolunteers()) {
@@ -147,7 +232,10 @@ public class Job implements Serializable {
 		return sb.toString();
 	}
 
-	/**outputs all information regarding our Job class.*/
+	/**
+	 * Outputs Job name, description, start date, end date, park,
+	 * high/medium/low workload count of Job.
+	 */
 	@Override
 	public String toString() {
 		DateFormat date = new SimpleDateFormat("EEEE MMM d yyyy");
