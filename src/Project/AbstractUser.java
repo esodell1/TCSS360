@@ -135,6 +135,7 @@ public abstract class AbstractUser implements User, Serializable {
  * Simple basic enum to show difficulty levels stored in users.
  * 
  * @author Travis Stinebaugh
+ * @date 02/17/2016
  */
 enum WorkLoad {
 	LOW,

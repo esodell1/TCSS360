@@ -64,6 +64,8 @@ public class Staff extends Administrator implements Serializable {
 	
 	/**
 	 * Tests contents of volunteers to see if they are equal.
+	 * 
+	 * @return true if equal or false if not all fields in Staff are equal.
 	 */
 	@Override
     public boolean equals(Object obj) {

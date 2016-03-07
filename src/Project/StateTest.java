@@ -16,7 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Eric & Elijah
+ * @author Eric Odell
+ * @author Elijah Gutierrez
  *
  */
 public class StateTest {
@@ -28,20 +29,26 @@ public class StateTest {
 	PrintStream print;
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets up a Control and UI for use in testing states.
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		ctrl = new Control();
 		ui = new UserInterface();
 		ui.input = this.input;
 		ui.output = System.out;
 	}
 	
+	/**
+	 * Gets the next state based on current state.
+	 */
 	public void next() {
 		currentState = currentState.nextState(ui, ctrl);
 	}
 	
+	/**
+	 * Tests to ensure an invalid login leads to the correct next state.
+	 */
 	@Test
 	public void testLoginInvalidUser() {
 		currentState = State.LOGIN;
@@ -50,6 +57,9 @@ public class StateTest {
 		assertTrue(currentState == State.LOGIN);
 	}
 	
+	/**
+	 * Tests to ensure login as a manager leads to the correct next state.
+	 */
 	@Test
 	public void testLoginAsManager() {
 		currentState = State.LOGIN;
@@ -58,6 +68,9 @@ public class StateTest {
 		assertTrue(currentState == State.MAIN);
 	}
 	
+	/**
+	 * Tests to ensure login as a staff member leads to the correct next state.
+	 */
 	@Test
 	public void testLoginAsStaff() {
 		currentState = State.LOGIN;
@@ -66,6 +79,9 @@ public class StateTest {
 		assertTrue(currentState == State.MAIN);
 	}
 	
+	/**
+	 * Tests to ensure login as a volunteer leads to the correct next state.
+	 */
 	@Test
 	public void testLoginAsVolunteer() {
 		currentState = State.LOGIN;
@@ -74,6 +90,9 @@ public class StateTest {
 		assertTrue(currentState == State.MAIN);
 	}
 	
+	/**
+	 * Tests to ensure main menu as a manager leads to the correct next state.
+	 */
 	@Test
 	public void testMainAsManager() {
 		currentState = State.LOGIN;
@@ -102,6 +121,9 @@ public class StateTest {
 		assertEquals(currentState, State.LOGOUT);
 	}
 	
+	/**
+	 * Tests to ensure main menu as a staff member leads to the correct next state.
+	 */
 	@Test
 	public void testMainAsStaff() {
 		currentState = State.LOGIN;
@@ -125,6 +147,9 @@ public class StateTest {
 		assertEquals(currentState, State.LOGOUT);
 	}
 	
+	/**
+	 * Tests to ensure main menu as a volunteer leads to the correct next state.
+	 */
 	@Test
 	public void testMainAsVolunteer() {
 		currentState = State.LOGIN;
@@ -147,6 +172,9 @@ public class StateTest {
 		assertEquals(currentState, State.LOGOUT);
 	}
 	
+	/**
+	 * Tests to ensure view all jobs state as a manager leads to the correct next state.
+	 */
 	@Test
 	public void testViewAllJobs() {
 		currentState = State.LOGIN;
@@ -166,6 +194,9 @@ public class StateTest {
 		assertEquals(jobNames, ctrl.getAllJobs());	// Ensure job lists are equivalent
 	}
 	
+	/**
+	 * Tests to ensure the View Job state returns correct next state.
+	 */
 	@Test
 	public void testViewJob() {
 		currentState = State.LOGIN;
@@ -181,6 +212,11 @@ public class StateTest {
 		assertEquals(currentState, State.VIEW_JOB);
 	}
 	
+	/**
+	 * Tests to ensure deleting a job returns the correct next state.
+	 * 
+	 * TODO: Implement this test or delete it!
+	 */
 	@Test
 	public void testDeleteJob() {
 		assertTrue(true);

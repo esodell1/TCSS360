@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Travis
+ * @author Travis Stinebaugh
  *
  */
 public class VolunteerTest {
@@ -14,15 +14,15 @@ public class VolunteerTest {
 	private Volunteer vol;
 	
 	/**
-	 * @throws java.lang.Exception
+	 * Generates a Volunteer to be used for testing.
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		vol = new Volunteer("Bob", "Smith", "vol@uw.edu", WorkLoad.HIGH);
 	}
 
 	/**
-	 * Test method for {@link Project.Volunteer#signUp(Project.Job)}.
+	 * Tests for successful Job signup by adding a new Job and ensuring it was added.
 	 */
 	@Test
 	public void testSignUp() {
@@ -33,7 +33,7 @@ public class VolunteerTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Volunteer#flag()}.
+	 * Tests to see if Volunteer can be flagged.
 	 */
 	@Test
 	public void testFlag() {
@@ -43,7 +43,7 @@ public class VolunteerTest {
 	}
 	
 	/**
-	 * Test method for {@link Project.Volunteer#equals(Object)}
+	 * Tests to see if two Volunteers are equal.
 	 */
 	@Test
 	public void testEquals() {
