@@ -109,7 +109,7 @@ public class Job implements Serializable {
 	 */
 	public void removeVolunteer(User vol) {
 		int index = this.enrolledVolunteers.indexOf(vol);
-		this.enrolledVolunteers.remove(index);
+		if (index > -1) this.enrolledVolunteers.remove(index);
 	}
 
 	/**

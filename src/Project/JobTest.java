@@ -40,7 +40,7 @@ public class JobTest {
 		calTest = new GregorianCalendar();
 		calTest.set(2016, 2, 2, 9, 30);
 		initialJob = new Job("Trash Pickup", initialPark, cal, cal2,
-				"This job will just be picking up trash.", new ArrayList<User>(), 5, 2, 0);
+				"This job will just be picking up trash.", new ArrayList<User>(), 5, 1, 0);
 		initialPark.addJob(initialJob);
 	}
 
@@ -58,6 +58,10 @@ public class JobTest {
 		assertEquals(initialJob.getEnrolledVolunteers().size(), 0);
 		initialJob.addVolunteer((Volunteer) volunteer, WorkLoad.MEDIUM);
 		assertEquals(initialJob.getEnrolledVolunteers().size(), 1);
+		
+		// Attempt to exceed max job duty requirement
+		initialJob.addVolunteer((Volunteer) volunteer, WorkLoad.MEDIUM);
+		assertEquals(initialJob.getEnrolledVolunteers().size(), 1);
 	}
 	
 	/**
@@ -73,6 +77,10 @@ public class JobTest {
 	public void testRemoveVolunteer() {
 		initialJob.addVolunteer((Volunteer) volunteer, WorkLoad.MEDIUM);
 		assertEquals(initialJob.getEnrolledVolunteers().size(), 1);
+		initialJob.removeVolunteer(volunteer);
+		assertEquals(initialJob.getEnrolledVolunteers().size(), 0);
+		
+		// check that a user not in the list can cause an issue
 		initialJob.removeVolunteer(volunteer);
 		assertEquals(initialJob.getEnrolledVolunteers().size(), 0);
 	}
@@ -104,6 +112,12 @@ public class JobTest {
 				calTest.get(Calendar.DATE), calTest.get(Calendar.HOUR), 
 				calTest.get(Calendar.MINUTE));
 		assertEquals(calTest, initialJob.getStartDate());
+		
+		// check different dates are not equivalent
+		initialJob.setStartDate(calTest.get(Calendar.YEAR) + 1, calTest.get(Calendar.MONTH), 
+				calTest.get(Calendar.DATE), calTest.get(Calendar.HOUR), 
+				calTest.get(Calendar.MINUTE));
+		assertNotEquals(calTest, initialJob.getStartDate());
 	}
 	
 	/**
@@ -149,6 +163,9 @@ public class JobTest {
 		assertEquals(initialJob.getEnrolledVolunteers().size(), 0);
 		initialJob.addVolunteer((Volunteer) volunteer, WorkLoad.MEDIUM);
 		assertEquals(initialJob.getEnrolledVolunteers().size(), 1);
+		
+		// tests the equivalence of the volunteers in the list
+		assertTrue(initialJob.getEnrolledVolunteers().get(0).equals(volunteer));
 	}
 
 	/**
