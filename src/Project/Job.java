@@ -1,11 +1,5 @@
 package Project;
-/**
- *  This class is a model of a Job.
- *  
- *  @author Tyler Braden
- *  @date 5/15/16
- * 
- * */
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +8,12 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * This class contains methods and states unique to the Job class.
+ * 
+ * @author Tyler Braden
+ * @date 2/13/2016
+ */
 public class Job implements Serializable {
 	
 	private static final long serialVersionUID = 6239276355031273785L;
@@ -31,6 +31,18 @@ public class Job implements Serializable {
 	private int mediumCount;
 	private int lowCount;
 	
+	/**
+	 * Constructs a Job based on given parameters
+	 * @param name the name of our job
+	 * @param park the name of our park
+	 * @param start the start date
+	 * @param end the end date
+	 * @param description the description of the job
+	 * @param volunteerList the people volunteering for this job
+	 * @param high the number of high difficulty members needed
+	 * @param medium the number of medium difficulty members needed
+	 * @param low the number of low difficulty members needed
+	 */
 	public Job(String name, Park park, Calendar start, Calendar end, String description, 
 			List<User> volunteerList, int high, int medium, int low) {
 		this.name = name;
@@ -44,6 +56,10 @@ public class Job implements Serializable {
 		this.low = low;
 	}
 	
+	
+	/**
+	 * This is a constructor for creating an empty Job.
+	 */
 	public Job() {
 		this.high = 0;
 		this.medium = 0;
@@ -61,7 +77,7 @@ public class Job implements Serializable {
 	 * 
 	 * @param volunteer Volunteer to be added to Job.
 	 * @param workLoad WorkLoad the Volunteer will be signed up for.
-	 * @return
+	 * @return if the member was successfully added.
 	 */
 	public boolean addVolunteer(Volunteer volunteer, WorkLoad workLoad) {
 		if ((workLoad == WorkLoad.HIGH)
@@ -235,6 +251,8 @@ public class Job implements Serializable {
 	/**
 	 * Outputs Job name, description, start date, end date, park,
 	 * high/medium/low workload count of Job.
+	 * 
+	 * @return returns our class fields in a string value.
 	 */
 	@Override
 	public String toString() {
@@ -271,6 +289,12 @@ public class Job implements Serializable {
 		return sb.toString();
 	}
 
+	/**
+	 * Tests contents of jobs to see if they are equal.
+	 * 
+	 * @param obj is our object we are comparing to this Job object.
+	 * @return returns a true/false to let us know of the object is equal to this object.
+	 */
 	@Override
     public boolean equals(Object obj) {
         if (this == obj)

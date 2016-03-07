@@ -1,15 +1,15 @@
 package Project;
-/**
- *  This class is a model of a Park.
- *  
- *  @author Tyler Braden
- *  @date 5/15/16
- * 
- * */
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  This class is the model for our Park.
+ *  
+ *  @author Tyler Braden
+ *  @date 2/15/16
+ */
 public class Park implements Serializable {
 	
 	private static final long serialVersionUID = -5896375771655268671L;

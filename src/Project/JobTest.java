@@ -5,10 +5,17 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ *  This class is for testing our job model.
+ *  
+ *  @author Tyler Braden
+ *  @author Travis Stinebaugh
+ *  @author Eric Odell
+ *  @date 2/15/16
+ */
 public class JobTest {
 	Job initialJob;
 	Park initialPark;
