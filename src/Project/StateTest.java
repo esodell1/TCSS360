@@ -388,7 +388,29 @@ public class StateTest {
 	
 	@Test
 	public void testEditJobDetails() {
-		assertTrue(true);
+		// login as manager
+		testLoginAsManager();
+		// 2 to view my jobs
+		inputHelper("2");
+		next();
+		// 1 to park cleanup
+		inputHelper("1");
+		next();
+		// 1 to edit job details
+		inputHelper("1");
+		next();
+		// 1 to change name
+		inputHelper("1");
+		next();
+		// enter "newJobName"
+		inputHelper("newJobName");
+		next();
+		// 4 to return to job list
+		inputHelper("4");
+		next();
+		// check first entry == "newJobName"
+		List<String> jobs = ctrl.getCurrentUser().getMyJobNames();
+		assertEquals(jobs.get(0), "newJobName");
 	}
 	
 	private void inputHelper(String theInput) {
