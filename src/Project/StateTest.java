@@ -403,10 +403,7 @@ public class StateTest {
 		
 		testCreateJob5();
 		inputHelper("1/2/3");
-		next();
-		inputHelper("2");
-		next();
-		assertEquals(currentState, State.VIEW_JOB);
+		next();	
 	}
 	
 	/**
