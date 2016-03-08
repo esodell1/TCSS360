@@ -227,7 +227,6 @@ public enum State {
 			job = job + "\n\tWhat work grade would you like to sign up for?";
 			List<String> opts = ctrl.getCurrentUser().getMenuOptions(JOB_SIGNUP);
 			int command = ui.detailsInt("Job Sign Up", job, opts);
-			// TODO Push this logic somewhere more appropriate:
 			if (command == 4) return VIEW_JOB;
 			else if (command == 5) return MAIN;
 			else {
