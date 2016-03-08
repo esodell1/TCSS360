@@ -442,7 +442,21 @@ public class StateTest {
 	 */
 	@Test
 	public void testViewJobVol() {
-		assertTrue(true);
+		currentState = State.VIEW_JOB_VOL;
+		ctrl.setCurrentJob(new Job());
+		inputHelper("1");
+		next();
+		assertEquals(currentState, State.VIEW_JOB);
+		
+		currentState = State.VIEW_JOB_VOL;
+		inputHelper("2");
+		next();
+		assertEquals(currentState, State.VIEW_ALL_JOBS);
+		
+		currentState = State.VIEW_JOB_VOL;
+		inputHelper("3");
+		next();
+		assertEquals(currentState, State.MAIN);
 	}
 	
 	/**
