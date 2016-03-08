@@ -409,7 +409,32 @@ public class StateTest {
 	 */
 	@Test
 	public void testJobSignup() {
-		assertTrue(true);
+		// sign in as volunteer
+		testLoginAsVolunteer();
+		// 1 to view all jobs
+		inputHelper("1");
+		next();	
+		// 1 to select job
+		inputHelper("1");
+		next();	
+		// 1 to sign up for job
+		inputHelper("1");
+		next();	
+		// 1 for low work
+		inputHelper("1");
+		next();	
+		// 1 sign up again (fails)
+		inputHelper("1");
+		next();	
+		// 1 to return to menu
+		inputHelper("1");
+		next();	
+		// 2 to view job
+		inputHelper("2");
+		next();	
+		// check for matching job
+		List<String> jobs = ctrl.getCurrentUser().getMyJobNames();
+		assertEquals(jobs.get(1), "Park Cleanup");
 	}
 	
 	/**
@@ -490,8 +515,8 @@ public class StateTest {
 		// 2 to view my jobs
 		inputHelper("2");
 		next();
-		// 1 to park cleanup
-		inputHelper("1");
+		// 2 to pick second job
+		inputHelper("2");
 		next();
 		// 1 to edit job details
 		inputHelper("1");
@@ -507,7 +532,7 @@ public class StateTest {
 		next();
 		// check first entry == "newJobName"
 		List<String> jobs = ctrl.getCurrentUser().getMyJobNames();
-		assertEquals(jobs.get(0), "newJobName");
+		assertEquals(jobs.get(1), "newJobName");
 	}
 	
 	/**
