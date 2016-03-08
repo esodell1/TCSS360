@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Volunteer Class represents a Volunteer and all of their unique parameters.
+ * 
+ * @author Travis Stinebaugh
+ * @date 03/05/16
+ */
 public class Volunteer extends AbstractUser implements Serializable {
 	private static final long serialVersionUID = -635814670107592458L;
 	
