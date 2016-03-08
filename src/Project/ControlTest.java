@@ -152,7 +152,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Tests functinality of saving the current job.
+	 * Tests functionality of saving the current job.
 	 */
 	@Test
 	public void testSaveCurrentJob() {
