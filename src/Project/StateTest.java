@@ -214,12 +214,20 @@ public class StateTest {
 	
 	/**
 	 * Tests to ensure deleting a job returns the correct next state.
-	 * 
-	 * TODO: Implement this test or delete it!
 	 */
 	@Test
 	public void testDeleteJob() {
-		assertTrue(true);
+		ctrl.setCurrentJob(new Job());
+		currentState = State.DELETE_JOB;
+		inputHelper("1");
+		next();
+		assertEquals(currentState, State.MAIN);
+		
+		ctrl.setCurrentJob(new Job());
+		currentState = State.DELETE_JOB;
+		inputHelper("2");
+		next();
+		assertEquals(currentState, State.VIEW_ALL_JOBS);
 	}
 	
 	@Test
