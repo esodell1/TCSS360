@@ -60,9 +60,11 @@ public class ControlTest {
 		// Expects a list of Strings of Job names
 		List<String> expected = new ArrayList<String>();
 		for (Job theJob : controlClass.jobs) {
-			expected.add(theJob.getName());
+			if (theJob.getStartDate().after(Calendar.getInstance()))
+				expected.add(theJob.getName());
 		}
-		
+		System.out.println(controlClass.jobs);
+		System.out.println(controlClass.getAllJobs());
 		// Assert the expected and actual are equivalent
 		assertEquals(expected, controlClass.getAllJobs());
 	}
