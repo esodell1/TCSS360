@@ -18,6 +18,8 @@ import org.junit.Test;
 /**
  * @author Eric Odell
  * @author Elijah Gutierrez
+ * @author Travis Stinebaugh
+ * @date 03/05/16
  *
  */
 public class StateTest {
@@ -54,7 +56,7 @@ public class StateTest {
 		currentState = State.LOGIN;
 		inputHelper("invalid@uw.edu");
 		next();	
-		assertTrue(currentState == State.LOGIN);
+		assertEquals(currentState, State.LOGIN);
 	}
 	
 	/**
@@ -65,7 +67,7 @@ public class StateTest {
 		currentState = State.LOGIN;
 		inputHelper("manager@uw.edu");
 		next();	
-		assertTrue(currentState == State.MAIN);
+		assertEquals(currentState, State.MAIN);
 	}
 	
 	/**
@@ -76,7 +78,7 @@ public class StateTest {
 		currentState = State.LOGIN;
 		inputHelper("staff@uw.edu");
 		next();	
-		assertTrue(currentState == State.MAIN);
+		assertEquals(currentState, State.MAIN);
 	}
 	
 	/**
@@ -87,7 +89,7 @@ public class StateTest {
 		currentState = State.LOGIN;
 		inputHelper("volunteer@uw.edu");
 		next();	
-		assertTrue(currentState == State.MAIN);
+		assertEquals(currentState, State.MAIN);
 	}
 	
 	/**
@@ -360,7 +362,7 @@ public class StateTest {
 		inputHelper("4");
 		next();	
 		next();
-		assertTrue(currentState == State.LOGIN);
+		assertEquals(currentState, State.LOGIN);
 	}
 	
 	@Test
@@ -369,7 +371,7 @@ public class StateTest {
 		inputHelper("3");
 		next();	
 		next();
-		assertTrue(currentState == State.LOGIN);
+		assertEquals(currentState, State.LOGIN);
 	}
 	
 	@Test
@@ -378,12 +380,26 @@ public class StateTest {
 		inputHelper("3");
 		next();	
 		next();
-		assertTrue(currentState == State.LOGIN);
+		assertEquals(currentState, State.LOGIN);
 	}
 	
 	@Test
-	public void testMyJobs() {
-		assertTrue(true);
+	public void testMyJobs() {	
+		testLoginAsStaff();
+		currentState = State.MY_JOBS;
+		next();
+		assertEquals(currentState, State.SUCCESS_MSG);
+		
+		testLoginAsManager();
+		currentState = State.MY_JOBS;
+		inputHelper("1");
+		next();
+		assertEquals(currentState, State.VIEW_JOB);
+		
+		currentState = State.MY_JOBS;
+		inputHelper("3");
+		next();
+		assertEquals(currentState, State.MAIN);
 	}
 	
 	@Test
@@ -413,6 +429,11 @@ public class StateTest {
 		assertEquals(jobs.get(0), "newJobName");
 	}
 	
+	/**
+	 * Allows the test file to emulate console input from the user.
+	 * 
+	 * @param theInput String input which should mirror the user.
+	 */
 	private void inputHelper(String theInput) {
 		System.setIn(new ByteArrayInputStream(theInput.getBytes()));
 	}
