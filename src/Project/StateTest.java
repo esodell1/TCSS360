@@ -369,7 +369,23 @@ public class StateTest {
 	 */
 	@Test
 	public void testCreateJob6() {
-		assertTrue(true);
+		// Testing invalid input
+		testCreateJob5();
+		inputHelper("1/2/3/4");
+		next();
+		assertEquals(currentState, State.CREATE_JOB_5);
+		
+		// Valid input
+		testCreateJob5();
+		inputHelper("1/2/3");
+		next();
+		assertEquals(currentState, State.CONFIRM_JOB);
+		
+		currentState = State.CREATE_JOB_6;
+		ctrl.jobEdit = true;
+		inputHelper("1/2/3");
+		next();
+		assertEquals(currentState, State.VIEW_JOB);
 	}
 	
 	/**
