@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Project;
 
 import static org.junit.Assert.*;
@@ -16,6 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * StateTest is a Junit Test suite to test the State class.
+ * 
  * @author Eric Odell
  * @author Elijah Gutierrez
  * @author Travis Stinebaugh
@@ -232,6 +231,9 @@ public class StateTest {
 		assertEquals(currentState, State.VIEW_ALL_JOBS);
 	}
 	
+	/**
+	 * Tests to ensure CREATE_JOB returns the correct next state.
+	 */
 	@Test
 	public void testCreateJob() {
 		currentState = State.LOGIN;
@@ -250,6 +252,9 @@ public class StateTest {
 		// No further input restrictions
 	}
 	
+	/**
+	 * Tests to ensure CREATE_JOB_2 returns the correct next state.
+	 */
 	@Test
 	public void testCreateJob2() {
 		testCreateJob();
@@ -262,6 +267,9 @@ public class StateTest {
 		assertEquals(ctrl.getCurrentJob().getDescription(), testDescription);
 	}
 	
+	/**
+	 * Tests to ensure CREATE_JOB_3 returns the correct next state.
+	 */
 	@Test
 	public void testCreateJob3() {
 		testCreateJob2();
@@ -288,6 +296,9 @@ public class StateTest {
 		
 	}
 	
+	/**
+	 * Tests to ensure CREATE_JOB_4 returns the correct next state.
+	 */
 	@Test
 	public void testCreateJob4() {
 		testCreateJob3();
@@ -326,36 +337,57 @@ public class StateTest {
 		assertEquals(currentState, State.CREATE_JOB_5);
 	}
 	
+	/**
+	 * Tests to ensure CREATE_JOB_5 returns the correct next state.
+	 */
 	@Test
 	public void testCreateJob5() {
 		assertTrue(true);
 	}
 	
+	/**
+	 * Tests to ensure CREATE_JOB_6 returns the correct next state.
+	 */
 	@Test
 	public void testCreateJob6() {
 		assertTrue(true);
 	}
 	
+	/**
+	 * Tests to ensure CONFIRM_JOB returns the correct next state.
+	 */
 	@Test
 	public void testConfirmJob() {
 		assertTrue(true);
 	}
 	
+	/**
+	 * Tests to ensure SEARCH_LAST_NAME returns the correct next state.
+	 */
 	@Test
 	public void testSearchLastName() {
 		assertTrue(true);
 	}
 	
+	/**
+	 * Tests to ensure JOB_SIGNUP returns the correct next state.
+	 */
 	@Test
 	public void testJobSignup() {
 		assertTrue(true);
 	}
 	
+	/**
+	 * Tests to ensure VIEW_JOB_VOL returns the correct next state.
+	 */
 	@Test
 	public void testViewJobVol() {
 		assertTrue(true);
 	}
 	
+	/**
+	 * Tests to ensure a Manager is successfully logged out.
+	 */
 	@Test
 	public void testLogoutAsManager() {
 		testLoginAsManager();		
@@ -365,6 +397,9 @@ public class StateTest {
 		assertEquals(currentState, State.LOGIN);
 	}
 	
+	/**
+	 * Tests to ensure a Staff member is successfully logged out.
+	 */
 	@Test
 	public void testLogoutAsStaff() {
 		testLoginAsStaff();		
@@ -374,6 +409,9 @@ public class StateTest {
 		assertEquals(currentState, State.LOGIN);
 	}
 	
+	/**
+	 * Tests to ensure a Volunteer is successfully logged out.
+	 */
 	@Test
 	public void testLogoutAsVolunteer() {
 		testLoginAsVolunteer();		
@@ -383,6 +421,10 @@ public class StateTest {
 		assertEquals(currentState, State.LOGIN);
 	}
 	
+	/**
+	 * Tests the MY_JOBS state to insure it returns the
+	 * correct next states.
+	 */
 	@Test
 	public void testMyJobs() {	
 		testLoginAsStaff();
@@ -402,6 +444,10 @@ public class StateTest {
 		assertEquals(currentState, State.MAIN);
 	}
 	
+	/**
+	 * Tests the state machine's edit job details states to ensure
+	 * they lead to the correct next states.
+	 */
 	@Test
 	public void testEditJobDetails() {
 		// login as manager

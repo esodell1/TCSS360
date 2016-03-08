@@ -63,8 +63,6 @@ public class ControlTest {
 			if (theJob.getStartDate().after(Calendar.getInstance()))
 				expected.add(theJob.getName());
 		}
-		System.out.println(controlClass.jobs);
-		System.out.println(controlClass.getAllJobs());
 		// Assert the expected and actual are equivalent
 		assertEquals(expected, controlClass.getAllJobs());
 	}
