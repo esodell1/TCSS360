@@ -391,16 +391,6 @@ public class StateTest {
 		assertTrue(true);
 	}
 	
-	@Test
-	public void testErrorMsg() {
-		assertTrue(true);
-	}
-	
-	@Test
-	public void testSuccessMsg() {
-		assertTrue(true);
-	}
-	
 	private void inputHelper(String theInput) {
 		System.setIn(new ByteArrayInputStream(theInput.getBytes()));
 	}
