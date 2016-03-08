@@ -355,8 +355,30 @@ public class StateTest {
 	}
 	
 	@Test
-	public void testLogout() {
-		assertTrue(true);
+	public void testLogoutAsManager() {
+		testLoginAsManager();		
+		inputHelper("4");
+		next();	
+		next();
+		assertTrue(currentState == State.LOGIN);
+	}
+	
+	@Test
+	public void testLogoutAsStaff() {
+		testLoginAsStaff();		
+		inputHelper("3");
+		next();	
+		next();
+		assertTrue(currentState == State.LOGIN);
+	}
+	
+	@Test
+	public void testLogoutAsVolunteer() {
+		testLoginAsVolunteer();		
+		inputHelper("3");
+		next();	
+		next();
+		assertTrue(currentState == State.LOGIN);
 	}
 	
 	@Test
