@@ -9,6 +9,14 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * AbstractUserTest is a Junit test file which tests the AbstractUser class.
+ *  
+ * @author Travis Stinebaugh
+ * @author Tyler Braden
+ * @date 03/04/16
+ */
+
 public class AbstractUserTest {
 	private String testFirstName = "John";
 	private String testLastName = "Smith";
@@ -19,8 +27,12 @@ public class AbstractUserTest {
 	Job initialJob;
 	Park initialPark;
 
+	/**
+	 * Sets up an instantiated instance of abstractUser (volunteer), a park,
+	 * calendar, and job for testing.
+	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		volunteer = new Volunteer(testFirstName, testLastName, testEmail, testWorkLoad);
 		initialPark = new Park("Central Park", "123 East Main Street", null);
 		cal = new GregorianCalendar();
@@ -35,42 +47,67 @@ public class AbstractUserTest {
 		volunteer.signUp(initialJob);
 	}
 
+	/**
+	 * Tests to see whether correct email address logs user in
+	 * and incorrect email does not. (technical requirement 2)
+	 */
 	@Test
 	public void testLogin() {
 		assertTrue(volunteer.login(testEmail));
 		assertFalse(volunteer.login("foo@bar.com"));
 	}
 
+	/**
+	 * Tests functionality of GetFirstName.
+	 */
 	@Test
 	public void testGetFirstName() {
 		assertEquals(volunteer.getFirstName(), testFirstName);
 	}
 
+	/**
+	 * Tests functionality of GetLastName.
+	 */
 	@Test
 	public void testGetLastName() {
 		assertEquals(volunteer.getLastName(), testLastName);
 	}
 
+	/**
+	 * Tests functionality of GetEmail.
+	 */
 	@Test
 	public void testGetEmail() {
 		assertEquals(volunteer.getEmail(), testEmail);
 	}
 
+	/**
+	 * Tests functionality of GetWorkLoad.
+	 */
 	@Test
 	public void testGetWorkLoad() {
 		assertEquals(volunteer.getWorkLoad(), testWorkLoad);
 	}
 
+	/**
+	 * Tests functionality of getMyJobs.
+	 */
 	@Test
 	public void testGetMyJobs() {
 		assertEquals(volunteer.getMyJobs().get(0), initialJob);
 	}
 
+	/**
+	 * Tests functionality of getMyJobNames.
+	 */
 	@Test
 	public void testGetMyJobNames() {
 		assertEquals(volunteer.getMyJobNames().get(0), initialJob.getName());
 	}
 
+	/**
+	 * Tests functionality of getUserType.
+	 */
 	@Test
 	public void testGetUserType() {
 		assertEquals(volunteer.getUserType(), "Volunteer");

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Project;
 
 import static org.junit.Assert.*;
@@ -14,8 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Eric
- *
+ * ControlTest is a Junit test suite that is used to test the Control class.
+ * 
+ * @author Eric Odell
+ * @date 03/05/16
  */
 public class ControlTest {
 	Control controlClass;
@@ -28,10 +27,10 @@ public class ControlTest {
 	Calendar cal2;
 
 	/**
-	 * @throws java.lang.Exception
+	 * Sets up Control, Users, Calendars, Jobs for testing.
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		controlClass = new Control();
 		staff = new Staff("Eric", "Odell", "staff@uw.edu", WorkLoad.HIGH);
 		manager = new Manager("Elijah", "Gutierrez", "manager@uw.edu", WorkLoad.MEDIUM);
@@ -54,7 +53,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#getAllJobs()}.
+	 * Tests to ensure all jobs returned with this method.
 	 */
 	@Test
 	public void testGetAllJobs() {
@@ -69,7 +68,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#getParks()}.
+	 * Tests to ensure all parks returned with this method.
 	 */
 	@Test
 	public void testGetParks() {
@@ -88,7 +87,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#getCurrentUser()}.
+	 * Tests to ensure correct current user is returned.
 	 */
 	@Test
 	public void testGetCurrentUser() {
@@ -98,7 +97,7 @@ public class ControlTest {
 
 	
 	/**
-	 * Test method for {@link Project.Control#getCurrentJob()}.
+	 * Tests to ensure current job is correct.
 	 */
 	@Test
 	public void testGetCurrentJob() {
@@ -107,7 +106,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#deleteCurrentJob()}.
+	 * Tests functionality of deleting current job.
 	 */
 	@Test
 	public void testDeleteCurrentJob() {
@@ -117,7 +116,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#setCurrentUser(int)}.
+	 * Tests functionality of setting current user.
 	 */
 	@Test
 	public void testSetCurrentUser() {
@@ -126,7 +125,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#setCurrentPark(int)}.
+	 * Tests functionality of setting current park.
 	 */
 	@Test
 	public void testSetCurrentPark() {
@@ -135,7 +134,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#setCurrentJob(int)}.
+	 * Tests functionality of setting current job by job number.
 	 */
 	@Test
 	public void testSetCurrentJobInt() {
@@ -144,7 +143,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#setCurrentJob(Project.Job)}.
+	 * Tests functionality of setting current job by job object.
 	 */
 	@Test
 	public void testSetCurrentJobJob() {
@@ -153,7 +152,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#saveCurrentJob()}.
+	 * Tests functinality of saving the current job.
 	 */
 	@Test
 	public void testSaveCurrentJob() {
@@ -169,7 +168,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#login(java.lang.String)}.
+	 * Tests functionality of login.
 	 */
 	@Test
 	public void testLogin() {
@@ -182,7 +181,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#logout()}.
+	 * Tests functionality of logout.
 	 */
 	@Test
 	public void testLogout() {
@@ -193,7 +192,7 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for {@link Project.Control#jobCount()}.
+	 * Tests functionality of getting jobcount.
 	 */
 	@Test
 	public void testJobCount() {
@@ -209,7 +208,8 @@ public class ControlTest {
 	}
 
 	/**
-	 * Test method for (@link {@link Project.Control#isWeekOpen()}.
+	 * Tests business rule 1 for whether current number of jobs
+	 *  is within maximum allowed jobs.
 	 */
 	@Test
 	public void testAllowedJobCount() {
@@ -221,7 +221,8 @@ public class ControlTest {
 	}
 	
 	/**
-	 * Test method for ({@link Project.Control#isWeekOpen()}
+	 * Testing functionality of business rule 2 to check if a given 
+	 * week is open.
 	 */
 	@Test
 	public void testIsWeekOpen() {
@@ -240,6 +241,9 @@ public class ControlTest {
 		assertFalse(controlClass.isWeekOpen(controlClass.getCurrentJob().getStartDate()));
 	}
 	
+	/**
+	 * Tests business rule 7 implementation.
+	 */
 	@Test
 	public void testIsDayOpen() {
 		Volunteer volunteer = new Volunteer("Bob", "Smith", "foo@bar.com", WorkLoad.MEDIUM);
@@ -257,6 +261,9 @@ public class ControlTest {
 		assertFalse(controlClass.isDayOpen(controlClass.getCurrentJob().getStartDate()));
 	}
 	
+	/**
+	 * tests business rule 4 implementation.
+	 */
 	@Test
 	public void testIsDurationAllowed() {
 		Calendar cal = new GregorianCalendar();
@@ -281,6 +288,9 @@ public class ControlTest {
 		assertFalse(controlClass.isDurationAllowed(cal, cal2));
 	}
 	
+	/**
+	 * Tests business rule 6 implementation.
+	 */
 	@Test
 	public void testIsJobPast() {
 		Calendar cal = new GregorianCalendar();
@@ -298,6 +308,9 @@ public class ControlTest {
 		assertTrue(controlClass.isJobPast(cal));
 	}
 	
+	/**
+	 * Tests user story 10 implementation.
+	 */
 	@Test
 	public void testSearchUsers() {
 		controlClass.users.clear();

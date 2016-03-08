@@ -9,28 +9,40 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Travis
- *
+ * This Test Suite tests the Manager class.
+ * 
+ * @author Travis Stinebaugh
+ * @date 03/03/16
  */
 public class ManagerTest {
 
 	Manager man;
 	/**
-	 * @throws java.lang.Exception
+	 * Setup method to initialize fresh new Manager for each test
 	 */
 	@Before
-	public void setUp() throws Exception {
-		man = new Manager("Bob", "Smith", "vol@uw.edu", WorkLoad.HIGH);
+	public void setUp() {
+		man = new Manager("Bob", "Smith", "man@uw.edu", WorkLoad.HIGH);
 	}
 
 	/**
-	 * Test method for {@link Project.Manager#equals(java.lang.Object)}.
+	 * Tests the equals method for Manager class.
 	 */
 	@Test
 	public void testEqualsObject() {
-		Manager man2 = new Manager("Bob", "Smith", "vol@uw.edu", WorkLoad.HIGH);		
+		Manager man2 = new Manager("Bob", "Smith", "man@uw.edu", WorkLoad.HIGH);		
 		assertEquals(man, man2);
-		man2 = new Manager("Bob", "Smithh", "vol@uw.edu", WorkLoad.HIGH);		
+		
+		man2 = new Manager("Bobb", "Smith", "man@uw.edu", WorkLoad.HIGH);		
+		assertNotEquals(man, man2);
+		
+		man2 = new Manager("Bob", "Smithh", "man@uw.edu", WorkLoad.HIGH);		
+		assertNotEquals(man, man2);
+		
+		man2 = new Manager("Bob", "Smith", "man@uw.eduu", WorkLoad.HIGH);		
+		assertNotEquals(man, man2);
+		
+		man2 = new Manager("Bob", "Smith", "man@uw.edu", WorkLoad.LOW);		
 		assertNotEquals(man, man2);
 	}
 
