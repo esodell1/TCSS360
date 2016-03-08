@@ -386,6 +386,7 @@ public class StateTest {
 		inputHelper("1/2/3");
 		next();
 		assertEquals(currentState, State.VIEW_JOB);
+		ctrl.jobEdit = false;
 	}
 	
 	/**
@@ -393,7 +394,19 @@ public class StateTest {
 	 */
 	@Test
 	public void testConfirmJob() {
-		assertTrue(true);
+		testCreateJob5();
+		inputHelper("1/2/3");
+		next();
+		inputHelper("1");
+		next();
+		assertEquals(currentState, State.MAIN);
+		
+		testCreateJob5();
+		inputHelper("1/2/3");
+		next();
+		inputHelper("2");
+		next();
+		assertEquals(currentState, State.VIEW_JOB);
 	}
 	
 	/**

@@ -179,7 +179,8 @@ public enum State {
 			opts.add("Yes");
 			int command = ui.detailsInt("View Job", job, opts);
 			if(command == 1) {
-				ctrl.setCurrentJob(-1);
+				// ctrl.setCurrentJob(-1);
+				ctrl.setCurrentJob(null);
 				return MAIN;
 			} else {
 				ctrl.getCurrentPark().addJob(ctrl.getCurrentJob());
