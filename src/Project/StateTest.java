@@ -401,14 +401,10 @@ public class StateTest {
 	 */
 	@Test
 	public void testSearchLastName() {
-		currentState = State.SEARCH_LAST_NAME;
-		inputHelper("Braden");
-		inputHelper("1");
-		assertEquals(currentState, State.SEARCH_LAST_NAME);
-		
-		inputHelper("Braden");
+		testLoginAsStaff();
 		inputHelper("2");
-		assertEquals(currentState, State.MAIN);
+		next();
+		assertEquals(currentState, State.SEARCH_LAST_NAME);
 	}
 	
 	/**
