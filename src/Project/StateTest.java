@@ -342,7 +342,26 @@ public class StateTest {
 	 */
 	@Test
 	public void testCreateJob5() {
-		assertTrue(true);
+		testCreateJob4();
+		int month = Calendar.getInstance().get(Calendar.MONTH) + 4;
+		int day = Calendar.getInstance().get(Calendar.DATE) + 1;
+		inputHelper(month + "/" + day + "/2016 14:00");
+		next();
+		assertEquals(currentState, State.ERROR_MSG);
+		
+		testCreateJob4();
+		month = Calendar.getInstance().get(Calendar.MONTH) + 2;
+		day = Calendar.getInstance().get(Calendar.DATE) + 3;
+		inputHelper(month + "/" + day + "/2016 14:00");
+		next();
+		assertEquals(currentState, State.ERROR_MSG);
+		
+		testCreateJob4();
+		month = Calendar.getInstance().get(Calendar.MONTH) + 2;
+		day = Calendar.getInstance().get(Calendar.DATE) + 1;
+		inputHelper(month + "/" + day + "/2016 14:00");
+		next();
+		assertEquals(currentState, State.CREATE_JOB_6);
 	}
 	
 	/**
