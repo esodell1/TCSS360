@@ -317,7 +317,7 @@ public class StateTest {
 		
 		// Test correct job date and time setting:
 		testCreateJob3();
-		month = Calendar.getInstance().get(Calendar.MONTH) + 1;
+		month = Calendar.getInstance().get(Calendar.MONTH) + 2;
 		day = Calendar.getInstance().get(Calendar.DATE);
 		inputHelper(month + "/" + day + "/2016 14:00");
 		next();
