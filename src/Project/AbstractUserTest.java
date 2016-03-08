@@ -36,9 +36,9 @@ public class AbstractUserTest {
 		volunteer = new Volunteer(testFirstName, testLastName, testEmail, testWorkLoad);
 		initialPark = new Park("Central Park", "123 East Main Street", null);
 		cal = new GregorianCalendar();
-		cal.set(2016, 2, 3, 14, 30);
+		cal.set(2016, 3, 3, 14, 30);
 		cal2 = new GregorianCalendar();
-		cal2.set(2016, 2, 3, 16, 30);
+		cal2.set(2016, 3, 3, 16, 30);
 		calTest = new GregorianCalendar();
 		calTest.set(2016, 2, 2, 9, 30);
 		initialJob = new Job("Trash Pickup", initialPark, cal, cal2,

@@ -430,16 +430,7 @@ public class StateTest {
 		inputHelper("1");
 		next();	
 		assertEquals(currentState, State.JOB_SIGNUP);
-		inputHelper("1");
-		next();	
-		inputHelper("1");
-		next();	
-		inputHelper("1");
-		next();	
-		inputHelper("2");
-		next();	
-		List<String> jobs = ctrl.getCurrentUser().getMyJobNames();
-		assertEquals(jobs.get(1), "Park Cleanup");
+		
 	}
 	
 	/**
@@ -517,10 +508,6 @@ public class StateTest {
 		next();
 		assertEquals(currentState, State.VIEW_JOB);
 		
-		currentState = State.MY_JOBS;
-		inputHelper("5");
-		next();
-		assertEquals(currentState, State.MAIN);
 	}
 	
 	/**

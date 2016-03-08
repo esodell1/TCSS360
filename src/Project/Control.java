@@ -99,8 +99,11 @@ public class Control {
 		if (currentJob != null) {
 			List<User> volunteers = currentJob.getEnrolledVolunteers();
 			for(int i = 0; i < volunteers.size(); i++) {
-				int index = volunteers.get(i).getMyJobs().indexOf(currentJob);
-				volunteers.get(i).getMyJobs().remove(index);
+				volunteers.get(i).getMyJobs().remove(currentJob);
+			}
+			currentJob.getPark().getMyJobs().remove(currentJob);
+			for(int i = 0; i < users.size(); i++) {
+				users.get(i).getMyJobs().remove(currentJob);
 			}
 			int idx = jobs.indexOf(currentJob);
 			if (idx >= 0) {

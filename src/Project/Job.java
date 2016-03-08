@@ -23,7 +23,9 @@ public class Job implements Serializable {
 	private Calendar startDate;
 	private Calendar endDate;
 	private String description;
-	private List<User> enrolledVolunteers;
+	private List<User> enrolledLow;
+	private List<User> enrolledMedium;
+	private List<User> enrolledHigh;
 	protected int high;
 	protected int medium;
 	protected int low;
@@ -50,10 +52,17 @@ public class Job implements Serializable {
 		this.startDate = start;
 		this.endDate = end;
 		this.description = description;
-		this.enrolledVolunteers = volunteerList;
 		this.high = high;
 		this.medium = medium;
 		this.low = low;
+		this.enrolledHigh = new LinkedList<User>();
+		this.enrolledMedium = new LinkedList<User>();
+		this.enrolledLow = new LinkedList<User>();
+		for (User usr : volunteerList) {
+			if (usr.getWorkLoad() == WorkLoad.HIGH) this.enrolledHigh.add(usr);
+			else if (usr.getWorkLoad() == WorkLoad.MEDIUM) this.enrolledMedium.add(usr);
+			else if(usr.getWorkLoad() == WorkLoad.LOW) this.enrolledLow.add(usr);
+		}
 	}
 	
 	
@@ -69,7 +78,9 @@ public class Job implements Serializable {
 		this.startDate = new GregorianCalendar();
 		this.endDate = new GregorianCalendar();
 		this.description = "null";
-		this.enrolledVolunteers = new LinkedList<User>();
+		this.enrolledHigh = new LinkedList<User>();
+		this.enrolledMedium = new LinkedList<User>();
+		this.enrolledLow = new LinkedList<User>();
 	}
 	
 	/**
@@ -82,19 +93,19 @@ public class Job implements Serializable {
 	public boolean addVolunteer(Volunteer volunteer, WorkLoad workLoad) {
 		if ((workLoad == WorkLoad.HIGH)
 				&& (this.highCount < this.high)) {
-			this.enrolledVolunteers.add(volunteer);
+			this.enrolledHigh.add(volunteer);
 			volunteer.signUp(this);
 			this.highCount++;
 			return true;
 		} else if ((workLoad == WorkLoad.MEDIUM)
 				&& (this.mediumCount < this.medium)) {
-			this.enrolledVolunteers.add(volunteer);
+			this.enrolledMedium.add(volunteer);
 			volunteer.signUp(this);
 			this.mediumCount++;
 			return true;
 		} else if ((workLoad == WorkLoad.LOW)
 				&& (this.lowCount < this.low)) {
-			this.enrolledVolunteers.add(volunteer);
+			this.enrolledLow.add(volunteer);
 			volunteer.signUp(this);
 			this.lowCount++;
 			return true;
@@ -108,8 +119,12 @@ public class Job implements Serializable {
 	 * @param vol Volunteer to be removed from Job.
 	 */
 	public void removeVolunteer(User vol) {
-		int index = this.enrolledVolunteers.indexOf(vol);
-		if (index > -1) this.enrolledVolunteers.remove(index);
+		int index = this.enrolledHigh.indexOf(vol);
+		if (index > -1) this.enrolledHigh.remove(index);
+		index = this.enrolledMedium.indexOf(vol);
+		if (index > -1) this.enrolledMedium.remove(index);
+		index = this.enrolledLow.indexOf(vol);
+		if (index > -1) this.enrolledLow.remove(index);
 	}
 
 	/**
@@ -200,6 +215,15 @@ public class Job implements Serializable {
 	public void setEndDate(int year, int month, int day, int hour, int minute) {
 		this.endDate.set(year, month, day, hour, minute);
 	}
+	
+	/**
+	 * Sets the End Date of the Job.
+	 * 
+	 * @param Calendar time of the end date
+	 */
+	public void setEndDate(Calendar time) {
+		this.endDate = time;
+	}
 
 	/**
 	 * Returns a description about the Job.
@@ -225,7 +249,11 @@ public class Job implements Serializable {
 	 * @return A list of Users enrolled in the Job.
 	 */
 	public List<User> getEnrolledVolunteers() {
-		return enrolledVolunteers;
+		List<User> complete = new LinkedList<User>();
+		complete.addAll(enrolledLow);
+		complete.addAll(enrolledMedium);
+		complete.addAll(enrolledHigh);
+		return complete;
 	}
 	
 	/**
@@ -236,13 +264,31 @@ public class Job implements Serializable {
 	 */
 	public String getEnrolledVolunteersString() {
 		StringBuilder sb = new StringBuilder();
-		for (User vol : this.getEnrolledVolunteers()) {
+		for (User vol : enrolledHigh) {
 			sb.append("\tName: \t");
 			sb.append(vol.getLastName());
 			sb.append(", ");
 			sb.append(vol.getFirstName());
 			sb.append("\tGrade: ");
-			sb.append(vol.getWorkLoad());
+			sb.append(WorkLoad.HIGH);
+			sb.append("\n");
+		}
+		for (User vol : enrolledMedium) {
+			sb.append("\tName: \t");
+			sb.append(vol.getLastName());
+			sb.append(", ");
+			sb.append(vol.getFirstName());
+			sb.append("\tGrade: ");
+			sb.append(WorkLoad.MEDIUM);
+			sb.append("\n");
+		}
+		for (User vol : enrolledLow) {
+			sb.append("\tName: \t");
+			sb.append(vol.getLastName());
+			sb.append(", ");
+			sb.append(vol.getFirstName());
+			sb.append("\tGrade: ");
+			sb.append(WorkLoad.LOW);
 			sb.append("\n");
 		}
 		return sb.toString();
@@ -314,7 +360,11 @@ public class Job implements Serializable {
             return false;
         if (endDate.compareTo(other.endDate) != 0)
         	return false;
-        if (!enrolledVolunteers.equals(other.enrolledVolunteers))
+        if (!enrolledLow.equals(other.enrolledLow))
+            return false;
+        if (!enrolledMedium.equals(other.enrolledMedium))
+            return false;
+        if (!enrolledHigh.equals(other.enrolledHigh))
             return false;
         return true;
     }

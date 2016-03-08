@@ -140,7 +140,6 @@ public enum State {
 					"Please enter a job end date and time: MM/DD/YYYY HH:MM");
 			String[] tokens = date.split("/| |:");
 			if(tokens.length != 5) return CREATE_JOB_5;
-			Calendar start = ctrl.getCurrentJob().getStartDate();
 			Calendar end = new GregorianCalendar(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
@@ -150,10 +149,11 @@ public enum State {
 			} else if (!ctrl.isWeekOpen(end)) {
 				ctrl.userMessage = "This week is already full (5).";
 				return ERROR_MSG;
-			} else if (!ctrl.isDurationAllowed(start, end)) {
+			} else if (!ctrl.isDurationAllowed(ctrl.getCurrentJob().getStartDate(), end)) {
 				ctrl.userMessage = "That job duration is too long (Max 2 days).";
 				return ERROR_MSG;
 			}
+			ctrl.getCurrentJob().setEndDate(end);
 			return (ctrl.jobEdit) ? VIEW_JOB : CREATE_JOB_6;
 		}
 	},
@@ -240,7 +240,6 @@ public enum State {
 						.addVolunteer((Volunteer)ctrl.getCurrentUser(), WorkLoad.HIGH);
 				
 				if (success) {
-					ctrl.getCurrentUser().getMyJobs().add(ctrl.getCurrentJob());
 					ctrl.updatePersistence();
 					return VIEW_JOB;
 				} else {
@@ -259,7 +258,7 @@ public enum State {
 			opts.add("Return to job view");
 			opts.add("Return to jobs list");
 			opts.add("Return to Main Menu");
-			int command = ui.detailsInt("View Job", str + 
+			int command = ui.detailsInt("View Job Details", str + 
 					ctrl.getCurrentJob().getEnrolledVolunteersString(), opts);
 			if (command == 1) return VIEW_JOB;
 			else if (command == 2) return VIEW_ALL_JOBS;
