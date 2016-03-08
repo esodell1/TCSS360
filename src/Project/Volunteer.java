@@ -34,7 +34,7 @@ public class Volunteer extends AbstractUser implements Serializable {
 	 * @param theJob Job that user will sign up for.
 	 */
 	public void signUp(Job theJob) {
-		myJobs.add(theJob);
+		if (myJobs.indexOf(theJob) < 0) myJobs.add(theJob);
 	}
 	
 	/**
