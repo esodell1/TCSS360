@@ -439,7 +439,7 @@ public class StateTest {
 		assertEquals(currentState, State.VIEW_JOB);
 		
 		currentState = State.MY_JOBS;
-		inputHelper("3");
+		inputHelper("5");
 		next();
 		assertEquals(currentState, State.MAIN);
 	}
