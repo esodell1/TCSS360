@@ -212,7 +212,7 @@ public class Control {
 			if ((theJob.getStartDate().get(Calendar.YEAR) == date.get(Calendar.YEAR))
 					&& (theJob.getStartDate().get(Calendar.MONTH) == date.get(Calendar.MONTH))
 					&& (Math.abs(theJob.getStartDate().get(Calendar.DATE) 
-							- date.get(Calendar.DATE))) <= 3) {
+							- date.get(Calendar.DATE))) <= 5) {
 				count++;
 			}
 		}
@@ -311,27 +311,22 @@ public class Control {
 //		newUser2.addPark(newPark);
 //		newUser4.addPark(newPark2);
 //		
-//		Calendar cal = new java.util.GregorianCalendar();
-//		cal.set(2016, 2, 17, 12, 30);
-//		Calendar cal2 = new java.util.GregorianCalendar();
-//		cal2.set(2016, 2, 17, 13, 30);
-//		Job newJob = new Job("Park Cleanup", newPark, cal, cal2,
-//				"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
+//		Calendar cal, cal2;
 //		
-//		newPark.addJob(newJob);
-//		newUser2.getMyJobs().add(newJob);
-//		jobs.add(newJob);
-//		Calendar cal3 = new java.util.GregorianCalendar();
-//		cal3.set(2016, 2, 18, 16, 30);
-//		Calendar cal4 = new java.util.GregorianCalendar();
-//		cal4.set(2016, 2, 18, 17, 30);
-//		Job newJob2 = new Job("Planting Trees", newPark, cal3, cal4,
-//				"This job will planting new trees.", new ArrayList<User>(), 3, 2, 3);
-//		
-//		newPark.addJob(newJob2);
-//		newUser2.getMyJobs().add(newJob2);
-//		jobs.add(newJob2);
-//		
+//		for (int i = 0; i < 5; i++) {
+//			cal = new java.util.GregorianCalendar();
+//			cal.set(2016, 2, i+11, 12, 30);
+//			cal2 = new java.util.GregorianCalendar();
+//			cal2.set(2016, 2, i+11, 13, 30);
+//			Job newJob = new Job("Park Cleanup " + (i+1), newPark, cal, cal2,
+//					"This job will just be picking up trash.", new ArrayList<User>(), 1, 1, 3);
+//			
+//			newPark.addJob(newJob);
+//			newUser2.getMyJobs().add(newJob);
+//			jobs.add(newJob);
+//			
+//			
+//		}
 //		users.add(newUser);
 //		users.add(newUser2);
 //		users.add(newUser3);
