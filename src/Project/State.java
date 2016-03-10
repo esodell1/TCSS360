@@ -143,7 +143,7 @@ public enum State {
 			Calendar end = new GregorianCalendar(Integer.parseInt(tokens[2]), 
 					Integer.parseInt(tokens[0]) - 1, Integer.parseInt(tokens[1]),
 					Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]));
-			if (ctrl.isJobPast(end)) {
+			if (ctrl.isJobPast(end) || ctrl.getCurrentJob().getStartDate().getTimeInMillis() > end.getTimeInMillis()) {
 				ctrl.userMessage = "Must schedule jobs for future dates, and no more than 3 months in advance.";
 				return ERROR_MSG;
 			} else if (!ctrl.isWeekOpen(end)) {
